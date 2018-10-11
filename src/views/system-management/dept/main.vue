@@ -1,7 +1,7 @@
 <template>
   <transition name="fade-transform" mode="out-in">
     <keep-alive>
-      <component :is="component" :option-type="optionType" :detail="group" @option-changed="optionChangeHandler"/>
+      <component :is="component" :option-type="optionType" :detail="detail" @option-changed="optionChangeHandler"/>
     </keep-alive>
   </transition>
 </template>
@@ -18,13 +18,13 @@ export default {
     return {
       optionType: 'query',
       component: 'query',
-      group: {}
+      detail: {}
     }
   },
   methods: {
-    optionChangeHandler(optionType = 'query', group = {}) {
+    optionChangeHandler(optionType = 'query', detail = {}) {
       NProgress.start()
-      this.group = group
+      this.detail = detail
       this.component = optionType
       this.optionType = optionType
       if (optionType === 'add') {
