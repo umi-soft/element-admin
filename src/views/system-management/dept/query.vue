@@ -27,10 +27,8 @@
 
 <script>
 import { queryAllDepts, delDept } from '@/api/system-management/dept'
-import ButtonRight from '@/views/common/layout/ButtonRight'
 
 export default {
-  components: { ButtonRight },
   data() {
     return {
       filter: null,

@@ -55,12 +55,9 @@
 <script>
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
-import Pagination from '@/views/common/Pagination/index'
 import { queryPageRoles, delRole } from '@/api/system-management/role'
-import ButtonRight from '@/views/common/layout/ButtonRight'
 
 export default {
-  components: { Pagination, ButtonRight },
   mixins: [BaseQueryPageForm],
   data() {
     const queryCriteria = this.initQueryCriteria()

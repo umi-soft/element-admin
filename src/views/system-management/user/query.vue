@@ -39,7 +39,9 @@
         <el-table-column prop="loginName" label="登录ID" width="120"/>
         <el-table-column prop="name" label="姓名" width="120"/>
         <el-table-column prop="state" label="启用状态" width="80">
-          <template slot-scope="scope">{{ scope.row.state | translateState }}</template>
+          <template slot-scope="scope">
+            <state :detail="scope.row"/>
+          </template>
         </el-table-column>
         <el-table-column prop="gender" label="性别" width="80">
           <template slot-scope="scope">{{ scope.row.gender | translateGender }}</template>
@@ -60,12 +62,9 @@
 <script>
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
-import Pagination from '@/views/common/Pagination/index'
 import { queryPageUsers, delUser } from '@/api/system-management/user'
-import ButtonRight from '@/views/common/layout/ButtonRight'
 
 export default {
-  components: { Pagination, ButtonRight },
   mixins: [BaseQueryPageForm],
   data() {
     const queryCriteria = this.initQueryCriteria()

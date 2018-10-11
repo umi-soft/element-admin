@@ -71,10 +71,8 @@
 </template>
 
 <script>
-import AuditInfo from '@/views/common/AuditInfo/index'
 
 export default {
-  components: { AuditInfo },
   props: {
     detail: {
       required: true,

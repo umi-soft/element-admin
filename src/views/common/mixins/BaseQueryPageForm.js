@@ -17,7 +17,7 @@ export default {
     }
   },
   activated() {
-    this.queryHandler()
+    this.executeQueryPage()
   },
   methods: {
     initPagination(pagination = {}) {
@@ -34,7 +34,7 @@ export default {
       this.executeQueryPage()
     },
     queryHandler() {
-      this.initQueryCriteria(this.pagination)
+      this.initPagination(this.pagination)
       this.executeQueryPage()
     },
     createQueryParams() {
