@@ -34,7 +34,7 @@ import { deepMerge, deepClone } from '@/utils'
 import { addDept, editDept } from '@/api/system-management/dept'
 
 export default {
-  mixins: [ BaseEditForm ],
+  mixins: [BaseEditForm],
   props: {
     optionType: {
       required: true,
@@ -105,9 +105,9 @@ export default {
     },
     executeSubmit() {
       if (this.optionType === 'edit') {
-        editGroup(this.form).then(this.submitSuccessHandler)
+        editDept(this.form).then(this.submitSuccessHandler)
       } else if (this.optionType === 'add') {
-        addGroup(this.form).then(this.submitSuccessHandler)
+        addDept(this.form).then(this.submitSuccessHandler)
       }
     }
   }

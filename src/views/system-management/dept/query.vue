@@ -2,7 +2,7 @@
   <el-row>
     <el-col :span="24">
       <el-card>
-        <el-input placeholder="输入关键字进行过滤" v-model="filter"/>
+        <el-input v-model="filter" placeholder="输入关键字进行过滤"/>
       </el-card>
     </el-col>
     <el-col :span="24" style="margin: 10px 0px;">
@@ -20,13 +20,12 @@
       </button-right>
     </el-col>
     <el-col :span="24">
-      <el-tree ref="tree" class="filter-tree" highlight-current accordion :data="nodes" :props="defaultProps" :filter-node-method="filterNodeHandler" @current-change="(value, node) => { this.selected = value }"/>
+      <el-tree ref="tree" :data="nodes" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value"/>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import { deepClone } from '@/utils'
 import { queryAllDepts, delDept } from '@/api/system-management/dept'
 import ButtonRight from '@/views/common/layout/ButtonRight'
 
@@ -41,6 +40,11 @@ export default {
         children: 'children',
         label: 'name'
       }
+    }
+  },
+  watch: {
+    filter(filter) {
+      this.$refs.tree.filter(filter)
     }
   },
   activated() {
@@ -61,11 +65,6 @@ export default {
     filterNodeHandler(value, data) {
       if (!value) return true
       return data.name.indexOf(value) !== -1
-    }
-  },
-  watch: {
-    filter(filter) {
-      this.$refs.tree.filter(filter)
     }
   }
 }

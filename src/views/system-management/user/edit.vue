@@ -65,7 +65,7 @@ import { deepMerge, deepClone } from '@/utils'
 import { addUser, editUser } from '@/api/system-management/user'
 
 export default {
-  mixins: [ BaseEditForm ],
+  mixins: [BaseEditForm],
   props: {
     optionType: {
       required: true,
@@ -154,9 +154,9 @@ export default {
     },
     executeSubmit() {
       if (this.optionType === 'edit') {
-        editGroup(this.form).then(this.submitSuccessHandler)
+        editUser(this.form).then(this.submitSuccessHandler)
       } else if (this.optionType === 'add') {
-        addGroup(this.form).then(this.submitSuccessHandler)
+        addUser(this.form).then(this.submitSuccessHandler)
       }
     }
   }

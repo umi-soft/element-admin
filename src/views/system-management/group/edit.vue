@@ -28,7 +28,7 @@ import { deepMerge, deepClone } from '@/utils'
 import { addGroup, editGroup } from '@/api/system-management/group'
 
 export default {
-  mixins: [ BaseEditForm ],
+  mixins: [BaseEditForm],
   props: {
     optionType: {
       required: true,
