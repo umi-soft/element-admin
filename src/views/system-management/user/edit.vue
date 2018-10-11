@@ -53,17 +53,19 @@
       <el-input v-model="form.remark" type="textarea"/>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">保存</el-button>
-      <el-button @click="back">取消</el-button>
+      <el-button type="primary" @click="submitHandler">保存</el-button>
+      <el-button @click="backHandler">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMerge, deepClone } from '@/utils'
 import { addUser, editUser } from '@/api/system-management/user'
 
 export default {
+  mixins: [ BaseEditForm ],
   props: {
     optionType: {
       required: true,
@@ -150,31 +152,12 @@ export default {
         }]
       }
     },
-    back() {
-      this.$emit('option-changed')
-    },
-    submit() {
-      this.$refs['form'].validate((valid) => {
-        if (this.optionType === 'edit') {
-          editUser(this.form).then(() => {
-            this.$message({
-              type: 'success',
-              message: '保存成功'
-            })
-            this.back()
-          })
-        } else if (this.optionType === 'add') {
-          addUser(this.form).then(() => {
-            this.$message({
-              type: 'success',
-              message: '保存成功'
-            })
-            this.back()
-          })
-        } else {
-          return false
-        }
-      })
+    executeSubmit() {
+      if (this.optionType === 'edit') {
+        editGroup(this.form).then(this.submitSuccessHandler)
+      } else if (this.optionType === 'add') {
+        addGroup(this.form).then(this.submitSuccessHandler)
+      }
     }
   }
 }
