@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-import { param2Obj, deepMerge, deepClone, fieldQueryLike } from '@/utils'
+import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import Utils from '../utils'
 
 const mockConfig = {
@@ -43,7 +43,11 @@ export default {
     params.filter.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = fieldQueryLike(rows, query)
+    const queryResult = deepClone(fieldQueryLike(rows, query))
+    params.filter.sorts.forEach(sort => {
+      // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
+      sortArray(queryResult, sort.field, sort.value === 'desc')
+    })
     return {
       code: 1,
       message: '',

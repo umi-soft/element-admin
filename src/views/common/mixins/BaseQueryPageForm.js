@@ -25,7 +25,11 @@ export default {
         total: 0,
         pageSize: 10,
         page: 1,
-        list: []
+        list: [],
+        filter: {
+          filters: [],
+          sorts: []
+        }
       })
     },
     resetHandler() {
@@ -38,24 +42,21 @@ export default {
       this.executeQueryPage()
     },
     createQueryParams() {
-      const filter = {
-        filters: [],
-        sorts: []
-      }
+      this.pagination.filter.filters = []
       Object.keys(this.queryCriteria).forEach(key => {
         const value = this.queryCriteria[key]
         if (value) {
           if (typeof value === 'object') {
-            filter.filters.push({ field: key, value: deepClone(value) })
+            this.pagination.filter.filters.push({ field: key, value: deepClone(value) })
           } else {
-            filter.filters.push({ field: key, value: value })
+            this.pagination.filter.filters.push({ field: key, value: value })
           }
         }
       })
       return {
         pageSize: this.pagination.pageSize,
         page: this.pagination.page,
-        filter: filter
+        filter: this.pagination.filter
       }
     },
     queryResultHandler(result) {
@@ -68,6 +69,19 @@ export default {
     },
     pageChangeHandler(page) {
       this.pagination.page = page
+      this.executeQueryPage()
+    },
+    sortChangeHandler({ column, prop, order }) {
+      // ElementUI 目前并不支持远端多字段排序
+      // sorts数组设计的目的是为了支持ElementUI后续拓展
+      this.pagination.filter.sorts = []
+      if (column) {
+        this.pagination.filter.sorts.push({
+          field: prop,
+          value: order === 'descending' ? 'desc' : 'asc'
+        })
+      }
+      this.pagination.page = 1
       this.executeQueryPage()
     },
     delHandler() {

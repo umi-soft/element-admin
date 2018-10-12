@@ -216,6 +216,16 @@ export function fieldQueryLike(array, query) {
 }
 
 /**
+ * @param array 数组
+ * @param sort 仅仅支持非对象类型的字段，反之报错
+ * @param isDesc  是否desc排序
+ * @returns {*}
+ */
+export function sortArray(array, sort, isDesc) {
+  return array.sort((a, b) => { return isDesc && a[sort] - b[sort] })
+}
+
+/**
  * 将制定元素，平滑滚动到指定位置
  * @param element
  * @param to

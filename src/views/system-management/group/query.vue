@@ -35,15 +35,15 @@
       </button-right>
     </el-col>
     <el-col :span="24">
-      <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)">
-        <el-table-column prop="name" label="名称" width="200"/>
-        <el-table-column prop="state" label="启用状态" width="80">
+      <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler">
+        <el-table-column prop="name" label="名称" width="200" sortable="custom"/>
+        <el-table-column prop="state" label="启用状态" width="100" sortable="custom">
           <template slot-scope="scope">{{ scope.row.state | translateState }}</template>
         </el-table-column>
-        <el-table-column prop="createdDate" label="创建时间">
+        <el-table-column prop="createdDate" label="创建时间" sortable="custom">
           <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
         </el-table-column>
-        <el-table-column prop="modifiedDate" label="最后修改时间">
+        <el-table-column prop="modifiedDate" label="最后修改时间" sortable="custom">
           <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
         </el-table-column>
       </el-table>
