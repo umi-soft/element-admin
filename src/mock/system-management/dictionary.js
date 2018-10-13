@@ -4,10 +4,14 @@ import Utils from '../utils'
 
 const mockConfig = {
   'id|1': Utils.id,
+  'parentId|1': Utils.id, // 上级ID
   'flag|1': Utils.flag, // 是否删除
   'state|1': Utils.state, // 是否启用
-  index: '@increment', // 编号
+  'category|1': [0, 1], // 类型： 0：业务字典类型, 1：业务字典
+  'type|1': Utils.id, // 字典类型ID
   name: '@cword(5, 10)', // 名称
+  'code|1': Utils.id, // 规则码
+  'index': '@increment', // 编号
   remark: '@cparagraph(1, 3)', // 备注
   createdBy: '@increment', // 创建人
   createdDate: +Mock.Random.date('T'), // 创建时间
@@ -94,20 +98,6 @@ export default {
   del: config => {
     const params = param2Obj(config.url)
     rows.splice(rows.findIndex(item => { return item.id === params.id }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
-  },
-  queryAllGroupUsers: config => {
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
-  },
-  queryAllGroupRoles: config => {
     return {
       code: 1,
       message: '操作成功',

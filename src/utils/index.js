@@ -43,7 +43,7 @@ export function parseTime(time, format = '{y}-{m}-{d} {h}:{i}:{s}') {
  * @author hujie@mail.taiji.com.cn
  */
 export function formatTime(time, format) {
-  if(time.toString().length !== 13){
+  if (time.toString().length !== 13) {
     time = time * 1000
   }
   const d = new Date(time)

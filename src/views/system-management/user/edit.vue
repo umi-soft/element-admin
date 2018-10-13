@@ -1,9 +1,9 @@
 <template>
-  <el-form ref="form" :model="form" :rules="addRules" label-width="200px">
+  <el-form ref="form" :model="form" :rules="optionType === 'edit' ? editRules : addRules" label-width="200px">
     <el-form-item v-if="form.id !== null" label="ID" prop="id">
       <el-input v-model="form.id" disabled/>
     </el-form-item>
-    <el-form-item label="是否启用" prop="index">
+    <el-form-item label="是否启用" prop="state">
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
     </el-form-item>
     <el-form-item label="用户编号" prop="index">
@@ -96,7 +96,6 @@ export default {
     } else {
       this.initForm(this.form)
     }
-    // 使用$nextTick目的是为了防止clearValidate部分不生效（index 字段，可能是因为关键字的原因）
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })
@@ -128,13 +127,13 @@ export default {
           required: true, message: '请选择用户启用状态', trigger: 'blur'
         }],
         index: [{
-          required: true, message: '请输入用户编号', trigger: 'change'
+          required: true, message: '请输入用户编号', trigger: 'blur'
         }],
         loginName: [{
-          required: true, message: '请输入用户编号', trigger: 'change'
+          required: true, message: '请输入用户编号', trigger: 'blur'
         }],
         password: [{
-          required: true, message: '请输入用户编号', trigger: 'change'
+          required: true, message: '请输入用户编号', trigger: 'blur'
         }],
         name: [{
           required: true, message: '请输入用户姓名', trigger: 'blur'
@@ -142,13 +141,13 @@ export default {
           min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
         }],
         nickName: [{
-          required: true, message: '请输入用户编号', trigger: 'change'
+          required: true, message: '请输入用户编号', trigger: 'blur'
         }],
         gender: [{
-          required: true, message: '请输入用户编号', trigger: 'change'
+          required: true, message: '请输入用户编号', trigger: 'blur'
         }],
         email: [{
-          required: true, message: '请输入用户编号', trigger: 'change'
+          required: true, message: '请输入用户编号', trigger: 'blur'
         }]
       }
     },

@@ -3,22 +3,27 @@
     <el-form-item v-if="form.id !== null" label="ID" prop="id">
       <el-input v-model="form.id" disabled/>
     </el-form-item>
-    <el-form-item v-if="form.parentId" label="上级部门">
-      <el-input :value="detail.name" disabled/>
-    </el-form-item>
-    <el-form-item label="部门类型" prop="type">
-      <el-input v-model="form.type"/>
-    </el-form-item>
-    <el-form-item label="部门名称" prop="name">
-      <el-input v-model="form.name"/>
+    <el-form-item v-if="form.parentId !== null" label="上级ID" prop="parentId">
+      <el-input v-model="form.parentId" disabled/>
     </el-form-item>
     <el-form-item label="是否启用" prop="state">
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
     </el-form-item>
-    <el-form-item label="部门编号" prop="index">
+    <el-form-item label="字典类型" prop="type">
+      <el-select v-model="form.type" :remote-method="queryAllDictionaryType" :loading="loading" filterable remote reserve-keyword placeholder="请输入字典关键词">
+        <el-option v-for="item in list" :key="item.id" :label="item.name" :value="item.id"/>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="字典名称" prop="name">
+      <el-input v-model="form.name"/>
+    </el-form-item>
+    <el-form-item label="字典规则码" prop="code">
+      <el-input v-model="form.code"/>
+    </el-form-item>
+    <el-form-item label="字典编号" prop="index">
       <el-input v-model="form.index"/>
     </el-form-item>
-    <el-form-item label="部门备注" prop="remark">
+    <el-form-item label="字典备注" prop="remark">
       <el-input v-model="form.remark" type="textarea"/>
     </el-form-item>
     <el-form-item>
@@ -31,7 +36,7 @@
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMerge, deepClone } from '@/utils'
-import { addDept, editDept } from '@/api/system-management/dept'
+import { queryAllDictionaries, addDictionary, editDictionary } from '@/api/system-management/dictionary'
 
 export default {
   mixins: [BaseEditForm],
@@ -56,7 +61,10 @@ export default {
     return {
       form: form,
       addRules: addRules,
-      editRules: editRules
+      editRules: editRules,
+
+      list: [],
+      loading: false
     }
   },
   activated() {
@@ -77,36 +85,56 @@ export default {
       return deepMerge(form, {
         id: null,
         parentId: null,
+        state: 1,
+        category: 1,
         type: '',
         name: '',
-        state: 1,
+        code: '',
         index: '',
         remark: ''
       })
     },
     initRules() {
       return {
+        state: [{
+          required: true, message: '请选择字典启用状态', trigger: 'blur'
+        }],
         type: [{
-          required: true, message: '请输入部门类型', trigger: 'blur'
+          required: true, message: '请选择字典类型', trigger: 'change'
         }],
         name: [{
-          required: true, message: '请输入部门名称', trigger: 'blur'
+          required: true, message: '请输入字典名称', trigger: 'blur'
         }, {
           min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
         }],
-        state: [{
-          required: true, message: '请选择部门启用状态', trigger: 'blur'
-        }],
         index: [{
-          required: true, message: '请输入部门编号', trigger: 'blur'
+          required: true, message: '请输入字典编号', trigger: 'blur'
         }]
       }
     },
     executeSubmit() {
       if (this.optionType === 'edit') {
-        editDept(this.form).then(this.submitSuccessHandler)
+        editDictionary(this.form).then(this.submitSuccessHandler)
       } else if (this.optionType === 'add') {
-        addDept(this.form).then(this.submitSuccessHandler)
+        addDictionary(this.form).then(this.submitSuccessHandler)
+      }
+    },
+    queryAllDictionaryType(name) {
+      if (!name) {
+        this.loading = true
+        queryAllDictionaries({
+          filters: [{
+            field: 'name',
+            value: name
+          }],
+          sorts: []
+        }).then((list) => {
+          this.list = list
+          this.loading = false
+        }, () => {
+          this.list = []
+          this.loading = false
+        })
       }
     }
   }

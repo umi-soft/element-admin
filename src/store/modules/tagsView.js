@@ -36,7 +36,6 @@ const tagsView = {
         }
       }
     },
-
     DEL_OTHERS_VISITED_VIEWS: (state, view) => {
       for (const [i, v] of state.visitedViews.entries()) {
         if (v.path === view.path) {
@@ -54,7 +53,6 @@ const tagsView = {
         }
       }
     },
-
     DEL_ALL_VISITED_VIEWS: state => {
       state.visitedViews = []
     },

@@ -6,13 +6,13 @@
           :model="queryCriteria"
           :inline="true">
           <el-form-item label="启用状态:" prop="flag">
-            <el-select v-model="queryCriteria.flag" placeholder="请选择用户启用状态">
+            <el-select v-model="queryCriteria.flag" placeholder="请选择字典启用状态">
               <el-option value="1" label="已启用"/>
               <el-option value="0" label="已禁用"/>
             </el-select>
           </el-form-item>
-          <el-form-item label="用户姓名:" prop="name">
-            <el-input v-model="queryCriteria.name" placeholder="请输入用户姓名"/>
+          <el-form-item label="字典名称:" prop="name">
+            <el-input v-model="queryCriteria.name" placeholder="请输入字典名称"/>
           </el-form-item>
         </el-form>
       </el-col>
@@ -23,10 +23,11 @@
     </el-card>
     <el-col :span="24" style="margin: 10px 0px;">
       <button-right>
-        用户列表
+        字典列表
         <template slot="button">
           <el-button-group>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','check', selected)">查看</el-button>
+            <el-button v-if="selected" type="primary" @click="$emit('option-changed','add', selected)">新增下级</el-button>
             <el-button type="primary" @click="$emit('option-changed','add')">新增</el-button>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
             <el-button v-if="selected" type="primary" @click="delHandler">删除</el-button>
@@ -36,22 +37,18 @@
     </el-col>
     <el-col :span="24">
       <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler">
-        <el-table-column prop="loginName" label="登录ID" width="120" sortable="custom"/>
-        <el-table-column prop="name" label="姓名" width="120" sortable="custom"/>
-        <el-table-column prop="state" label="启用状态" width="100" sortable="custom">
-          <template slot-scope="scope">
-            <state :detail="scope.row"/>
-          </template>
-        </el-table-column>
-        <el-table-column prop="gender" label="性别" width="80" sortable="custom">
-          <template slot-scope="scope">{{ scope.row.gender | translateGender }}</template>
-        </el-table-column>
-        <el-table-column prop="email" label="邮箱" width="200" sortable="custom"/>
-        <el-table-column prop="createdDate" label="创建时间">
+        <el-table-column prop="type" label="字典类型" width="200" sortable="custom"/>
+        <el-table-column prop="name" label="名称" width="200" sortable="custom"/>
+        <el-table-column prop="code" label="规则码" width="200" sortable="custom"/>
+        <el-table-column prop="index" label="编号" width="200" sortable="custom"/>
+        <el-table-column prop="createdDate" label="创建时间" sortable="custom">
           <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
         </el-table-column>
         <el-table-column prop="modifiedDate" label="最后修改时间" sortable="custom">
           <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column prop="state" label="启用状态" width="100" sortable="custom">
+          <template slot-scope="scope">{{ scope.row.state | translateState }}</template>
         </el-table-column>
       </el-table>
       <pagination :pagination="pagination" @page-size-changed="pageSizeChangeHandler" @page-changed="pageChangeHandler"/>
@@ -62,7 +59,7 @@
 <script>
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
-import { queryPageUsers, delUser } from '@/api/system-management/user'
+import { queryPageDictionaries, delDictionary } from '@/api/system-management/dictionary'
 
 export default {
   mixins: [BaseQueryPageForm],
@@ -81,12 +78,12 @@ export default {
       })
     },
     executeQueryPage() {
-      queryPageUsers(this.createQueryParams()).then(data => {
+      queryPageDictionaries(this.createQueryParams()).then(data => {
         this.queryResultHandler(data)
       })
     },
     customDelHandler() {
-      delUser(this.selected.id).then(() => {
+      delDictionary(this.selected.id).then(() => {
         this.queryHandler()
       })
     }

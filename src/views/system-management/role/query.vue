@@ -5,7 +5,7 @@
         <el-form
           :model="queryCriteria"
           :inline="true">
-          <el-form-item label="启用状态:" prop="region">
+          <el-form-item label="启用状态:" prop="flag">
             <el-select v-model="queryCriteria.flag" placeholder="请选择角色启用状态">
               <el-option value="1" label="已启用"/>
               <el-option value="0" label="已禁用"/>

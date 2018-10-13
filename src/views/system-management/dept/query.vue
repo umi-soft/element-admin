@@ -11,8 +11,8 @@
         <template slot="button">
           <el-button-group>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','check', selected)">查看</el-button>
-            <el-button v-if="selected" type="primary" @click="$emit('option-changed','add', selected)">新增</el-button>
-            <el-button v-else type="primary" @click="$emit('option-changed','add')">新增</el-button>
+            <el-button v-if="selected" type="primary" @click="$emit('option-changed','add', selected)">新增子部门</el-button>
+            <el-button type="primary" @click="$emit('option-changed','add')">新增</el-button>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
             <el-button v-if="selected" type="primary" @click="delHandler">删除</el-button>
           </el-button-group>
