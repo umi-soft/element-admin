@@ -20,7 +20,24 @@
       </button-right>
     </el-col>
     <el-col :span="24">
-      <el-tree ref="tree" :data="nodes" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value"/>
+      <el-tree :data="[{}]" :props="defaultProps">
+        <div slot-scope="{ data }" class="custom-tree-node">
+          <div class="name">名称</div>
+          <div class="state">状态</div>
+          <div class="time">最后修改时间</div>
+          <div class="time">创建时间</div>
+        </div>
+      </el-tree>
+      <el-tree ref="tree" :data="nodes" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value">
+        <div slot-scope="{ data }" class="custom-tree-node">
+          <div class="name">{{ data.name }}</div>
+          <div class="state">
+            <state :detail="data"/>
+          </div>
+          <div class="time">{{ data.modifiedDate | parseTime }}</div>
+          <div class="time">{{ data.createdDate | parseTime }}</div>
+        </div>
+      </el-tree>
     </el-col>
   </el-row>
 </template>
@@ -51,7 +68,6 @@ export default {
   methods: {
     queryAllHandler() {
       queryAllDepts({}).then(data => {
-        console.log(data)
         this.nodes = data
       })
     },
@@ -75,5 +91,44 @@ export default {
   .query-btn /deep/ .el-button {
     float: right;
     margin-left: 10px;
+  }
+
+  /deep/ .el-tree {
+    border-bottom: 1px solid #ebeef5;
+
+    .el-tree-node__content {
+      border-top: 1px solid #ebeef5;
+      border-left: 1px solid #ebeef5;
+      border-right: 1px solid #ebeef5;
+      min-height: 40px;
+    }
+  }
+
+  .custom-tree-node {
+    width: 100%;
+
+    .name {
+      float: left;
+      min-height: 40px;
+      line-height: 40px;
+    }
+
+    .time {
+      float: right;
+      width: 200px;
+      min-height: 40px;
+      line-height: 40px;
+      border-left: 1px solid #ebeef5;
+      text-align: center;
+    }
+
+    .state {
+      float: right;
+      width: 100px;
+      min-height: 40px;
+      line-height: 40px;
+      border-left: 1px solid #ebeef5;
+      text-align: center;
+    }
   }
 </style>

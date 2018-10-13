@@ -48,7 +48,9 @@
           <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
         </el-table-column>
         <el-table-column prop="state" label="启用状态" width="100" sortable="custom">
-          <template slot-scope="scope">{{ scope.row.state | translateState }}</template>
+          <template slot-scope="scope">
+            <state :detail="scope.row"/>
+          </template>
         </el-table-column>
       </el-table>
       <pagination :pagination="pagination" @page-size-changed="pageSizeChangeHandler" @page-changed="pageChangeHandler"/>

@@ -39,17 +39,6 @@ const asyncRouter = {
       },
       children: [
         {
-          path: 'user',
-          component: () => import('@/views/system-management/user/main'),
-          name: 'user',
-          meta: {
-            roles: [],
-            title: '用户管理',
-            icon: 'user',
-            noCache: false
-          }
-        },
-        {
           path: 'group',
           component: () => import('@/views/system-management/group/main'),
           hidden: false,
@@ -58,6 +47,17 @@ const asyncRouter = {
             roles: [],
             title: '用户分组',
             icon: 'user-group',
+            noCache: false
+          }
+        },
+        {
+          path: 'user',
+          component: () => import('@/views/system-management/user/main'),
+          name: 'user',
+          meta: {
+            roles: [],
+            title: '用户管理',
+            icon: 'user',
             noCache: false
           }
         }
