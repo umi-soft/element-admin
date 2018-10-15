@@ -11,7 +11,7 @@
         <template slot="button">
           <el-button-group>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','check', selected)">查看</el-button>
-            <el-button type="primary" @click="$emit('option-changed','add')">同步</el-button>
+            <el-button v-if="needSync" type="primary" @click="syncMenus">同步</el-button>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
           </el-button-group>
         </template>
@@ -25,7 +25,7 @@
           <div class="icon">图标</div>
         </div>
       </el-tree>
-      <el-tree ref="tree" :data="menus" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value">
+      <el-tree ref="tree" :data="menusTree" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">
             {{ data.name }}
@@ -46,7 +46,7 @@
 import Abbreviation from '@/components/Abbreviation/index'
 import SvgIcon from '@/components/SvgIcon/index'
 import { asyncMenuMap } from '@/router'
-// import { queryAllMenus } from '@/api/system-management/menu'
+import { queryAllMenus, syncMenus } from '@/api/system-management/menu'
 
 export default {
   components: { Abbreviation, SvgIcon },
@@ -54,7 +54,9 @@ export default {
     return {
       filter: null,
       selected: null,
-      menus: this.initMenus()
+      menusTree: [],
+      allMenus: [],
+      needSync: false
     }
   },
   watch: {
@@ -62,44 +64,82 @@ export default {
       this.$refs.tree.filter(filter)
     }
   },
-  activated() {
-    this.queryAllHandler()
+  mounted() {
+    this.initMenus()
   },
   methods: {
     initMenus() {
-      const menus = []
-      asyncMenuMap.forEach(router => {
-        menus.push(this.createMenu(router, null))
+      queryAllMenus({}).then(data => {
+        this.allMenus = data
+        const menusTree = []
+        asyncMenuMap.forEach(router => {
+          menusTree.push(this.createMenu(router, null))
+        })
+        this.menusTree = menusTree
       })
-      return menus
     },
     createMenu(router, parentId) {
       const menu = {}
-      menu.id = router.name
-      menu.parentId = parentId
-      menu.flag = 1
-      menu.state = 0
-      menu.index = router.meta.index
-      menu.name = router.meta.title
-      menu.icon = router.meta.icon
-      menu.remark = null
-      menu.createdBy = null
-      menu.createdDate = null
-      menu.modifiedBy = null
-      menu.modifiedDate = null
+      let remoteMenu = null
+      const remoteMenuIndex = this.allMenus.findIndex(item => { return item.id === router.name })
+      if (remoteMenuIndex === -1) { // 需要同步，本次构建从本地路由中构建
+        this.needSync = true
+        menu.id = router.name
+        menu.parentId = parentId
+        menu.flag = 1
+        menu.state = 0
+        menu.index = router.meta.index
+        menu.name = router.meta.title
+        menu.icon = router.meta.icon
+        menu.remark = null
+        menu.createdBy = null
+        menu.createdDate = null
+        menu.modifiedBy = null
+        menu.modifiedDate = null
+      } else { // 不需要同步，本次构建从远端服务器构建
+        remoteMenu = this.allMenus[remoteMenuIndex]
+        menu.id = remoteMenu.id
+        menu.parentId = parentId
+        menu.flag = 1
+        menu.state = 0
+        menu.index = remoteMenu.index
+        menu.name = remoteMenu.name
+        menu.icon = remoteMenu.icon
+        menu.remark = remoteMenu.remark
+        menu.createdBy = remoteMenu.createdBy
+        menu.createdDate = remoteMenu.createdDate
+        menu.modifiedBy = remoteMenu.modifiedBy
+        menu.modifiedDate = remoteMenu.modifiedDate
+      }
 
       menu.children = []
       if (router.children && router.children.length > 0) {
         router.children.forEach(children => {
-          menu.children.push(this.createMenu(children, router.name))
+          menu.children.push(this.createMenu(children, menu.id))
         })
       }
       return menu
     },
-    queryAllHandler() {
-      // queryAllMenus({}).then(data => {
-      //   // 从服务端获取合并至本地数据源asyncMenuMap，主要为名称，icon等
-      // })
+    syncMenus() {
+      this.$confirm('确定要同步吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        syncMenus(this.menusTree).then(data => {
+          this.needSync = false
+          this.initMenus()
+          this.$message({
+            type: 'success',
+            message: '保存成功'
+          })
+        })
+      }, () => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
+        })
+      })
     },
     filterNodeHandler(value, data) {
       if (!value) return true

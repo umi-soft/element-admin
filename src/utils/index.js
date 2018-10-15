@@ -8,6 +8,9 @@ export function parseTime(time, format = '{y}-{m}-{d} {h}:{i}:{s}') {
   if (arguments.length === 0) { // 没传递参数
     return null
   }
+  if (!time) {
+    return null
+  }
   let date
   if (typeof time === 'object') {
     date = time

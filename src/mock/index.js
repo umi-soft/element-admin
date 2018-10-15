@@ -6,13 +6,14 @@ import userAPI from './system-management/user'
 import roleAPI from './system-management/role'
 import deptAPI from './system-management/dept'
 import dictionaryAPI from './system-management/dictionary'
+import menuAPI from './system-management/menu'
 
 Mock.setup({
   timeout: '350-600'
 })
 
 // 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
+Mock.mock(/\/auth/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
 
@@ -57,5 +58,10 @@ Mock.mock(/\/system\/dictionary\/check/, 'post', dictionaryAPI.check)
 Mock.mock(/\/system\/dictionary\/add/, 'post', dictionaryAPI.add)
 Mock.mock(/\/system\/dictionary\/edit/, 'post', dictionaryAPI.edit)
 Mock.mock(/\/system\/dictionary\/del/, 'get', dictionaryAPI.del)
+
+Mock.mock(/\/system\/menu\/queryAll/, 'post', menuAPI.queryAll)
+Mock.mock(/\/system\/menu\/check/, 'post', menuAPI.check)
+Mock.mock(/\/system\/menu\/edit/, 'post', menuAPI.edit)
+Mock.mock(/\/system\/menu\/sync/, 'post', menuAPI.sync)
 
 export default Mock

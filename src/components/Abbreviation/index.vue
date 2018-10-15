@@ -1,6 +1,7 @@
 <template>
-  <el-popover :placement="placement" :width="width" :trigger="trigger" :content="content">
-    <button slot="reference">{{ abbr }}</button>
+  <el-popover :placement="placement" :width="width" :trigger="trigger">
+    <span slot="reference">{{ abbr }}</span>
+    <span class="break-word">{{ content }}</span>
   </el-popover>
 </template>
 
@@ -45,6 +46,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.break-word {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap !important;
+}
 </style>

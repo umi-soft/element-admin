@@ -38,6 +38,7 @@ for (let i = 0; i < 300; i++) {
 
 export default {
   queryPage: config => {
+    console.log(config)
     const params = JSON.parse(config.body)
     const query = {}
     params.filter.filters.forEach(filter => {
@@ -60,6 +61,7 @@ export default {
     }
   },
   queryAll: config => {
+    console.log(config)
     const params = JSON.parse(config.body)
     const query = {}
     params.filters.forEach(filter => {
@@ -77,6 +79,7 @@ export default {
     }
   },
   check: config => {
+    console.log(config)
     return {
       code: 1,
       message: '操作成功',
@@ -84,6 +87,7 @@ export default {
     }
   },
   add: config => {
+    console.log(config)
     const params = JSON.parse(config.body)
     const row = deepMerge(deepClone(params), Mock.mock(mockConfig))
     rows.push(row)
@@ -94,6 +98,7 @@ export default {
     }
   },
   edit: config => {
+    console.log(config)
     const params = JSON.parse(config.body)
     const row = rows[rows.findIndex(item => { return item.id === params.id })]
     deepMerge(row, params)
@@ -104,6 +109,7 @@ export default {
     }
   },
   del: config => {
+    console.log(config)
     const params = param2Obj(config.url)
     rows.splice(rows.findIndex(item => { return item.id === params.id }), 1)
     return {
