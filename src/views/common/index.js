@@ -33,6 +33,4 @@ requireComponent.keys().forEach(fileName => {
   components[componentName] = componentConfig.default || componentConfig
 })
 
-console.log(components)
-
 export default components
