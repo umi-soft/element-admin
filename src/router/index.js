@@ -46,12 +46,13 @@ export const constantRouterMap = [
     path: '/me',
     component: defaultLayout,
     hidden: true,
+    meta: { title: '个人设置', icon: 'user', cacheAble: true },
     children: [
       {
         path: ':id',
         component: () => import('@/views/system-management/user/edit'),
         name: 'edit-me',
-        meta: { title: '个人信息编辑', icon: 'user', noCache: true }
+        meta: { title: '个人信息编辑', icon: 'user', cacheAble: true }
       }
     ]
   },
@@ -64,7 +65,7 @@ export const constantRouterMap = [
         path: '/index',
         component: () => import('@/views/dashboard/index'),
         name: 'index',
-        meta: { title: '首页', icon: 'index', noCache: true }
+        meta: { title: '首页', icon: 'index', cacheAble: true }
       }
     ]
   }
@@ -79,8 +80,10 @@ export default new Router({
 /**
  * 聚合子模块路由对象，登陆后异步匹配路由结构，动态添加路由
  * 建议，该动态路由表由前端控制
+ * asyncRouterMap动态够钱过程中，请在最后末尾处加上路由 ： { path: '*', redirect: '/404', hidden: true }，将未知路由归置到404页面, 详见src/store/modules/permission.js
  */
 export const asyncRouterMap = [
-  systemManagementRouter,
-  { path: '*', redirect: '/404', hidden: true }
+  systemManagementRouter
 ]
+
+export const asyncMenuMap = JSON.parse(JSON.stringify(asyncRouterMap))

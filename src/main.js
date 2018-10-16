@@ -1,28 +1,34 @@
 import Vue from 'vue'
 
-import 'normalize.css/normalize.css' // A modern alternative to CSS resets
+import 'normalize.css/normalize.css'
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import '@/styles/index.scss' // global css
+import '@/styles/index.scss'
 
 import App from './App'
 import router from './router'
 import store from './store'
 
-import './icons' // icon
-import './errorLog' // error log
-import './permission' // permission control
-import './mock' // simulation data
+import './icons'
+import './errorLog'
+import './permission'
+import './mock'
 
-import * as filters from './filters' // global filters
+import components from './views/common'
+import * as filters from './filters'
 
 Vue.use(Element, {
   size: 'small'
 })
 
-// register global utility filters.
+// 全局注册组件
+Object.keys(components).forEach(key => {
+  Vue.component(key, components[key])
+})
+
+// 全局注册指令
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })

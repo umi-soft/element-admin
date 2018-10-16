@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="form" :model="form" :rules="addRules" label-width="200px">
+  <el-form ref="form" :model="form" :rules="optionType === 'edit' ? editRules : addRules" label-width="200px">
     <el-form-item v-if="form.id !== null" label="ID" prop="id">
       <el-input v-model="form.id" disabled/>
     </el-form-item>
@@ -12,7 +12,7 @@
     <el-form-item label="部门名称" prop="name">
       <el-input v-model="form.name"/>
     </el-form-item>
-    <el-form-item label="是否启用" prop="index">
+    <el-form-item label="是否启用" prop="state">
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
     </el-form-item>
     <el-form-item label="部门编号" prop="index">
@@ -22,17 +22,19 @@
       <el-input v-model="form.remark" type="textarea"/>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submit">保存</el-button>
-      <el-button @click="back">取消</el-button>
+      <el-button type="primary" @click="submitHandler">保存</el-button>
+      <el-button @click="backHandler">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
+import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMerge, deepClone } from '@/utils'
 import { addDept, editDept } from '@/api/system-management/dept'
 
 export default {
+  mixins: [BaseEditForm],
   props: {
     optionType: {
       required: true,
@@ -66,7 +68,6 @@ export default {
         this.form.parentId = this.detail.id
       }
     }
-    // 使用$nextTick目的是为了防止clearValidate部分不生效（index 字段，可能是因为关键字的原因）
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })
@@ -97,35 +98,16 @@ export default {
           required: true, message: '请选择部门启用状态', trigger: 'blur'
         }],
         index: [{
-          required: true, message: '请输入部门编号', trigger: 'change'
+          required: true, message: '请输入部门编号', trigger: 'blur'
         }]
       }
     },
-    back() {
-      this.$emit('option-changed')
-    },
-    submit() {
-      this.$refs['form'].validate((valid) => {
-        if (this.optionType === 'edit') {
-          editDept(this.form).then(() => {
-            this.$message({
-              type: 'success',
-              message: '保存成功'
-            })
-            this.back()
-          })
-        } else if (this.optionType === 'add') {
-          addDept(this.form).then(() => {
-            this.$message({
-              type: 'success',
-              message: '保存成功'
-            })
-            this.back()
-          })
-        } else {
-          return false
-        }
-      })
+    executeSubmit() {
+      if (this.optionType === 'edit') {
+        editDept(this.form).then(this.submitSuccessHandler)
+      } else if (this.optionType === 'add') {
+        addDept(this.form).then(this.submitSuccessHandler)
+      }
     }
   }
 }

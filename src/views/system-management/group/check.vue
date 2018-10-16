@@ -4,21 +4,11 @@
     <el-collapse value="base-info" accordion>
       <el-collapse-item title="基本信息" name="base-info">
         <el-form :model="detail" :label-width="labelWidth">
-          <el-form-item label="ID">
-            <el-input :value="detail.id" disabled/>
-          </el-form-item>
-          <el-form-item label="启用状态">
-            <el-input :value="detail.state | translateState" disabled/>
-          </el-form-item>
-          <el-form-item label="分组编号">
-            <el-input :value="detail.index" disabled/>
-          </el-form-item>
-          <el-form-item label="分组名称">
-            <el-input :value="detail.name" disabled/>
-          </el-form-item>
-          <el-form-item label="分组备注">
-            <el-input :value="detail.remark" type="textarea" disabled/>
-          </el-form-item>
+          <input-item-view label="ID">{{ detail.id }}</input-item-view>
+          <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
+          <input-item-view label="分组编号">{{ detail.index }}</input-item-view>
+          <input-item-view label="分组名称">{{ detail.name }}</input-item-view>
+          <text-item-view label="分组备注">{{ detail.remark }}</text-item-view>
         </el-form>
       </el-collapse-item>
       <el-collapse-item title="审计信息" name="audit-info">
@@ -32,10 +22,8 @@
 </template>
 
 <script>
-import AuditInfo from '@/views/common/AuditInfo/index'
 
 export default {
-  components: { AuditInfo },
   props: {
     detail: {
       required: true,

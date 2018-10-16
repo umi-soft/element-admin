@@ -8,6 +8,9 @@ export function parseTime(time, format = '{y}-{m}-{d} {h}:{i}:{s}') {
   if (arguments.length === 0) { // 没传递参数
     return null
   }
+  if (!time) {
+    return null
+  }
   let date
   if (typeof time === 'object') {
     date = time
@@ -43,7 +46,9 @@ export function parseTime(time, format = '{y}-{m}-{d} {h}:{i}:{s}') {
  * @author hujie@mail.taiji.com.cn
  */
 export function formatTime(time, format) {
-  time = +time * 1000
+  if (time.toString().length !== 13) {
+    time = time * 1000
+  }
   const d = new Date(time)
   const now = Date.now()
 
@@ -213,6 +218,16 @@ export function fieldQueryLike(array, query) {
       return new RegExp(query[key] + '').test(item[key])
     })
   })
+}
+
+/**
+ * @param array 数组
+ * @param sort 仅仅支持非对象类型的字段，反之报错
+ * @param isDesc  是否desc排序
+ * @returns {*}
+ */
+export function sortArray(array, sort, isDesc) {
+  return array.sort((a, b) => { return isDesc && a[sort] - b[sort] })
 }
 
 /**

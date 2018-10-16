@@ -1,17 +1,9 @@
 <template>
   <el-form :model="detail" :label-width="labelWidth" :size="size" :inline="inline">
-    <el-form-item label="创建人">
-      <el-input :value="detail.createdBy" disabled/>
-    </el-form-item>
-    <el-form-item label="创建时间">
-      <el-input :value="detail.createdDate | parseTime" disabled/>
-    </el-form-item>
-    <el-form-item label="最后修改人">
-      <el-input :value="detail.modifiedBy" disabled/>
-    </el-form-item>
-    <el-form-item label="最后修改时间">
-      <el-input :value="detail.modifiedDate | parseTime" disabled/>
-    </el-form-item>
+    <input-item-view label="创建人">{{ detail.createdBy }}</input-item-view>
+    <input-item-view label="创建时间">{{ detail.createdDate | parseTime }}</input-item-view>
+    <input-item-view label="最后修改人">{{ detail.modifiedBy }}</input-item-view>
+    <input-item-view label="最后修改时间">{{ detail.modifiedDate | parseTime }}</input-item-view>
   </el-form>
 </template>
 

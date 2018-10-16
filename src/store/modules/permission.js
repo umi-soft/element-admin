@@ -1,6 +1,9 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
 // import { deepClone } from '@/utils'
 
+// 将未知路由归置到404页面
+asyncRouterMap.push({ path: '*', redirect: '/404', hidden: true })
+
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param roles 用户的角色列表

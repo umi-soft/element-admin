@@ -14,7 +14,7 @@ const tagsView = {
     },
     ADD_CACHED_VIEW: (state, view) => {
       if (state.cachedViews.includes(view.name)) return
-      if (!view.meta.noCache) {
+      if (view.meta.cacheAble) {
         state.cachedViews.push(view.name)
       }
     },
@@ -36,7 +36,6 @@ const tagsView = {
         }
       }
     },
-
     DEL_OTHERS_VISITED_VIEWS: (state, view) => {
       for (const [i, v] of state.visitedViews.entries()) {
         if (v.path === view.path) {
@@ -54,7 +53,6 @@ const tagsView = {
         }
       }
     },
-
     DEL_ALL_VISITED_VIEWS: state => {
       state.visitedViews = []
     },
