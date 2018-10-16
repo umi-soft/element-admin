@@ -64,7 +64,7 @@ export default {
       this.$refs.tree.filter(filter)
     }
   },
-  mounted() {
+  activated() {
     this.initMenus()
   },
   methods: {

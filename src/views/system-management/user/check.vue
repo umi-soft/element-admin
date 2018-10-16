@@ -4,49 +4,20 @@
     <el-collapse value="base-info" accordion>
       <el-collapse-item title="基本信息" name="base-info">
         <el-form :model="detail" :label-width="labelWidth">
-          <el-form-item label="ID">
-            <el-input :value="detail.id" disabled/>
-          </el-form-item>
-          <el-form-item label="启用状态">
-            <el-input :value="detail.state | translateState" disabled/>
-          </el-form-item>
-          <el-form-item label="用户编号">
-            <el-input :value="detail.index" disabled/>
-          </el-form-item>
-          <el-form-item label="登录ID" prop="loginName">
-            <el-input v-model="detail.loginName" disabled/>
-          </el-form-item>
-          <el-form-item label="用户姓名" prop="name">
-            <el-input v-model="detail.name" disabled/>
-          </el-form-item>
-          <el-form-item label="昵称" prop="nickName">
-            <el-input v-model="detail.nickName" disabled/>
-          </el-form-item>
-          <el-form-item label="证件号码" prop="idNumber">
-            <el-input v-model="detail.idNumber" disabled/>
-          </el-form-item>
-          <el-form-item label="性别" prop="gender">
-            <el-radio v-model="detail.gender" label="1" disabled>男</el-radio>
-            <el-radio v-model="detail.gender" label="0" disabled>女</el-radio>
-          </el-form-item>
-          <el-form-item label="生日" prop="birthday">
-            <el-input v-model="detail.birthday" disabled/>
-          </el-form-item>
-          <el-form-item label="电话" prop="phone">
-            <el-input v-model="detail.phone" disabled/>
-          </el-form-item>
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="detail.email" disabled/>
-          </el-form-item>
-          <el-form-item label="住址" prop="address">
-            <el-input v-model="detail.address" disabled/>
-          </el-form-item>
-          <el-form-item label="标签" prop="tag" placeholder="支持英文逗号隔开">
-            <el-input v-model="detail.tag" disabled/>
-          </el-form-item>
-          <el-form-item label="用户备注">
-            <el-input :value="detail.remark" type="textarea" disabled/>
-          </el-form-item>
+          <input-item-view label="ID">{{ detail.id }}</input-item-view>
+          <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
+          <input-item-view label="用户编号">{{ detail.index }}</input-item-view>
+          <input-item-view label="登录ID">{{ detail.loginName }}</input-item-view>
+          <input-item-view label="用户姓名">{{ detail.name }}</input-item-view>
+          <input-item-view label="昵称">{{ detail.nickName }}</input-item-view>
+          <input-item-view label="证件号码">{{ detail.idNumber }}</input-item-view>
+          <input-item-view label="性别">{{ detail.gender }}</input-item-view>
+          <input-item-view label="生日">{{ detail.birthday }}</input-item-view>
+          <input-item-view label="电话">{{ detail.phone }}</input-item-view>
+          <input-item-view label="邮箱">{{ detail.email }}</input-item-view>
+          <input-item-view label="住址">{{ detail.address }}</input-item-view>
+          <input-item-view label="标签">{{ detail.tag }}</input-item-view>
+          <text-item-view label="用户备注">{{ detail.remark }}</text-item-view>
         </el-form>
       </el-collapse-item>
       <el-collapse-item title="肖像" name="user-photo">
