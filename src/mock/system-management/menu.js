@@ -51,6 +51,7 @@ export default {
       data: rows
     }
   },
+
   check: config => {
     console.log(config)
     return {
@@ -59,6 +60,7 @@ export default {
       data: {}
     }
   },
+
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)

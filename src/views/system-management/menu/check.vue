@@ -16,7 +16,7 @@
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
       <el-collapse-item title="菜单角色信息" name="menu-role">
-        等着吧，组件没想好怎么抽象
+
       </el-collapse-item>
     </el-collapse>
   </div>
