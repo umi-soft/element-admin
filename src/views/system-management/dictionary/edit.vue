@@ -10,8 +10,8 @@
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
     </el-form-item>
     <el-form-item label="字典类型" prop="type">
-      <el-select v-model="form.type" :remote-method="queryAllDictionaryType" :loading="loading" filterable remote reserve-keyword placeholder="请输入字典关键词">
-        <el-option v-for="item in list" :key="item.id" :label="item.name" :value="item.id"/>
+      <el-select v-model="form.type" :remote-method="queryAllDictionaryType" :loading="loading" filterable clearable remote reserve-keyword placeholder="请输入字典关键词进行搜索">
+        <el-option v-for="(item,index) in list" :key="index" :label="item.name" :value="item.id"/>
       </el-select>
     </el-form-item>
     <el-form-item label="字典名称" prop="name">
@@ -141,6 +141,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .el-select {
+    width: 100%;
+  }
 </style>
