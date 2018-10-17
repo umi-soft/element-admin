@@ -60,8 +60,12 @@ Mock.mock(/\/system\/dictionary\/edit/, 'post', dictionaryAPI.edit)
 Mock.mock(/\/system\/dictionary\/del/, 'get', dictionaryAPI.del)
 
 Mock.mock(/\/system\/menu\/queryAll/, 'post', menuAPI.queryAll)
-Mock.mock(/\/system\/menu\/check/, 'post', menuAPI.check)
 Mock.mock(/\/system\/menu\/edit/, 'post', menuAPI.edit)
 Mock.mock(/\/system\/menu\/sync/, 'post', menuAPI.sync)
+Mock.mock(/\/system\/menu\/query-urls/, 'get', menuAPI.queryMenuUrls)
+Mock.mock(/\/system\/menu\/add-url/, 'post', menuAPI.addMenuUrl)
+Mock.mock(/\/system\/menu\/del-url/, 'post', menuAPI.delMenuUrl)
+Mock.mock(/\/system\/menu\/query-roles/, 'get', menuAPI.queryMenuRoles)
+Mock.mock(/\/system\/menu\/del-role/, 'post', menuAPI.delMenuRole)
 
 export default Mock

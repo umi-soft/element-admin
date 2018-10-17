@@ -10,9 +10,9 @@
         菜单树列表
         <template slot="button">
           <el-button-group>
-            <el-button v-if="selected" type="primary" @click="$emit('option-changed','check', selected)">查看</el-button>
+            <el-button v-if="selected && !needSync" type="primary" @click="$emit('option-changed','check', selected)">查看</el-button>
             <el-button v-if="needSync" type="primary" @click="syncMenus">同步</el-button>
-            <el-button v-if="selected" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
+            <el-button v-if="selected && !needSync" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
           </el-button-group>
         </template>
       </button-right>
@@ -76,6 +76,14 @@ export default {
           menusTree.push(this.createMenu(router, null))
         })
         this.menusTree = menusTree
+        if (this.needSync) {
+          this.$notify({
+            title: '提示',
+            type: 'warning',
+            message: '检测到您需要同步本地菜单信息树至服务端',
+            duration: 0
+          })
+        }
       })
     },
     createMenu(router, parentId) {

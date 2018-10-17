@@ -16,7 +16,7 @@
       <el-input v-model="form.remark" type="textarea"/>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitHandler">保存</el-button>
+      <el-button type="primary" @click="submitHandler('form')">保存</el-button>
       <el-button @click="backHandler">取消</el-button>
     </el-form-item>
   </el-form>
@@ -88,7 +88,7 @@ export default {
         }]
       }
     },
-    executeSubmit() {
+    customSubmitHandler() {
       if (this.optionType === 'edit') {
         editGroup(this.form).then(this.submitSuccessHandler)
       } else if (this.optionType === 'add') {

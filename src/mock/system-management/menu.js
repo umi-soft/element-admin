@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
-import { deepMerge } from '@/utils'
+import { deepMerge, param2Obj } from '@/utils'
 import { asyncMenuMap } from '@/router'
+import { mockConfig as roleMockConfig } from './role'
 
 // const mockConfig = {
 //   id: '',
@@ -42,6 +43,20 @@ function createMenu(router, parentId, menus) {
 
 export const rows = []
 
+// const mockConfig = {
+//   menuId: '',
+//   url: ''
+// }
+export const menuUrls = []
+
+// const mockConfig = {
+//   menuId: '',
+//   roleId: ''
+// }
+export const menuRoles = []
+
+export const roles = []
+
 export default {
   queryAll: config => {
     console.log(config)
@@ -49,15 +64,6 @@ export default {
       code: 1,
       message: '操作成功',
       data: rows
-    }
-  },
-
-  check: config => {
-    console.log(config)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
     }
   },
 
@@ -81,5 +87,77 @@ export default {
       message: '操作成功',
       data: {}
     }
+  },
+
+  queryMenuUrls: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: menuUrls.filter(item => { return item.menuId === params.id })
+    }
+  },
+
+  addMenuUrl: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    menuUrls.push(params)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: {}
+    }
+  },
+
+  delMenuUrl: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    menuUrls.splice(menuUrls.findIndex(item => {
+      return item.menuId === params.menuId && item.url === params.url
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: {}
+    }
+  },
+
+  queryMenuRoles: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    if (menuRoles.findIndex(item => { return item.menuId === params.id }) === -1) {
+      // 生成几个role
+      for (let i = 0; i < 5; i++) {
+        const role = Mock.mock(roleMockConfig)
+        roles.push(role)
+        menuRoles.push({
+          menuId: params.id,
+          roleId: role.id
+        })
+      }
+    }
+    const menuRolesResult = menuRoles.filter(item => { return params.id === item.menuId })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: roles.filter(role => {
+        return menuRolesResult.findIndex(menuRole => { return role.id === menuRole.roleId }) !== -1
+      })
+    }
+  },
+
+  delMenuRole: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    menuRoles.splice(menuRoles.findIndex(item => {
+      return item.menuId === params.menuId && item.roleId === params.roleId
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: {}
+    }
   }
+
 }

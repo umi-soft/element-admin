@@ -11,14 +11,6 @@ export function queryAllMenus(data) {
   })
 }
 
-export function checkMenu(id) {
-  return request({
-    url: base_url + 'check',
-    method: 'get',
-    params: { id }
-  })
-}
-
 export function editMenu(data) {
   return request({
     url: base_url + 'edit',
@@ -36,10 +28,11 @@ export function syncMenus(data) {
 }
 
 // ####################################MenuURL中间表API####################################
-export function queryAllMenuUrl() {
+export function queryAllMenuUrl(params) {
   return request({
-    url: base_url + 'query-all-url',
-    method: 'get'
+    url: base_url + 'query-urls',
+    method: 'get',
+    params
   })
 }
 
@@ -60,18 +53,11 @@ export function delMenuUrl(data) {
 }
 
 // ####################################RoleMenu中间表API####################################
-export function queryAllMenuRole() {
+export function queryAllMenuRole(params) {
   return request({
-    url: base_url + 'query-all-role',
-    method: 'get'
-  })
-}
-
-export function addMenuRole(data) {
-  return request({
-    url: base_url + 'add-role',
-    method: 'post',
-    data
+    url: base_url + 'query-roles',
+    method: 'get',
+    params
   })
 }
 

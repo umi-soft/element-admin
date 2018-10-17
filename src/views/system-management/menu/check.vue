@@ -15,16 +15,39 @@
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
+      <el-collapse-item title="菜单URL信息" name="menu-url">
+        <el-col :span="24">
+          <el-table :data="menuUrls" border style="width: 100%">
+            <el-table-column prop="url" label="URL"/>
+          </el-table>
+        </el-col>
+      </el-collapse-item>
       <el-collapse-item title="菜单角色信息" name="menu-role">
-
+        <el-table :data="roles" border style="width: 100%">
+          <el-table-column prop="name" label="角色名称"/>
+          <el-table-column prop="createdDate" label="创建时间">
+            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column prop="modifiedDate" label="最后修改时间">
+            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column label="操作" width="100" align="center">
+            <template slot-scope="scope">
+              <el-button type="warning" @click="delMenuRoleHandler(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 
 <script>
+import * as menuAPI from '@/api/system-management/menu'
+import mixins from './mixins'
 
 export default {
+  mixins: [mixins],
   props: {
     detail: {
       required: true,
@@ -35,6 +58,22 @@ export default {
   data() {
     return {
       labelWidth: '200px'
+    }
+  },
+  activated() {
+    this.queryMenuUrls()
+    this.queryMenuRoles()
+  },
+  methods: {
+    queryMenuUrls() {
+      this.menuUrls = []
+      const params = { id: this.detail.id }
+      menuAPI.queryAllMenuUrl(params).then(menuUrls => { this.menuUrls = menuUrls })
+    },
+    queryMenuRoles() {
+      this.roles = []
+      const params = { id: this.detail.id }
+      menuAPI.queryAllMenuRole(params).then(roles => { this.roles = roles })
     }
   }
 }
