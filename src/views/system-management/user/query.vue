@@ -36,19 +36,17 @@
     </el-col>
     <el-col :span="24">
       <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler">
-        <el-table-column prop="loginName" label="登录ID" width="120" sortable="custom"/>
-        <el-table-column prop="name" label="姓名" width="120" sortable="custom"/>
-        <el-table-column prop="gender" label="性别" width="80" sortable="custom">
+        <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable="custom" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="姓名" sortable="custom" align="center"/>
+        <el-table-column prop="gender" label="性别" width="100" sortable="custom" align="center">
           <template slot-scope="scope">{{ scope.row.gender | translateGender }}</template>
         </el-table-column>
-        <el-table-column prop="email" label="邮箱" width="200" sortable="custom"/>
-        <el-table-column prop="createdDate" label="创建时间">
+        <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱" sortable="custom" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="phone" label="电话" width="160" sortable="custom" align="center"/>
+        <el-table-column prop="createdDate" label="创建时间" width="180" sortable="custom" align="center">
           <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
         </el-table-column>
-        <el-table-column prop="modifiedDate" label="最后修改时间" sortable="custom">
-          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
-        </el-table-column>
-        <el-table-column prop="state" label="启用状态" width="100" sortable="custom">
+        <el-table-column prop="state" label="启用状态" width="100" sortable="custom" align="center">
           <template slot-scope="scope">
             <state :detail="scope.row"/>
           </template>

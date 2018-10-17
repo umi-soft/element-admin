@@ -37,17 +37,17 @@
     </el-col>
     <el-col :span="24">
       <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler">
-        <el-table-column prop="type" label="字典类型" width="200" sortable="custom"/>
-        <el-table-column prop="name" label="名称" width="200" sortable="custom"/>
-        <el-table-column prop="code" label="规则码" width="200" sortable="custom"/>
-        <el-table-column prop="index" label="编号" width="200" sortable="custom"/>
-        <el-table-column prop="createdDate" label="创建时间" sortable="custom">
+        <el-table-column :show-overflow-tooltip="true" prop="type" label="字典类型" sortable="custom"/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable="custom" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="code" label="规则码" width="120" sortable="custom" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="index" label="编号" width="80" sortable="custom" align="center"/>
+        <el-table-column prop="createdDate" label="创建时间" width="180" sortable="custom" align="center">
           <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
         </el-table-column>
-        <el-table-column prop="modifiedDate" label="最后修改时间" sortable="custom">
+        <el-table-column prop="modifiedDate" label="最后修改时间" width="180" sortable="custom" align="center">
           <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
         </el-table-column>
-        <el-table-column prop="state" label="启用状态" width="100" sortable="custom">
+        <el-table-column prop="state" label="启用状态" width="100" sortable="custom" align="center">
           <template slot-scope="scope">
             <state :detail="scope.row"/>
           </template>
