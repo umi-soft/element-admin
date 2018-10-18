@@ -17,15 +17,26 @@
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
       <el-collapse-item title="部门用户信息" name="dept-user">
-        等着吧，组件没想好怎么抽象
+        <el-table :data="users" border style="width: 100%">
+          <el-table-column type="index" width="100" align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="姓名" sortable align="center"/>
+          <el-table-column prop="gender" label="性别" width="100" sortable align="center">
+            <template slot-scope="scope">{{ scope.row.gender | translateGender }}</template>
+          </el-table-column>
+          <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱" sortable align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="phone" label="电话" width="160" sortable align="center"/>
+        </el-table>
       </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 
 <script>
+import mixins from './mixins'
 
 export default {
+  mixins: [mixins],
   props: {
     detail: {
       required: true,
@@ -35,8 +46,12 @@ export default {
   },
   data() {
     return {
-      labelWidth: '200px'
+      labelWidth: '200px',
+      users: []
     }
+  },
+  activated() {
+    this.queryAllUsers()
   }
 }
 </script>

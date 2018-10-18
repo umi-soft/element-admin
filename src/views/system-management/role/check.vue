@@ -85,4 +85,43 @@ export default {
   .el-button {
     margin-bottom: 10px;
   }
+
+  /deep/ .el-tree {
+    border-bottom: 1px solid #ebeef5;
+
+    .el-tree-node__content {
+      border-top: 1px solid #ebeef5;
+      border-left: 1px solid #ebeef5;
+      border-right: 1px solid #ebeef5;
+      min-height: 40px;
+    }
+  }
+
+  .custom-tree-node {
+    width: 100%;
+
+    .name {
+      float: left;
+      min-height: 40px;
+      line-height: 40px;
+    }
+
+    .remark {
+      float: right;
+      width: 300px;
+      min-height: 40px;
+      line-height: 40px;
+      border-left: 1px solid #ebeef5;
+      text-align: center;
+    }
+
+    .icon {
+      float: right;
+      width: 100px;
+      min-height: 40px;
+      line-height: 40px;
+      border-left: 1px solid #ebeef5;
+      text-align: center;
+    }
+  }
 </style>

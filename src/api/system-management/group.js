@@ -52,16 +52,16 @@ export function delGroup(id) {
 
 export function queryAllGroupUsers(id) {
   return request({
-    url: base_url + 'user',
+    url: base_url + 'all-users',
     method: 'get',
     params: { id }
   })
 }
 
-export function queryAllGroupRoles(id) {
+export function delGroupUser(data) {
   return request({
-    url: base_url + 'role',
-    method: 'get',
-    params: { id }
+    url: base_url + 'del-user',
+    method: 'post',
+    data
   })
 }
