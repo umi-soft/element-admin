@@ -50,9 +50,17 @@ export function delDept(id) {
   })
 }
 
-export function queryPageDeptUsers(data) {
+export function queryAllDeptUsers(id) {
   return request({
-    url: base_url + 'user',
+    url: base_url + 'all-users',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function delDeptUser(data) {
+  return request({
+    url: base_url + 'del-user',
     method: 'post',
     data
   })

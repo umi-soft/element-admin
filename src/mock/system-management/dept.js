@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import Utils from '../utils'
+import { mockConfig as userMockConfig } from './user'
 
 const mockConfig = {
   'id|1': Utils.id,
@@ -23,6 +24,15 @@ export const rowsTree = []
 
 export const rows = []
 rows.push(row)
+
+/**
+ * {
+ *  userId: '',
+ *  deptId: ''
+ * }
+ */
+export const deptUsers = []
+export const users = []
 
 let length = Mock.mock('@integer(10, 40)')
 for (let i = 0; i < length; i++) {
@@ -88,12 +98,14 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = deepMerge(deepClone(params), Mock.mock(mockConfig))
+    const row = Mock.mock(mockConfig)
+    params.id = row.id
+    deepMerge(row, params)
     rows.push(row)
     return {
       code: 1,
       message: '操作成功',
-      data: {}
+      data: row
     }
   },
   edit: config => {
@@ -115,6 +127,41 @@ export default {
       code: 1,
       message: '操作成功',
       data: {}
+    }
+  },
+  queryAllDeptUsers: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    if (deptUsers.findIndex(item => { return item.deptId === params.id }) === -1) {
+      // 生成几个user
+      for (let i = 0; i < 20; i++) {
+        const user = Mock.mock(userMockConfig)
+        users.push(user)
+        deptUsers.push({
+          userId: user.id,
+          deptId: params.id
+        })
+      }
+    }
+    const deptUsersResult = deptUsers.filter(item => { return item.deptId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: users.filter(user => {
+        return deptUsersResult.findIndex(deptUser => { return user.id === deptUser.userId }) !== -1
+      })
+    }
+  },
+  delDeptUser: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    deptUsers.splice(deptUsers.findIndex(item => {
+      return item.userId === params.userId && item.deptId === params.deptId
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: ''
     }
   }
 }
