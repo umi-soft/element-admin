@@ -28,22 +28,51 @@
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
-      <el-collapse-item title="用户部门" name="user-dept">
-        等着吧，组件没想好怎么抽象
-      </el-collapse-item>
       <el-collapse-item title="用户分组" name="user-group">
-        等着吧，组件没想好怎么抽象
+        <el-table :data="groups" border style="width: 100%">
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+          <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+          </el-table-column>
+        </el-table>
+      </el-collapse-item>
+      <el-collapse-item title="用户部门" name="user-dept">
+        <el-table :data="depts" border style="width: 100%">
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+          <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+          </el-table-column>
+        </el-table>
       </el-collapse-item>
       <el-collapse-item title="用户角色" name="user-role">
-        等着吧，组件没想好怎么抽象
+        <el-table :data="roles" border style="width: 100%">
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+          <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+          </el-table-column>
+        </el-table>
       </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 
 <script>
+import mixins from './mixins'
 
 export default {
+  mixins: [mixins],
   props: {
     detail: {
       required: true,
@@ -53,8 +82,16 @@ export default {
   },
   data() {
     return {
-      labelWidth: '200px'
+      labelWidth: '200px',
+      depts: [],
+      groups: [],
+      roles: []
     }
+  },
+  activated() {
+    this.queryAllUserDepts()
+    this.queryAllUserGroups()
+    this.queryAllUserRoles()
   }
 }
 </script>

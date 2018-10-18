@@ -2,6 +2,10 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import Utils from '../utils'
 
+import { mockConfig as roleMockConfig, userRoles } from './role'
+import { mockConfig as groupMockConfig, groupUsers } from './group'
+import { mockConfig as deptMockConfig, deptUsers } from './dept'
+
 export const mockConfig = {
   'id|1': Utils.id, // 主键
   'flag|1': Utils.flag, // 是否删除
@@ -31,6 +35,10 @@ export const row = Mock.mock(mockConfig)
 
 export const rows = []
 rows.push(row)
+
+export const roles = []
+export const groups = []
+export const depts = []
 
 for (let i = 0; i < 300; i++) {
   rows.push(Mock.mock(mockConfig))
@@ -89,12 +97,14 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = deepMerge(deepClone(params), Mock.mock(mockConfig))
+    const row = Mock.mock(mockConfig)
+    params.id = row.id
+    deepMerge(row, params)
     rows.push(row)
     return {
       code: 1,
       message: '操作成功',
-      data: {}
+      data: row
     }
   },
   edit: config => {
@@ -116,6 +126,144 @@ export default {
       code: 1,
       message: '操作成功',
       data: {}
+    }
+  },
+
+  queryAllUserDepts: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    if (deptUsers.findIndex(item => { return item.userId === params.id }) === -1) {
+      // 生成几个dept
+      for (let i = 0; i < 3; i++) {
+        const dept = Mock.mock(deptMockConfig)
+        depts.push(dept)
+        deptUsers.push({
+          userId: params.id,
+          deptId: dept.id
+        })
+      }
+    }
+    const deptUsersResult = deptUsers.filter(item => { return item.userId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: depts.filter(dept => {
+        return deptUsersResult.findIndex(deptUser => { return dept.id === deptUser.deptId }) !== -1
+      })
+    }
+  },
+  addUserDept: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    deptUsers.push(params)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: params
+    }
+  },
+  delUserDept: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    deptUsers.splice(deptUsers.findIndex(item => {
+      return item.userId === params.userId && item.deptId === params.deptId
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: ''
+    }
+  },
+
+  queryAllUserGroups: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    if (groupUsers.findIndex(item => { return item.userId === params.id }) === -1) {
+      // 生成几个group
+      for (let i = 0; i < 3; i++) {
+        const group = Mock.mock(groupMockConfig)
+        groups.push(group)
+        groupUsers.push({
+          userId: params.id,
+          groupId: group.id
+        })
+      }
+    }
+    const groupUsersResult = groupUsers.filter(item => { return item.userId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: groups.filter(group => {
+        return groupUsersResult.findIndex(groupUser => { return group.id === groupUser.groupId }) !== -1
+      })
+    }
+  },
+  addUserGroup: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    groupUsers.push(params)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: params
+    }
+  },
+  delUserGroup: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    groupUsers.splice(groupUsers.findIndex(item => {
+      return item.userId === params.userId && item.groupId === params.groupId
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: ''
+    }
+  },
+
+  queryAllUserRoles: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    if (userRoles.findIndex(item => { return item.userId === params.id }) === -1) {
+      // 生成几个role
+      for (let i = 0; i < 3; i++) {
+        const role = Mock.mock(roleMockConfig)
+        roles.push(role)
+        userRoles.push({
+          userId: params.id,
+          roleId: role.id
+        })
+      }
+    }
+    const userRolesResult = userRoles.filter(item => { return item.userId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: roles.filter(role => {
+        return userRolesResult.findIndex(userRole => { return role.id === userRole.roleId }) !== -1
+      })
+    }
+  },
+  addUserRole: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    userRoles.push(params)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: params
+    }
+  },
+  delUserRole: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    userRoles.splice(userRoles.findIndex(item => {
+      return item.userId === params.userId && item.roleId === params.roleId
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: ''
     }
   }
 }

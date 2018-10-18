@@ -3,7 +3,7 @@ import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/ut
 import Utils from '../utils'
 import { mockConfig as userMockConfig } from './user'
 
-const mockConfig = {
+export const mockConfig = {
   'id|1': Utils.id,
   'parentId|1': Utils.id, // 父级机构
   'flag|1': Utils.flag, // 是否删除

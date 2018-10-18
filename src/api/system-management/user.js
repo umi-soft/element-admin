@@ -42,26 +42,74 @@ export function delUser(id) {
   })
 }
 
-export function queryAllUserRoles(id) {
+export function queryAllUserRoles(params) {
   return request({
-    url: base_url + 'role',
+    url: base_url + 'all-roles',
     method: 'get',
-    params: { id }
+    params: params
   })
 }
 
-export function queryAllUserDepts(id) {
+export function addUserRole(data) {
   return request({
-    url: base_url + 'dept',
-    method: 'get',
-    params: { id }
+    url: base_url + 'add-role',
+    method: 'post',
+    data
   })
 }
 
-export function queryAllUserGroups(id) {
+export function delUserRole(data) {
   return request({
-    url: base_url + 'group',
+    url: base_url + 'del-role',
+    method: 'post',
+    data
+  })
+}
+
+export function queryAllUserDepts(params) {
+  return request({
+    url: base_url + 'all-depts',
     method: 'get',
-    params: { id }
+    params: params
+  })
+}
+
+export function addUserDept(data) {
+  return request({
+    url: base_url + 'add-dept',
+    method: 'post',
+    data
+  })
+}
+
+export function delUserDept(data) {
+  return request({
+    url: base_url + 'del-dept',
+    method: 'post',
+    data
+  })
+}
+
+export function queryAllUserGroups(params) {
+  return request({
+    url: base_url + 'all-groups',
+    method: 'get',
+    params: params
+  })
+}
+
+export function addUserGroup(data) {
+  return request({
+    url: base_url + 'add-group',
+    method: 'post',
+    data
+  })
+}
+
+export function delUserGroup(data) {
+  return request({
+    url: base_url + 'del-group',
+    method: 'post',
+    data
   })
 }
