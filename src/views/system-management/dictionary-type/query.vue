@@ -59,7 +59,7 @@
 <script>
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
-import { queryPageDictionaries, delDictionary } from '@/api/system-management/dictionary'
+import * as DictionaryAPI from '@/api/system-management/dictionary'
 
 export default {
   mixins: [BaseQueryPageForm],
@@ -81,12 +81,12 @@ export default {
       })
     },
     executeQueryPage() {
-      queryPageDictionaries(this.createQueryParams()).then(data => {
+      DictionaryAPI.queryPageDictionaries(this.createQueryParams()).then(data => {
         this.queryResultHandler(data)
       })
     },
     customDelHandler() {
-      delDictionary(this.selected.id).then(() => {
+      DictionaryAPI.delDictionary(this.selected.id).then(() => {
         this.queryHandler()
       })
     }

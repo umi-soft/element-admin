@@ -60,7 +60,7 @@
 <script>
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
-import { queryPageUsers, delUser } from '@/api/system-management/user'
+import * as UserAPI from '@/api/system-management/user'
 
 export default {
   mixins: [BaseQueryPageForm],
@@ -82,12 +82,12 @@ export default {
       })
     },
     executeQueryPage() {
-      queryPageUsers(this.createQueryParams()).then(data => {
+      UserAPI.queryPageUsers(this.createQueryParams()).then(data => {
         this.queryResultHandler(data)
       })
     },
     customDelHandler() {
-      delUser(this.selected.id).then(() => {
+      UserAPI.delUser(this.selected.id).then(() => {
         this.queryHandler()
       })
     }

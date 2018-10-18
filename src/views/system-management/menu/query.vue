@@ -46,7 +46,7 @@
 import Abbreviation from '@/components/Abbreviation/index'
 import SvgIcon from '@/components/SvgIcon/index'
 import { asyncMenuMap } from '@/router'
-import { queryAllMenus, syncMenus, createMenuTree, syncMenuVoter } from '@/api/system-management/menu'
+import * as MenuAPI from '@/api/system-management/menu'
 
 export default {
   components: { Abbreviation, SvgIcon },
@@ -70,15 +70,15 @@ export default {
   },
   methods: {
     initMenus() {
-      queryAllMenus({}).then(data => {
+      MenuAPI.queryAllMenus({}).then(data => {
         this.allMenus = data
         const menusTree = []
         asyncMenuMap.forEach(router => {
-          menusTree.push(createMenuTree(this.allMenus, router, null))
+          menusTree.push(MenuAPI.createMenuTree(this.allMenus, router, null))
         })
         this.menusTree = menusTree
         this.needSync = this.menusTree.some(menu => {
-          return syncMenuVoter(this.allMenus, menu)
+          return MenuAPI.syncMenuVoter(this.allMenus, menu)
         })
         if (this.needSync) {
           this.$notify({
@@ -96,7 +96,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        syncMenus(this.menusTree).then(data => {
+        MenuAPI.syncMenus(this.menusTree).then(data => {
           this.needSync = false
           this.initMenus()
           this.$message({

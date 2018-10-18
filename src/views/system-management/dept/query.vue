@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { queryAllDepts, delDept } from '@/api/system-management/dept'
+import * as DeptAPI from '@/api/system-management/dept'
 
 export default {
   data() {
@@ -68,12 +68,12 @@ export default {
   },
   methods: {
     queryAllHandler() {
-      queryAllDepts({}).then(data => {
+      DeptAPI.queryAllDepts({}).then(data => {
         this.nodes = data
       })
     },
     delHandler() {
-      delDept(this.selected.id).then(() => {
+      DeptAPI.delDept(this.selected.id).then(() => {
         this.queryAllHandler()
       })
     },

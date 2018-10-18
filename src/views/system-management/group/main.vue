@@ -1,7 +1,7 @@
 <template>
   <transition name="fade-transform" mode="out-in">
     <keep-alive>
-      <component :is="optionType" :option-type="optionType" :detail="detail" @option-changed="optionChangeHandler"/>
+      <component :is="optionType" :detail="detail" @option-changed="optionChangeHandler"/>
     </keep-alive>
   </transition>
 </template>

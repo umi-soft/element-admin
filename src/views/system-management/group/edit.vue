@@ -57,10 +57,6 @@ import mixins from './mixins'
 export default {
   mixins: [BaseEditForm, mixins],
   props: {
-    optionType: {
-      required: true,
-      type: String
-    },
     detail: {
       required: false,
       type: Object,

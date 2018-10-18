@@ -22,16 +22,12 @@
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMerge } from '@/utils'
-import { addRole } from '@/api/system-management/role'
+import * as RoleAPI from '@/api/system-management/role'
 import mixins from './mixins'
 
 export default {
   mixins: [BaseEditForm, mixins],
   props: {
-    optionType: {
-      required: true,
-      type: String
-    },
     detail: {
       required: false,
       type: Object,
@@ -64,7 +60,7 @@ export default {
       })
     },
     customSubmitHandler() {
-      addRole(this.form).then(data => {
+      RoleAPI.addRole(this.form).then(data => {
         this.submitSuccessHandler(data)
       })
     },

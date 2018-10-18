@@ -31,7 +31,7 @@
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMerge, deepClone } from '@/utils'
-import { addDictionary, editDictionary } from '@/api/system-management/dictionary'
+import * as DictionaryAPI from '@/api/system-management/dictionary'
 
 export default {
   mixins: [BaseEditForm],
@@ -106,9 +106,9 @@ export default {
     },
     customSubmitHandler() {
       if (this.optionType === 'edit') {
-        editDictionary(this.form).then(this.submitSuccessHandler)
+        DictionaryAPI.editDictionary(this.form).then(this.submitSuccessHandler)
       } else if (this.optionType === 'add') {
-        addDictionary(this.form).then(this.submitSuccessHandler)
+        DictionaryAPI.addDictionary(this.form).then(this.submitSuccessHandler)
       }
     }
   }

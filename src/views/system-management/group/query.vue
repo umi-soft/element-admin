@@ -57,7 +57,7 @@
 <script>
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
-import { queryPageGroups, delGroup } from '@/api/system-management/group'
+import * as GroupAPI from '@/api/system-management/group'
 
 export default {
   mixins: [BaseQueryPageForm],
@@ -79,12 +79,12 @@ export default {
       })
     },
     executeQueryPage() {
-      queryPageGroups(this.createQueryParams()).then(data => {
+      GroupAPI.queryPageGroups(this.createQueryParams()).then(data => {
         this.queryResultHandler(data)
       })
     },
     customDelHandler() {
-      delGroup(this.selected.id).then(() => {
+      GroupAPI.delGroup(this.selected.id).then(() => {
         this.queryHandler()
       })
     }

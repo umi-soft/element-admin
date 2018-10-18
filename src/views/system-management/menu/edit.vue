@@ -80,16 +80,12 @@
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMerge } from '@/utils'
-import * as menuAPI from '@/api/system-management/menu'
+import * as MenuAPI from '@/api/system-management/menu'
 import mixins from './mixins'
 
 export default {
   mixins: [BaseEditForm, mixins],
   props: {
-    optionType: {
-      required: true,
-      type: String
-    },
     detail: {
       required: false,
       type: Object,
@@ -143,7 +139,7 @@ export default {
       }
     },
     customSubmitHandler() {
-      menuAPI.editMenu(this.form).then(this.submitSuccessHandler)
+      MenuAPI.editMenu(this.form).then(this.submitSuccessHandler)
     },
     customSubmitSuccessHandler() {
       // 便于继续编辑url,此处不返回
@@ -156,7 +152,7 @@ export default {
             menuId: this.detail.id,
             url: this.addUrl.url
           }
-          menuAPI.addMenuUrl(params).then(data => {
+          MenuAPI.addMenuUrl(params).then(data => {
             this.queryMenuUrls()
             this.addUrl.show = false
           })
@@ -164,7 +160,7 @@ export default {
       })
     },
     delMenuUrlHandler(menuUrl) {
-      menuAPI.delMenuUrl(menuUrl).then(data => {
+      MenuAPI.delMenuUrl(menuUrl).then(data => {
         this.queryMenuUrls()
       })
     },
@@ -173,7 +169,7 @@ export default {
         menuId: this.detail.id,
         roleId: id
       }
-      menuAPI.delMenuRole(params).then(data => {
+      MenuAPI.delMenuRole(params).then(data => {
         this.queryMenuRoles()
       })
     }

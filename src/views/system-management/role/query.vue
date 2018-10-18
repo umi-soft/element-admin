@@ -57,7 +57,7 @@
 <script>
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
-import { queryPageRoles, delRole } from '@/api/system-management/role'
+import * as RoleAPI from '@/api/system-management/role'
 
 export default {
   mixins: [BaseQueryPageForm],
@@ -79,12 +79,12 @@ export default {
       })
     },
     executeQueryPage() {
-      queryPageRoles(this.createQueryParams()).then(data => {
+      RoleAPI.queryPageRoles(this.createQueryParams()).then(data => {
         this.queryResultHandler(data)
       })
     },
     customDelHandler() {
-      delRole(this.selected.id).then(() => {
+      RoleAPI.delRole(this.selected.id).then(() => {
         this.queryHandler()
       })
     }

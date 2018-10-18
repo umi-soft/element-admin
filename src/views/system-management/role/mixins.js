@@ -1,5 +1,5 @@
 import * as RoleAPI from '@/api/system-management/role'
-import { queryAllMenus, createMenuTree, syncMenuVoter } from '@/api/system-management/menu'
+import * as MenuAPI from '@/api/system-management/menu'
 import { asyncMenuMap } from '@/router'
 
 export default {
@@ -30,14 +30,14 @@ export default {
       return data.name.indexOf(value) !== -1
     },
     initMenus() {
-      queryAllMenus({}).then(allMenus => {
+      MenuAPI.queryAllMenus({}).then(allMenus => {
         const menusTree = []
         asyncMenuMap.forEach(router => {
-          menusTree.push(createMenuTree(allMenus, router, null))
+          menusTree.push(MenuAPI.createMenuTree(allMenus, router, null))
         })
         this.menusTree = menusTree
         const needSync = this.menusTree.some(menu => {
-          return syncMenuVoter(allMenus, menu)
+          return MenuAPI.syncMenuVoter(allMenus, menu)
         })
         if (needSync) {
           this.$notify({

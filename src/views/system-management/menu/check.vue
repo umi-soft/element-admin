@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import * as menuAPI from '@/api/system-management/menu'
+import * as MenuAPI from '@/api/system-management/menu'
 import mixins from './mixins'
 
 export default {
@@ -63,12 +63,12 @@ export default {
     queryMenuUrls() {
       this.menuUrls = []
       const params = { id: this.detail.id }
-      menuAPI.queryAllMenuUrl(params).then(menuUrls => { this.menuUrls = menuUrls })
+      MenuAPI.queryAllMenuUrl(params).then(menuUrls => { this.menuUrls = menuUrls })
     },
     queryMenuRoles() {
       this.roles = []
       const params = { id: this.detail.id }
-      menuAPI.queryAllMenuRole(params).then(roles => { this.roles = roles })
+      MenuAPI.queryAllMenuRole(params).then(roles => { this.roles = roles })
     }
   }
 }
