@@ -42,6 +42,10 @@ Mock.mock(/\/system\/role\/check/, 'post', roleAPI.check)
 Mock.mock(/\/system\/role\/add/, 'post', roleAPI.add)
 Mock.mock(/\/system\/role\/edit/, 'post', roleAPI.edit)
 Mock.mock(/\/system\/role\/del/, 'get', roleAPI.del)
+Mock.mock(/\/system\/role\/all-menus/, 'get', roleAPI.queryAllRoleMenus)
+Mock.mock(/\/system\/role\/reset-menus/, 'post', roleAPI.resetRoleMenus)
+Mock.mock(/\/system\/role\/all-users/, 'get', roleAPI.queryAllRoleUsers)
+Mock.mock(/\/system\/role\/del-user/, 'post', roleAPI.delRoleUser)
 
 //  系统设置相关---部门
 Mock.mock(/\/system\/dept\/queryAll/, 'post', deptAPI.queryAll)

@@ -42,26 +42,34 @@ export function delRole(id) {
   })
 }
 
-export function queryAllRoleGroups(id) {
+export function queryAllRoleMenus(id) {
   return request({
-    url: base_url + 'group',
+    url: base_url + 'all-menus',
     method: 'get',
     params: { id }
+  })
+}
+
+export function resetRoleMenus(data) {
+  return request({
+    url: base_url + 'reset-menus',
+    method: 'post',
+    data
   })
 }
 
 export function queryAllRoleUsers(id) {
   return request({
-    url: base_url + 'user',
+    url: base_url + 'all-users',
     method: 'get',
     params: { id }
   })
 }
 
-export function queryAllRoleMenus(id) {
+export function delRoleUser(data) {
   return request({
-    url: base_url + 'menu',
-    method: 'get',
-    params: { id }
+    url: base_url + 'del-user',
+    method: 'post',
+    data
   })
 }

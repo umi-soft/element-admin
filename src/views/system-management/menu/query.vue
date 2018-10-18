@@ -31,7 +31,7 @@
             {{ data.name }}
           </div>
           <div class="remark">
-            <abbreviation :content="data.remark"/>
+            {{ data.remark }}
           </div>
           <div class="icon">
             <svg-icon :icon-class="data.icon"/>
@@ -46,7 +46,7 @@
 import Abbreviation from '@/components/Abbreviation/index'
 import SvgIcon from '@/components/SvgIcon/index'
 import { asyncMenuMap } from '@/router'
-import { queryAllMenus, syncMenus } from '@/api/system-management/menu'
+import { queryAllMenus, syncMenus, createMenuTree, syncMenuVoter } from '@/api/system-management/menu'
 
 export default {
   components: { Abbreviation, SvgIcon },
@@ -65,6 +65,7 @@ export default {
     }
   },
   activated() {
+    this.selected = null
     this.initMenus()
   },
   methods: {
@@ -73,9 +74,12 @@ export default {
         this.allMenus = data
         const menusTree = []
         asyncMenuMap.forEach(router => {
-          menusTree.push(this.createMenu(router, null))
+          menusTree.push(createMenuTree(this.allMenus, router, null))
         })
         this.menusTree = menusTree
+        this.needSync = this.menusTree.some(menu => {
+          return syncMenuVoter(this.allMenus, menu)
+        })
         if (this.needSync) {
           this.$notify({
             title: '提示',
@@ -85,48 +89,6 @@ export default {
           })
         }
       })
-    },
-    createMenu(router, parentId) {
-      const menu = {}
-      let remoteMenu = null
-      const remoteMenuIndex = this.allMenus.findIndex(item => { return item.id === router.name })
-      if (remoteMenuIndex === -1) { // 需要同步，本次构建从本地路由中构建
-        this.needSync = true
-        menu.id = router.name
-        menu.parentId = parentId
-        menu.flag = 1
-        menu.state = 0
-        menu.index = router.meta.index
-        menu.name = router.meta.title
-        menu.icon = router.meta.icon
-        menu.remark = null
-        menu.createdBy = null
-        menu.createdDate = null
-        menu.modifiedBy = null
-        menu.modifiedDate = null
-      } else { // 不需要同步，本次构建从远端服务器构建
-        remoteMenu = this.allMenus[remoteMenuIndex]
-        menu.id = remoteMenu.id
-        menu.parentId = parentId
-        menu.flag = 1
-        menu.state = 0
-        menu.index = remoteMenu.index
-        menu.name = remoteMenu.name
-        menu.icon = remoteMenu.icon
-        menu.remark = remoteMenu.remark
-        menu.createdBy = remoteMenu.createdBy
-        menu.createdDate = remoteMenu.createdDate
-        menu.modifiedBy = remoteMenu.modifiedBy
-        menu.modifiedDate = remoteMenu.modifiedDate
-      }
-
-      menu.children = []
-      if (router.children && router.children.length > 0) {
-        router.children.forEach(children => {
-          menu.children.push(this.createMenu(children, menu.id))
-        })
-      }
-      return menu
     },
     syncMenus() {
       this.$confirm('确定要同步吗?', '提示', {

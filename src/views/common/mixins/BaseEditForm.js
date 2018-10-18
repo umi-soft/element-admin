@@ -8,7 +8,6 @@ export default {
       }
     },
     submitHandler(form) {
-      console.log(form)
       this.$refs[form].validate((valid) => {
         if (!valid) return false
         this.$confirm('确定要保存吗?', '提示', {
@@ -23,16 +22,19 @@ export default {
         })
       })
     },
-    submitSuccessHandler() {
-      this.$message({
-        type: 'success',
-        message: '保存成功'
-      })
+    submitSuccessHandler(data) {
+      this.optionSuccessHandler()
       if (this.customSubmitSuccessHandler) {
-        this.customSubmitSuccessHandler()
+        this.customSubmitSuccessHandler(data)
       } else {
         this.backHandler()
       }
+    },
+    optionSuccessHandler() {
+      this.$message({
+        type: 'success',
+        message: '操作成功'
+      })
     }
   }
 }

@@ -1,6 +1,8 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import Utils from '../utils'
+import { roleMenus } from './menu'
+import { mockConfig as userMockConfig } from './user'
 
 export const mockConfig = {
   'id|1': Utils.id,
@@ -23,6 +25,15 @@ rows.push(row)
 for (let i = 0; i < 300; i++) {
   rows.push(Mock.mock(mockConfig))
 }
+/**
+ * {
+ *  userId: '',
+ *  roleId: ''
+ * }
+ */
+export const userRoles = []
+
+export const users = []
 
 export default {
   queryPage: config => {
@@ -77,12 +88,14 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = deepMerge(deepClone(params), Mock.mock(mockConfig))
+    const row = Mock.mock(mockConfig)
+    params.id = row.id
+    deepMerge(row, params)
     rows.push(row)
     return {
       code: 1,
       message: '操作成功',
-      data: {}
+      data: row
     }
   },
   edit: config => {
@@ -104,6 +117,82 @@ export default {
       code: 1,
       message: '操作成功',
       data: {}
+    }
+  },
+
+  // ###################################RoleMenu中间表操作MOCK#######################################
+  queryAllRoleMenus: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: roleMenus.filter(item => { return params.id === item.roleId })
+    }
+  },
+  /**
+   * {
+   *  roleId: '', //本次操作的roleId
+   *  menuIds: [] //新勾选的菜单IDs
+   * }
+   * @param config
+   * @returns {{code: number, message: string, data: ''}}
+   */
+  resetRoleMenus: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    roleMenus.forEach(roleMenu => {
+      roleMenus.splice(roleMenus.findIndex(item => {
+        return item.roleId === params.roleId
+      }), 1)
+    })
+    params.menuIds.forEach(menuId => {
+      roleMenus.push({
+        roleId: params.roleId,
+        menuId
+      })
+    })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: ''
+    }
+  },
+
+  queryAllRoleUsers: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    if (userRoles.findIndex(item => { return item.roleId === params.id }) === -1) {
+      // 生成几个user
+      for (let i = 0; i < 20; i++) {
+        const user = Mock.mock(userMockConfig)
+        users.push(user)
+        userRoles.push({
+          userId: user.id,
+          roleId: params.id
+        })
+      }
+    }
+    const userRolesResult = userRoles.filter(item => { return item.roleId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: users.filter(user => {
+        return userRolesResult.findIndex(userRole => { return user.id === userRole.userId }) !== -1
+      })
+    }
+  },
+
+  delRoleUser: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    userRoles.splice(userRoles.findIndex(item => {
+      return item.userId === params.userId && item.roleId === params.roleId
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: ''
     }
   }
 }

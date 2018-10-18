@@ -63,6 +63,7 @@ export default {
     }
   },
   activated() {
+    this.selected = null
     this.queryAllHandler()
   },
   methods: {

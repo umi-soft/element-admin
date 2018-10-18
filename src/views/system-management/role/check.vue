@@ -14,16 +14,49 @@
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
+      <el-collapse-item title="角色菜单信息" name="role-menu">
+        <el-tree :data="[{}]">
+          <div slot-scope="{ data }" class="custom-tree-node">
+            <div class="name">名称</div>
+            <div class="remark">备注</div>
+            <div class="icon">图标</div>
+          </div>
+        </el-tree>
+        <el-tree ref="menusTree" :data="menusTree" :filter-node-method="filterNodeHandler" class="filter-tree" node-key="id" show-checkbox accordion>
+          <div slot-scope="{ data }" class="custom-tree-node">
+            <div class="name">
+              {{ data.name }}
+            </div>
+            <div class="remark">
+              {{ data.remark }}
+            </div>
+            <div class="icon">
+              <svg-icon :icon-class="data.icon"/>
+            </div>
+          </div>
+        </el-tree>
+      </el-collapse-item>
       <el-collapse-item title="角色用户" name="role-user">
-        等等吧，没心情
+        <el-table :data="users" border style="width: 100%">
+          <el-table-column type="index" width="100" align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="姓名" sortable align="center"/>
+          <el-table-column prop="gender" label="性别" width="100" sortable align="center">
+            <template slot-scope="scope">{{ scope.row.gender | translateGender }}</template>
+          </el-table-column>
+          <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱" sortable align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="phone" label="电话" width="160" sortable align="center"/>
+        </el-table>
       </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 
 <script>
+import mixins from './mixins'
 
 export default {
+  mixins: [mixins],
   props: {
     detail: {
       required: true,
@@ -33,8 +66,17 @@ export default {
   },
   data() {
     return {
-      labelWidth: '200px'
+      labelWidth: '200px',
+      users: [],
+      menusTree: []
     }
+  },
+  activated() {
+    this.queryAllUsers()
+    this.initMenus()
+  },
+  methods: {
+
   }
 }
 </script>

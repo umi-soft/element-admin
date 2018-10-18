@@ -31,11 +31,6 @@
           <el-table-column prop="modifiedDate" label="最后修改时间">
             <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
           </el-table-column>
-          <el-table-column label="操作" width="100" align="center">
-            <template slot-scope="scope">
-              <el-button type="warning" @click="delMenuRoleHandler(scope.row.id)">删除</el-button>
-            </template>
-          </el-table-column>
         </el-table>
       </el-collapse-item>
     </el-collapse>

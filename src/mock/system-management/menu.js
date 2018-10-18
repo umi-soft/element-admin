@@ -53,7 +53,7 @@ export const menuUrls = []
 //   menuId: '',
 //   roleId: ''
 // }
-export const menuRoles = []
+export const roleMenus = []
 
 export const roles = []
 
@@ -126,23 +126,23 @@ export default {
   queryMenuRoles: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (menuRoles.findIndex(item => { return item.menuId === params.id }) === -1) {
+    if (roleMenus.findIndex(item => { return item.menuId === params.id }) === -1) {
       // 生成几个role
       for (let i = 0; i < 5; i++) {
         const role = Mock.mock(roleMockConfig)
         roles.push(role)
-        menuRoles.push({
+        roleMenus.push({
           menuId: params.id,
           roleId: role.id
         })
       }
     }
-    const menuRolesResult = menuRoles.filter(item => { return params.id === item.menuId })
+    const roleMenusResult = roleMenus.filter(item => { return params.id === item.menuId })
     return {
       code: 1,
       message: '操作成功',
       data: roles.filter(role => {
-        return menuRolesResult.findIndex(menuRole => { return role.id === menuRole.roleId }) !== -1
+        return roleMenusResult.findIndex(menuRole => { return role.id === menuRole.roleId }) !== -1
       })
     }
   },
@@ -150,7 +150,7 @@ export default {
   delMenuRole: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    menuRoles.splice(menuRoles.findIndex(item => {
+    roleMenus.splice(roleMenus.findIndex(item => {
       return item.menuId === params.menuId && item.roleId === params.roleId
     }), 1)
     return {

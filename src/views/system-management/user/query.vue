@@ -71,6 +71,9 @@ export default {
       selected: null
     }
   },
+  activated() {
+    this.selected = null
+  },
   methods: {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
