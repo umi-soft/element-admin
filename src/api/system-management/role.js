@@ -4,17 +4,17 @@ const base_url = '/system/role/'
 
 export function queryPageRoles(data) {
   return request({
-    url: base_url + 'query',
+    url: base_url + 'query-page',
     method: 'post',
     data
   })
 }
 
-export function checkRole(id) {
+export function queryAllRoles(data) {
   return request({
-    url: base_url + 'check',
-    method: 'get',
-    params: { id }
+    url: base_url + 'query-all',
+    method: 'post',
+    data
   })
 }
 

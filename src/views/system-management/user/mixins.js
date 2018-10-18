@@ -33,12 +33,12 @@ export default {
       }
     },
     queryAllUserDepts() {
-      this.roles = []
+      this.depts = []
       const params = { id: this.detail.id }
       UserAPI.queryAllUserDepts(params).then(depts => { this.depts = depts })
     },
     queryAllUserGroups() {
-      this.roles = []
+      this.groups = []
       const params = { id: this.detail.id }
       UserAPI.queryAllUserGroups(params).then(groups => { this.groups = groups })
     },

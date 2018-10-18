@@ -19,13 +19,10 @@ const mockConfig = {
   modifiedDate: +Mock.Random.date('T') // 最后修改时间
 }
 
-export const row = Mock.mock(mockConfig)
+export const dictionaries = []
 
-export const rows = []
-rows.push(row)
-
-for (let i = 0; i < 300; i++) {
-  rows.push(Mock.mock(mockConfig))
+for (let i = 0; i < 30; i++) {
+  dictionaries.push(Mock.mock(mockConfig))
 }
 
 export default {
@@ -36,7 +33,7 @@ export default {
     params.filter.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(rows, query))
+    const queryResult = deepClone(fieldQueryLike(dictionaries, query))
     params.filter.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -59,7 +56,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(rows, query))
+    const queryResult = deepClone(fieldQueryLike(dictionaries, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -70,19 +67,11 @@ export default {
       data: queryResult
     }
   },
-  check: config => {
-    console.log(config)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
-  },
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = deepMerge(deepClone(params), Mock.mock(mockConfig))
-    rows.push(row)
+    const dictionary = deepMerge(deepClone(params), Mock.mock(mockConfig))
+    dictionaries.push(dictionary)
     return {
       code: 1,
       message: '操作成功',
@@ -92,8 +81,8 @@ export default {
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = rows[rows.findIndex(item => { return item.id === params.id })]
-    deepMerge(row, params)
+    const dictionary = dictionaries[dictionaries.findIndex(item => { return item.id === params.id })]
+    deepMerge(dictionary, params)
     return {
       code: 1,
       message: '操作成功',
@@ -103,7 +92,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    rows.splice(rows.findIndex(item => { return item.id === params.id }), 1)
+    dictionaries.splice(dictionaries.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',

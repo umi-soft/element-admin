@@ -66,20 +66,14 @@
       </el-form>
     </el-card>
     <el-card>
-      <div slot="header">
-        <select-right left="分组信息">
-          <el-select placeholder="请选择">
-            <el-option
-              v-for="item in cities"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-              <span style="float: left">{{ item.label }}</span>
-              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
-            </el-option>
+      <template slot="header">
+        <select-right>
+          <template slot="left">分组信息</template>
+          <el-select v-model="addOption.groupId" placeholder="添加分组" clearable filterable @change="addUserGroupHandler">
+            <el-option v-for="(item, index) in addOption.allGroups" :key="index" :label="item.name" :value="item.id"/>
           </el-select>
         </select-right>
-      </div>
+      </template>
       <el-table :data="groups" border style="width: 100%">
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
@@ -96,7 +90,15 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-card header="部门信息">
+    <el-card>
+      <template slot="header">
+        <select-right>
+          <template slot="left">部门信息</template>
+          <el-select v-model="addOption.deptId" placeholder="添加部门" clearable filterable @change="addUserDeptHandler">
+            <el-option v-for="(item, index) in addOption.allDepts" :key="index" :label="item.name" :value="item.id"/>
+          </el-select>
+        </select-right>
+      </template>
       <el-table :data="depts" border style="width: 100%">
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
@@ -113,7 +115,15 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-card header="角色信息">
+    <el-card>
+      <template slot="header">
+        <select-right>
+          <template slot="left">角色信息</template>
+          <el-select v-model="addOption.roleId" placeholder="添加角色" clearable filterable @change="addUserRoleHandler">
+            <el-option v-for="(item, index) in addOption.allRoles" :key="index" :label="item.name" :value="item.id"/>
+          </el-select>
+        </select-right>
+      </template>
       <el-table :data="roles" border style="width: 100%">
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
@@ -137,6 +147,8 @@
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMerge } from '@/utils'
 import * as DeptAPI from '@/api/system-management/dept'
+import * as RoleAPI from '@/api/system-management/role'
+import * as GroupAPI from '@/api/system-management/group'
 import * as UserAPI from '@/api/system-management/user'
 import mixins from './mixins'
 
@@ -158,10 +170,18 @@ export default {
     return {
       form: form,
       rules: rules,
-      allDepts: [],
       depts: [],
       groups: [],
-      roles: []
+      roles: [],
+
+      addOption: {
+        allDepts: [],
+        allGroups: [],
+        allRoles: [],
+        deptId: null,
+        roleId: null,
+        groupId: null
+      }
     }
   },
   activated() {
@@ -172,7 +192,13 @@ export default {
     this.queryAllUserDepts()
     this.queryAllUserGroups()
     this.queryAllUserRoles()
-    this.queryAllDepts()
+    const params = {
+      filters: [],
+      sorts: []
+    }
+    DeptAPI.queryAllDepts(params).then(data => { this.addOption.allDepts = data })
+    GroupAPI.queryAllGroups(params).then(data => { this.addOption.allGroups = data })
+    RoleAPI.queryAllRoles(params).then(data => { this.addOption.allRoles = data })
   },
   methods: {
     initForm(form = {}) {
@@ -201,16 +227,16 @@ export default {
     customSubmitSuccessHandler() {
       this.$refs['form'].clearValidate()
     },
-    queryAllDepts() {
-      // DeptAPI.queryAllDepts().then(data => { this.allDepts = data })
-    },
     addUserDeptHandler(id) {
+      if (!id) return
       const params = {
         userId: this.detail.id,
         deptId: id
       }
       UserAPI.addUserDept(params).then(data => {
         this.queryAllUserDepts()
+        this.optionSuccessHandler()
+        this.addOption.deptId = null
       })
     },
     delUserDeptHandler(id) {
@@ -220,15 +246,19 @@ export default {
       }
       UserAPI.delUserDept(params).then(data => {
         this.queryAllUserDepts()
+        this.optionSuccessHandler()
       })
     },
     addUserGroupHandler(id) {
+      if (!id) return
       const params = {
         userId: this.detail.id,
         groupId: id
       }
       UserAPI.addUserGroup(params).then(data => {
         this.queryAllUserGroups()
+        this.optionSuccessHandler()
+        this.addOption.groupId = null
       })
     },
     delUserGroupHandler(id) {
@@ -238,15 +268,19 @@ export default {
       }
       UserAPI.delUserGroup(params).then(data => {
         this.queryAllUserGroups()
+        this.optionSuccessHandler()
       })
     },
     addUserRoleHandler(id) {
+      if (!id) return
       const params = {
         userId: this.detail.id,
         roleId: id
       }
       UserAPI.addUserRole(params).then(data => {
         this.queryAllUserRoles()
+        this.optionSuccessHandler()
+        this.addOption.roleId = null
       })
     },
     delUserRoleHandler(id) {
@@ -256,6 +290,7 @@ export default {
       }
       UserAPI.delUserRole(params).then(data => {
         this.queryAllUserRoles()
+        this.optionSuccessHandler()
       })
     }
   }

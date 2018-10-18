@@ -4,7 +4,7 @@ const base_url = '/system/group/'
 
 export function queryPageGroups(data) {
   return request({
-    url: base_url + 'query',
+    url: base_url + 'query-page',
     method: 'post',
     data
   })
@@ -12,17 +12,9 @@ export function queryPageGroups(data) {
 
 export function queryAllGroups(data) {
   return request({
-    url: base_url + 'queryAll',
+    url: base_url + 'query-all',
     method: 'post',
     data
-  })
-}
-
-export function checkGroup(id) {
-  return request({
-    url: base_url + 'check',
-    method: 'get',
-    params: { id }
   })
 }
 

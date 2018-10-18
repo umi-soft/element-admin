@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import { deepMerge, param2Obj } from '@/utils'
 import { asyncMenuMap } from '@/router'
-import { mockConfig as roleMockConfig } from './role'
+import { mockConfig as roleMockConfig, roles } from './role'
 
 // const mockConfig = {
 //   id: '',
@@ -41,7 +41,7 @@ function createMenu(router, parentId, menus) {
   menus.push(menu)
 }
 
-export const rows = []
+export const menus = []
 
 // const mockConfig = {
 //   menuId: '',
@@ -55,23 +55,21 @@ export const menuUrls = []
 // }
 export const roleMenus = []
 
-export const roles = []
-
 export default {
   queryAll: config => {
     console.log(config)
     return {
       code: 1,
       message: '操作成功',
-      data: rows
+      data: menus
     }
   },
 
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = rows[rows.findIndex(item => { return item.id === params.id })]
-    deepMerge(row, params)
+    const menu = menus[menus.findIndex(item => { return item.id === params.id })]
+    deepMerge(menu, params)
     return {
       code: 1,
       message: '操作成功',
@@ -81,7 +79,7 @@ export default {
 
   sync: config => {
     console.log(config)
-    asyncMenuMap.forEach(router => createMenu(router, null, rows))
+    asyncMenuMap.forEach(router => createMenu(router, null, menus))
     return {
       code: 1,
       message: '操作成功',

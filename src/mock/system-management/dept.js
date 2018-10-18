@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import Utils from '../utils'
-import { mockConfig as userMockConfig } from './user'
+import { mockConfig as userMockConfig, users } from './user'
 
 export const mockConfig = {
   'id|1': Utils.id,
@@ -18,12 +18,9 @@ export const mockConfig = {
   modifiedDate: +Mock.Random.date('T') // 最后修改时间
 }
 
-export const row = Mock.mock(mockConfig)
+export const deptsTree = []
 
-export const rowsTree = []
-
-export const rows = []
-rows.push(row)
+export const depts = []
 
 /**
  * {
@@ -32,87 +29,73 @@ rows.push(row)
  * }
  */
 export const deptUsers = []
-export const users = []
 
 let length = Mock.mock('@integer(10, 40)')
 for (let i = 0; i < length; i++) {
-  rows.push(Mock.mock(mockConfig))
+  depts.push(Mock.mock(mockConfig))
 }
 
-function createRowsTree(row) {
-  row.children = []
+function createDeptTree(dept) {
+  dept.children = []
   if (Mock.mock('@boolean')) {
     const children = Mock.mock(mockConfig)
-    children.parentId = row.id
-    row.children.push(children)
-    createRowsTree(children)
+    children.parentId = dept.id
+    dept.children.push(children)
+    createDeptTree(children)
   }
-  return row
+  return dept
 }
 
 length = Mock.mock('@integer(5, 20)')
 for (let i = 0; i < length; i++) {
-  rowsTree.push(createRowsTree(Mock.mock(mockConfig)))
+  deptsTree.push(createDeptTree(Mock.mock(mockConfig)))
 }
 
 export default {
-  queryPage: config => {
+  queryAll: config => {
     console.log(config)
     const params = JSON.parse(config.body)
     const query = {}
-    params.filter.filters.forEach(filter => {
+    params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(rows, query))
-    params.filter.sorts.forEach(sort => {
+    const queryResult = deepClone(fieldQueryLike(depts, query))
+    params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
     })
     return {
       code: 1,
-      message: '',
-      data: {
-        total: queryResult.length,
-        pageSize: params.pageSize,
-        page: params.page,
-        list: queryResult.slice((params.page - 1) * params.pageSize, params.page * params.pageSize)
-      }
+      message: '操作成功',
+      data: queryResult
     }
   },
-  queryAll: config => {
+  queryAllTree: config => {
     console.log(config)
     return {
       code: 1,
       message: '操作成功',
-      data: rowsTree
-    }
-  },
-  check: config => {
-    console.log(config)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
+      data: deptsTree
     }
   },
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = Mock.mock(mockConfig)
-    params.id = row.id
-    deepMerge(row, params)
-    rows.push(row)
+    const dept = Mock.mock(mockConfig)
+    params.id = dept.id
+    deepMerge(dept, params)
+    depts.push(dept)
     return {
       code: 1,
       message: '操作成功',
-      data: row
+      data: dept
     }
   },
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = rows[rows.findIndex(item => { return item.id === params.id })]
-    deepMerge(row, params)
+    const dept = depts[depts.findIndex(item => { return item.id === params.id })]
+    deepMerge(dept, params)
     return {
       code: 1,
       message: '操作成功',
@@ -122,7 +105,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    rows.splice(rows.findIndex(item => { return item.id === params.id }), 1)
+    depts.splice(depts.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',
@@ -134,7 +117,7 @@ export default {
     const params = param2Obj(config.url)
     if (deptUsers.findIndex(item => { return item.deptId === params.id }) === -1) {
       // 生成几个user
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 5; i++) {
         const user = Mock.mock(userMockConfig)
         users.push(user)
         deptUsers.push({

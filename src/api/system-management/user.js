@@ -4,17 +4,9 @@ const base_url = '/system/user/'
 
 export function queryPageUsers(data) {
   return request({
-    url: base_url + 'query',
+    url: base_url + 'query-page',
     method: 'post',
     data
-  })
-}
-
-export function checkUser(id) {
-  return request({
-    url: base_url + 'check',
-    method: 'get',
-    params: { id }
   })
 }
 

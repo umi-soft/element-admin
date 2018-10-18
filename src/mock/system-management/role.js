@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import Utils from '../utils'
 import { roleMenus } from './menu'
-import { mockConfig as userMockConfig } from './user'
+import { mockConfig as userMockConfig, users } from './user'
 
 export const mockConfig = {
   'id|1': Utils.id,
@@ -17,13 +17,10 @@ export const mockConfig = {
   modifiedDate: +Mock.Random.date('T') // 最后修改时间
 }
 
-export const row = Mock.mock(mockConfig)
-
-export const rows = []
-rows.push(row)
+export const roles = []
 
 for (let i = 0; i < 300; i++) {
-  rows.push(Mock.mock(mockConfig))
+  roles.push(Mock.mock(mockConfig))
 }
 /**
  * {
@@ -33,8 +30,6 @@ for (let i = 0; i < 300; i++) {
  */
 export const userRoles = []
 
-export const users = []
-
 export default {
   queryPage: config => {
     console.log(config)
@@ -43,7 +38,7 @@ export default {
     params.filter.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(rows, query))
+    const queryResult = deepClone(fieldQueryLike(roles, query))
     params.filter.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -66,7 +61,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(rows, query))
+    const queryResult = deepClone(fieldQueryLike(roles, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -77,32 +72,24 @@ export default {
       data: queryResult
     }
   },
-  check: config => {
-    console.log(config)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
-  },
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = Mock.mock(mockConfig)
-    params.id = row.id
-    deepMerge(row, params)
-    rows.push(row)
+    const role = Mock.mock(mockConfig)
+    params.id = role.id
+    deepMerge(role, params)
+    roles.push(role)
     return {
       code: 1,
       message: '操作成功',
-      data: row
+      data: role
     }
   },
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = rows[rows.findIndex(item => { return item.id === params.id })]
-    deepMerge(row, params)
+    const role = roles[roles.findIndex(item => { return item.id === params.id })]
+    deepMerge(role, params)
     return {
       code: 1,
       message: '操作成功',
@@ -112,7 +99,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    rows.splice(rows.findIndex(item => { return item.id === params.id }), 1)
+    roles.splice(roles.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',

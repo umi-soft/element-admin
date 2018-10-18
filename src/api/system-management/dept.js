@@ -2,27 +2,18 @@ import request from '@/utils/request'
 
 const base_url = '/system/dept/'
 
-export function queryPageDepts(data) {
-  return request({
-    url: base_url + 'query',
-    method: 'post',
-    data
-  })
-}
-
 export function queryAllDepts(data) {
   return request({
-    url: base_url + 'queryAll',
+    url: base_url + 'query-all',
     method: 'post',
     data
   })
 }
 
-export function checkDept(id) {
+export function queryAllTreeDepts() {
   return request({
-    url: base_url + 'check',
-    method: 'get',
-    params: { id }
+    url: base_url + 'query-all-tree',
+    method: 'get'
   })
 }
 

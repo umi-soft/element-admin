@@ -72,7 +72,7 @@ export function syncMenuVoter(allMenus, menu) {
 // ####################################Menu主表API####################################
 export function queryAllMenus(data) {
   return request({
-    url: base_url + 'queryAll',
+    url: base_url + 'query-all',
     method: 'post',
     data
   })

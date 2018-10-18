@@ -2,9 +2,9 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import Utils from '../utils'
 
-import { mockConfig as roleMockConfig, userRoles } from './role'
-import { mockConfig as groupMockConfig, groupUsers } from './group'
-import { mockConfig as deptMockConfig, deptUsers } from './dept'
+import { mockConfig as roleMockConfig, userRoles, roles } from './role'
+import { mockConfig as groupMockConfig, groupUsers, groups } from './group'
+import { mockConfig as deptMockConfig, deptUsers, depts } from './dept'
 
 export const mockConfig = {
   'id|1': Utils.id, // 主键
@@ -31,17 +31,10 @@ export const mockConfig = {
   modifiedDate: +Mock.Random.date('T') // 最后修改时间
 }
 
-export const row = Mock.mock(mockConfig)
+export const users = []
 
-export const rows = []
-rows.push(row)
-
-export const roles = []
-export const groups = []
-export const depts = []
-
-for (let i = 0; i < 300; i++) {
-  rows.push(Mock.mock(mockConfig))
+for (let i = 0; i < 25; i++) {
+  users.push(Mock.mock(mockConfig))
 }
 
 export default {
@@ -52,7 +45,7 @@ export default {
     params.filter.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(rows, query))
+    const queryResult = deepClone(fieldQueryLike(users, query))
     params.filter.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -68,50 +61,24 @@ export default {
       }
     }
   },
-  queryAll: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    const query = {}
-    params.filters.forEach(filter => {
-      query[filter.field] = filter.value
-    })
-    const queryResult = deepClone(fieldQueryLike(rows, query))
-    params.sorts.forEach(sort => {
-      // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
-      sortArray(queryResult, sort.field, sort.value === 'desc')
-    })
-    return {
-      code: 1,
-      message: '操作成功',
-      data: queryResult
-    }
-  },
-  check: config => {
-    console.log(config)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
-  },
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = Mock.mock(mockConfig)
-    params.id = row.id
-    deepMerge(row, params)
-    rows.push(row)
+    const user = Mock.mock(mockConfig)
+    params.id = user.id
+    deepMerge(user, params)
+    users.push(user)
     return {
       code: 1,
       message: '操作成功',
-      data: row
+      data: user
     }
   },
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const row = rows[rows.findIndex(item => { return item.id === params.id })]
-    deepMerge(row, params)
+    const user = users[users.findIndex(item => { return item.id === params.id })]
+    deepMerge(user, params)
     return {
       code: 1,
       message: '操作成功',
@@ -121,7 +88,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    rows.splice(rows.findIndex(item => { return item.id === params.id }), 1)
+    users.splice(users.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',
