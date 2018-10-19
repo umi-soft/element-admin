@@ -46,9 +46,37 @@ function createDeptTree(dept) {
   return dept
 }
 
+function findDept(deptId) {
+  let dept = null
+  for (let i = 0; i < deptsTree.length; i++) {
+    dept = findDeptTreeNode(deptId, deptsTree[i])
+    if (dept !== null) {
+      break
+    }
+  }
+  return dept
+}
+
+function findDeptTreeNode(deptId, dept) {
+  if (dept.id === deptId) {
+    return dept
+  }
+  if (dept.children && dept.children.length > 0) {
+    for (let i = 0; i < dept.children.length; i++) {
+      const find = findDeptTreeNode(deptId, dept.children[i])
+      if (find !== null) {
+        return find
+      }
+    }
+  }
+  return null
+}
+
 length = Mock.mock('@integer(5, 20)')
 for (let i = 0; i < length; i++) {
-  deptsTree.push(createDeptTree(Mock.mock(mockConfig)))
+  const dept = Mock.mock(mockConfig)
+  dept.parentId = null
+  deptsTree.push(createDeptTree(dept))
 }
 
 export default {
@@ -84,7 +112,17 @@ export default {
     const dept = Mock.mock(mockConfig)
     params.id = dept.id
     deepMerge(dept, params)
-    depts.push(dept)
+
+    if (dept.parentId) {
+      const find = findDept(dept.parentId)
+      if (!find.children) {
+        find.children = []
+      }
+      find.children.push(dept)
+    } else {
+      deptsTree.push(dept)
+    }
+
     return {
       code: 1,
       message: '操作成功',
@@ -94,7 +132,7 @@ export default {
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const dept = depts[depts.findIndex(item => { return item.id === params.id })]
+    const dept = findDept(params.id)
     deepMerge(dept, params)
     return {
       code: 1,
@@ -105,7 +143,13 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    depts.splice(depts.findIndex(item => { return item.id === params.id }), 1)
+    let dept = findDept(params.id)
+    if (dept.parentId === null) {
+      deptsTree.splice(deptsTree.findIndex(item => { return item.id === params.id }), 1)
+    } else {
+      dept = findDept(dept.parentId)
+      dept.children.splice(dept.children.findIndex(item => { return item.id === params.id }), 1)
+    }
     return {
       code: 1,
       message: '操作成功',

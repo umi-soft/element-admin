@@ -1,6 +1,6 @@
 <template>
-  <el-form ref="form" :model="form" :rules="optionType === 'edit' ? editRules : addRules" label-width="200px">
-    <el-form-item v-if="form.id !== null" label="ID" prop="id">
+  <el-form ref="form" :model="form" :rules="rules" label-width="200px">
+    <el-form-item label="ID" prop="id">
       <el-input v-model="form.id" disabled/>
     </el-form-item>
     <el-form-item v-if="form.parentId !== null" label="上级ID" prop="parentId">
@@ -30,16 +30,13 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge, deepClone } from '@/utils'
+import { deepMerge } from '@/utils'
 import * as DictionaryAPI from '@/api/system-management/dictionary'
+import mixins from './mixins'
 
 export default {
-  mixins: [BaseEditForm],
+  mixins: [BaseEditForm, mixins],
   props: {
-    optionType: {
-      required: true,
-      type: String
-    },
     detail: {
       required: false,
       type: Object,
@@ -48,29 +45,17 @@ export default {
   },
   data() {
     const form = this.initForm()
-    const addRules = this.initRules()
-    const editRules = deepClone(addRules)
-    editRules.id = [{
+    const rules = this.initRules()
+    rules.id = [{
       required: true, message: '编辑信息时ID不能为空', trigger: 'change'
     }]
     return {
       form: form,
-      addRules: addRules,
-      editRules: editRules,
-
-      list: [],
-      loading: false
+      rules: rules
     }
   },
   activated() {
-    if (this.optionType === 'edit') {
-      deepMerge(this.form, this.detail)
-    } else {
-      this.initForm(this.form)
-      if (this.detail.id) {
-        this.form.parentId = this.detail.id
-      }
-    }
+    deepMerge(this.form, this.detail)
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })
@@ -89,27 +74,8 @@ export default {
         remark: ''
       })
     },
-    initRules() {
-      return {
-        state: [{
-          required: true, message: '请选择字典分类启用状态', trigger: 'blur'
-        }],
-        name: [{
-          required: true, message: '请输入字典分类名称', trigger: 'blur'
-        }, {
-          min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
-        }],
-        index: [{
-          required: true, message: '请输入字典分类编号', trigger: 'blur'
-        }]
-      }
-    },
     customSubmitHandler() {
-      if (this.optionType === 'edit') {
-        DictionaryAPI.editDictionary(this.form).then(this.submitSuccessHandler)
-      } else if (this.optionType === 'add') {
-        DictionaryAPI.addDictionary(this.form).then(this.submitSuccessHandler)
-      }
+      DictionaryAPI.editDictionary(this.form).then(this.submitSuccessHandler)
     }
   }
 }

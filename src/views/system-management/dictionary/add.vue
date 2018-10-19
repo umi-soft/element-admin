@@ -1,8 +1,5 @@
 <template>
   <el-form ref="form" :model="form" :rules="rules" label-width="200px">
-    <el-form-item label="ID" prop="id">
-      <el-input v-model="form.id" disabled/>
-    </el-form-item>
     <el-form-item v-if="form.parentId !== null" label="上级ID" prop="parentId">
       <el-input v-model="form.parentId" disabled/>
     </el-form-item>
@@ -51,9 +48,6 @@ export default {
   data() {
     const form = this.initForm()
     const rules = this.initRules()
-    rules.id = [{
-      required: true, message: '编辑信息时ID不能为空', trigger: 'change'
-    }]
     return {
       form: form,
       rules: rules,
@@ -62,7 +56,10 @@ export default {
     }
   },
   activated() {
-    deepMerge(this.form, this.detail)
+    this.initForm(this.form)
+    if (this.detail.id) {
+      this.form.parentId = this.detail.id
+    }
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })
@@ -83,7 +80,7 @@ export default {
       })
     },
     customSubmitHandler() {
-      DictionaryAPI.editDictionary(this.form).then(this.submitSuccessHandler)
+      DictionaryAPI.addDictionary(this.form).then(this.submitSuccessHandler)
     }
   }
 }
