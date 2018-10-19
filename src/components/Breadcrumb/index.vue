@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import pathToRegexp from 'path-to-regexp'
 
 export default {
   data() {
@@ -27,7 +28,15 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      this.levelList = this.$route.matched.filter(item => item.name)
+      const { params } = this.$route
+      const matched = this.$route.matched.filter(item => {
+        if (item.name) {
+          var toPath = pathToRegexp.compile(item.path)
+          item.path = toPath(params)
+          return true
+        }
+      })
+      this.levelList = matched
     }
   }
 }

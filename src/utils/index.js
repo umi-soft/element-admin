@@ -183,6 +183,36 @@ export function deepMerge(target, source) {
 }
 
 /**
+ * 深度合并对象，仅仅合并target已有的属性
+ * @param target
+ * @param source
+ * @returns {*}
+ */
+export function deepMergeLeft(target, source) {
+  if (typeof target !== 'object') {
+    target = {}
+  }
+  if (Array.isArray(source)) {
+    return source.slice() // slice产生数组新副本
+  }
+  if (source === null || source === undefined) {
+    return source
+  }
+  Object.keys(target).forEach(property => {
+    if (Object.prototype.toString.call(target[property]) === '[object Object]') {
+      target[property] = deepMergeLeft(target[property], source[property])
+    } else if (Object.prototype.toString.call(source[property]) === '[object Object]') {
+      target[property] = deepMerge({}, source[property])
+    } else if (Object.prototype.toString.call(source[property]) === '[object Array]') {
+      target[property] = source[property].slice()
+    } else {
+      target[property] = source[property]
+    }
+  })
+  return target
+}
+
+/**
  * 为了moke模糊查询方便
  * 从数组中模糊查询获得匹配的子集
  * 全字段匹配
@@ -228,23 +258,6 @@ export function fieldQueryLike(array, query) {
  */
 export function sortArray(array, sort, isDesc) {
   return array.sort((a, b) => { return isDesc && a[sort] - b[sort] })
-}
-
-/**
- * 将制定元素，平滑滚动到指定位置
- * @param element
- * @param to
- * @param duration
- */
-export function scrollTo(element, to, duration) {
-  if (duration <= 0) return
-  const difference = to - element.scrollTop
-  const perTick = (difference / duration) * 10
-  setTimeout(() => {
-    element.scrollTop = element.scrollTop + perTick
-    if (element.scrollTop === to) return
-    scrollTo(element, to, duration - 10)
-  }, 10)
 }
 
 /**
@@ -367,3 +380,6 @@ export function createUniqueString() {
   return (+(randomNum + timestamp)).toString(32)
 }
 
+export function isExternal(path) {
+  return /^(https?:|mailto:|tel:)/.test(path)
+}
