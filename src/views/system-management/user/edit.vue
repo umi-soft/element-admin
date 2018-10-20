@@ -47,8 +47,7 @@
               <el-input v-model="form.email"/>
             </el-form-item>
             <el-form-item label="性别" prop="gender">
-              <el-radio v-model="form.gender" label="1">男</el-radio>
-              <el-radio v-model="form.gender" label="0">女</el-radio>
+              <el-radio v-for="item in dictionaries.gender" v-model="form.gender" :key="item.key" :label="item.key">{{ item.value }}</el-radio>
             </el-form-item>
             <el-form-item label="生日" prop="birthday">
               <el-date-picker v-model="form.birthday" :picker-options="(time) => { return time.getTime() > Date.now() }" align="right" type="date"/>

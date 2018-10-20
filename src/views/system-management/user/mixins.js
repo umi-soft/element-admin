@@ -1,6 +1,12 @@
+import { mapGetters } from 'vuex'
 import * as UserAPI from '@/api/system-management/user'
 
 export default {
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
+  },
   methods: {
     initRules() {
       return {

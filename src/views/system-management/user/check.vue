@@ -22,7 +22,7 @@
             <el-col :span="12">
               <input-item-view :label-width="labelWidth" label="昵称">{{ detail.nickName }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="证件号码">{{ detail.idNumber }}</input-item-view>
-              <input-item-view :label-width="labelWidth" label="性别">{{ detail.gender }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="性别">{{ detail.gender | translateGender }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="生日">{{ detail.birthday }}</input-item-view>
             </el-col>
             <el-col :span="12">

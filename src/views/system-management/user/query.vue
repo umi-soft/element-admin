@@ -83,24 +83,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
 import * as UserAPI from '@/api/system-management/user'
+import mixins from './mixins'
 
 export default {
-  mixins: [BaseQueryPageForm],
+  mixins: [BaseQueryPageForm, mixins],
   data() {
     const queryCriteria = this.initQueryCriteria()
     return {
       queryCriteria: queryCriteria,
       selected: null
     }
-  },
-  computed: {
-    ...mapGetters([
-      'dictionaries'
-    ])
   },
   activated() {
     this.selected = null
