@@ -12,7 +12,6 @@ import router from './router'
 import store from './store'
 
 import './icons'
-import './errorLog'
 import './permission'
 import './mock'
 

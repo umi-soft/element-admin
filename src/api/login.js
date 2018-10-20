@@ -10,7 +10,7 @@ export function loginByUsername(data) {
 
 export function logout() {
   return request({
-    url: '/login/logout',
+    url: '/logout',
     method: 'post'
   })
 }

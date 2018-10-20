@@ -24,7 +24,7 @@ Mock.setup({
 
 // 登录相关
 Mock.mock(/\/auth/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
+Mock.mock(/\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
 
 //  系统设置相关---用户分组
@@ -78,6 +78,7 @@ Mock.mock(/\/system\/dictionary\/add/, 'post', dictionaryAPI.add)
 Mock.mock(/\/system\/dictionary\/edit/, 'post', dictionaryAPI.edit)
 Mock.mock(/\/system\/dictionary\/del/, 'get', dictionaryAPI.del)
 
+//  系统设置相关---菜单
 Mock.mock(/\/system\/menu\/query-all/, 'post', menuAPI.queryAll)
 Mock.mock(/\/system\/menu\/edit/, 'post', menuAPI.edit)
 Mock.mock(/\/system\/menu\/sync/, 'post', menuAPI.sync)

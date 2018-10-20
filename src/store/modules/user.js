@@ -3,34 +3,22 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
   state: {
-    user: '',
-    status: '',
-    code: '',
     token: getToken(),
-    name: '',
-    avatar: '',
-    introduction: '',
+    user: null,
     roles: []
   },
 
   mutations: {
-    SET_CODE: (state, code) => {
-      state.code = code
-    },
     SET_TOKEN: (state, token) => {
       state.token = token
+      if (token) {
+        setToken(token)
+      } else {
+        removeToken()
+      }
     },
-    SET_INTRODUCTION: (state, introduction) => {
-      state.introduction = introduction
-    },
-    SET_STATUS: (state, status) => {
-      state.status = status
-    },
-    SET_NAME: (state, name) => {
-      state.name = name
-    },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
+    SET_USER: (state, user) => {
+      state.user = user
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
@@ -43,7 +31,6 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(userInfo).then(token => {
           commit('SET_TOKEN', token)
-          setToken(token)
           resolve()
         }).catch(error => {
           reject(error)
@@ -55,15 +42,12 @@ const user = {
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(data => {
+          commit('SET_USER', data.user)
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.roles)
           } else {
-            reject('getInfo: roles must be a non-null array !')
+            reject('未获取到该用户权限信息，请联系系统管理员完善权限配置后使用系统!')
           }
-
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
           resolve(data)
         }).catch(error => {
           reject(error)
@@ -75,9 +59,9 @@ const user = {
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
+          commit('SET_TOKEN', null)
+          commit('SET_USER', null)
           commit('SET_ROLES', [])
-          removeToken()
           resolve()
         }).catch(error => {
           reject(error)
@@ -88,26 +72,10 @@ const user = {
     // 前端 登出
     FedLogOut({ commit }) {
       return new Promise(resolve => {
-        commit('SET_TOKEN', '')
-        removeToken()
+        commit('SET_TOKEN', null)
+        commit('SET_USER', null)
+        commit('SET_ROLES', [])
         resolve()
-      })
-    },
-
-    // 动态修改权限
-    ChangeRoles({ commit, dispatch }, role) {
-      return new Promise(resolve => {
-        commit('SET_TOKEN', role)
-        setToken(role)
-        getUserInfo(role).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.roles)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
-          dispatch('GenerateRoutes', data) // 动态修改权限后 重绘侧边菜单
-          resolve()
-        })
       })
     }
   }

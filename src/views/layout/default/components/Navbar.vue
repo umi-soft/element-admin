@@ -5,7 +5,6 @@
     <breadcrumb class="breadcrumb-container"/>
 
     <div class="right-menu">
-      <error-log class="errLog-container right-menu-item"/>
 
       <el-tooltip content="全屏" effect="dark" placement="bottom">
         <screenfull class="screenfull right-menu-item"/>
@@ -13,7 +12,7 @@
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="user.avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
@@ -33,21 +32,18 @@
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 import Breadcrumb from '@/components/Breadcrumb'
-import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 
 export default {
   components: {
     Hamburger,
     Breadcrumb,
-    ErrorLog,
     Screenfull
   },
   computed: {
     ...mapGetters([
       'sidebar',
-      'name',
-      'avatar'
+      'user'
     ])
   },
   methods: {

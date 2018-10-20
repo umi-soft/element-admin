@@ -3,16 +3,9 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // 进度条组件
 import 'nprogress/nprogress.css'// 进度条样式
-import { getToken } from '@/utils/auth' // 从cookie中获取用户信息
+import { getToken, hasPermission } from '@/utils/auth' // 从cookie中获取用户信息
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
-
-// permission judge function
-function hasPermission(roles, permissionRoles) {
-  if (roles.indexOf('admin') >= 0) return true // admin permission passed directly
-  if (!permissionRoles) return true
-  return roles.some(role => permissionRoles.indexOf(role) >= 0)
-}
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // 开始进度条
@@ -36,7 +29,7 @@ router.beforeEach((to, from, next) => {
         })
       } else {
         // 没有动态改变权限的需求可直接next() 删除下方权限判断
-        if (hasPermission(store.getters.roles, to.meta.roles)) {
+        if (hasPermission(store.getters.roles, to)) {
           next()
         } else {
           next({ path: '/401', replace: true, query: { noGoBack: true }})
