@@ -32,7 +32,7 @@
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">{{ data.name }}</div>
           <div class="state">
-            <state :detail="data"/>
+            <state :state="data.state"/>
           </div>
           <div class="time">{{ data.modifiedDate | parseTime }}</div>
           <div class="time">{{ data.createdDate | parseTime }}</div>

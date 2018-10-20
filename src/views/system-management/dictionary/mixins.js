@@ -1,6 +1,11 @@
 import * as DictionaryAPI from '@/api/system-management/dictionary'
 
 export default {
+  data() {
+    return {
+      dictionaryTypeList: []
+    }
+  },
   methods: {
     initRules() {
       return {
@@ -22,13 +27,20 @@ export default {
     },
     queryAllDictionaryType() {
       DictionaryAPI.queryAllDictionaries({
-        filters: [],
+        filters: [{ field: 'category', value: 1 }],
         sorts: []
       }).then((list) => {
-        this.list = list
+        this.dictionaryTypeList = list
       }, () => {
-        this.list = []
+        this.dictionaryTypeList = []
       })
+    },
+    getDictionaryTypeName(type) {
+      const dictionary = this.dictionaryTypeList.find(item => item.id === type)
+      if (dictionary) {
+        return dictionary.name
+      }
+      return ''
     }
   }
 }

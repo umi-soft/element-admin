@@ -1,24 +1,14 @@
 <template>
-  <el-tag :type="type" plain>{{ item.state | translateState }}</el-tag>
+  <el-tag :type="state === 1 ? 'success' : 'info'" plain>{{ state | translateState }}</el-tag>
 </template>
 
 <script>
 export default {
   props: {
-    detail: {
+    state: {
       required: true,
-      type: Object,
+      type: [String, Number],
       default: () => {}
-    }
-  },
-  data() {
-    return {
-      item: this.detail
-    }
-  },
-  computed: {
-    type() {
-      return this.item.state === 1 ? 'success' : 'info'
     }
   }
 }

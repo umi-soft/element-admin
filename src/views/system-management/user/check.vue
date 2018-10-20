@@ -4,26 +4,38 @@
     <el-collapse value="base-info" accordion>
       <el-collapse-item title="基本信息" name="base-info">
         <el-form :model="detail" :label-width="labelWidth">
-          <input-item-view label="ID">{{ detail.id }}</input-item-view>
-          <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
-          <input-item-view label="用户编号">{{ detail.index }}</input-item-view>
-          <input-item-view label="登录ID">{{ detail.loginName }}</input-item-view>
-          <input-item-view label="用户姓名">{{ detail.name }}</input-item-view>
-          <input-item-view label="昵称">{{ detail.nickName }}</input-item-view>
-          <input-item-view label="证件号码">{{ detail.idNumber }}</input-item-view>
-          <input-item-view label="性别">{{ detail.gender }}</input-item-view>
-          <input-item-view label="生日">{{ detail.birthday }}</input-item-view>
-          <input-item-view label="电话">{{ detail.phone }}</input-item-view>
-          <input-item-view label="邮箱">{{ detail.email }}</input-item-view>
-          <input-item-view label="住址">{{ detail.address }}</input-item-view>
-          <input-item-view label="标签">{{ detail.tag }}</input-item-view>
-          <text-item-view label="用户备注">{{ detail.remark }}</text-item-view>
+          <el-row>
+            <el-col :span="12">
+              <input-item-view :label-width="labelWidth" label="ID">{{ detail.id }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="启用状态">{{ detail.state | translateState }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="用户编号">{{ detail.index }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="登录ID">{{ detail.loginName }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="用户姓名">{{ detail.name }}</input-item-view>
+            </el-col>
+            <el-col :span="12">
+              <input-item-view :label-width="labelWidth" label="肖像">
+                <img :src="detail.avatar ? detail.avatar : 'http://element.eleme.io/static/hamburger.50e4091.png'" class="photo">
+              </input-item-view>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <input-item-view :label-width="labelWidth" label="昵称">{{ detail.nickName }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="证件号码">{{ detail.idNumber }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="性别">{{ detail.gender }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="生日">{{ detail.birthday }}</input-item-view>
+            </el-col>
+            <el-col :span="12">
+              <input-item-view :label-width="labelWidth" label="电话">{{ detail.phone }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="邮箱">{{ detail.email }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="住址">{{ detail.address }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="标签">{{ detail.tag }}</input-item-view>
+            </el-col>
+            <el-col :span="24">
+              <text-item-view :label-width="labelWidth" label="用户备注">{{ detail.remark }}</text-item-view>
+            </el-col>
+          </el-row>
         </el-form>
-      </el-collapse-item>
-      <el-collapse-item title="肖像" name="user-photo">
-        <el-card :body-style="{textAlign: 'center'}">
-          <img :src="detail.avatar ? detail.avatar : 'http://element.eleme.io/static/hamburger.50e4091.png'" class="photo">
-        </el-card>
       </el-collapse-item>
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
@@ -82,7 +94,7 @@ export default {
   },
   data() {
     return {
-      labelWidth: '200px',
+      labelWidth: '150px',
       depts: [],
       groups: [],
       roles: []

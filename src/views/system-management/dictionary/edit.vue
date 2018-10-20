@@ -11,7 +11,7 @@
     </el-form-item>
     <el-form-item label="字典类型" prop="type">
       <el-select v-model="form.type" filterable clearable placeholder="请输入字典关键词进行搜索">
-        <el-option v-for="(item, index) in list" :key="index" :label="item.name" :value="item.id"/>
+        <el-option v-for="(item, index) in dictionaryTypeList" :key="index" :label="item.name" :value="item.id"/>
       </el-select>
     </el-form-item>
     <el-form-item label="字典名称" prop="name">
@@ -56,9 +56,7 @@ export default {
     }]
     return {
       form: form,
-      rules: rules,
-
-      list: []
+      rules: rules
     }
   },
   activated() {
@@ -74,7 +72,7 @@ export default {
         id: null,
         parentId: null,
         state: 1,
-        category: 1,
+        category: 0,
         type: '',
         name: '',
         code: '',

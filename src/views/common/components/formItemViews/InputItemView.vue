@@ -1,6 +1,6 @@
 <template>
   <div :class="['el-form-item', elFormItemSize]">
-    <label :style="{ width: labelWidth}" class="el-form-item__label">{{ label }}</label>
+    <label :style="{ width: labelWidth}" class="el-form-item__label">{{ label }}:</label>
     <div :style="{ marginLeft: labelWidth}" class="el-form-item__content">
       <div :class="['el-input', 'is-disabled', elInputSize]">
         <div class="el-input__inner break-word">
@@ -43,6 +43,7 @@ export default {
 <style lang="scss" scoped>
   .el-input__inner {
     background-color: white !important;
+    border: none !important;
   }
   .break-word {
     word-wrap: break-word;

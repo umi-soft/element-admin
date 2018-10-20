@@ -6,9 +6,8 @@
           :model="queryCriteria"
           :inline="true">
           <el-form-item label="启用状态:" prop="flag">
-            <el-select v-model="queryCriteria.flag" placeholder="请选择字典类型启用状态">
-              <el-option value="1" label="已启用"/>
-              <el-option value="0" label="已禁用"/>
+            <el-select v-model="queryCriteria.flag" clearable placeholder="全部">
+              <el-option v-for="item in dictionaries.flag" :key="item.key" :value="item.key" :label="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="字典类型名称:" prop="name">
@@ -47,7 +46,7 @@
         </el-table-column>
         <el-table-column prop="state" label="启用状态" width="100" sortable="custom" align="center">
           <template slot-scope="scope">
-            <state :detail="scope.row"/>
+            <state :state="scope.row.state"/>
           </template>
         </el-table-column>
       </el-table>
@@ -57,6 +56,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
 import * as DictionaryAPI from '@/api/system-management/dictionary'
@@ -70,6 +70,11 @@ export default {
       selected: null
     }
   },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
+  },
   activated() {
     this.selected = null
   },
@@ -77,6 +82,7 @@ export default {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
         flag: '',
+        category: 1,
         name: ''
       })
     },

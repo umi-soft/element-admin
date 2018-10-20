@@ -1,24 +1,49 @@
 <template>
   <el-row>
     <el-card>
-      <el-col :span="18">
-        <el-form
-          :model="queryCriteria"
-          :inline="true">
-          <el-form-item label="启用状态:" prop="flag">
-            <el-select v-model="queryCriteria.flag" placeholder="请选择用户启用状态">
-              <el-option value="1" label="已启用"/>
-              <el-option value="0" label="已禁用"/>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="用户姓名:" prop="name">
-            <el-input v-model="queryCriteria.name" placeholder="请输入用户姓名"/>
-          </el-form-item>
+      <el-col :span="24">
+        <el-form :model="queryCriteria" label-width="150px">
+          <el-col :span="8">
+            <el-form-item label="启用状态:" prop="flag">
+              <el-select v-model="queryCriteria.flag" clearable placeholder="全部">
+                <el-option v-for="item in dictionaries.flag" :key="item.key" :value="item.key" :label="item.value"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="登录ID:" prop="loginName">
+              <el-input v-model="queryCriteria.loginName" placeholder="请输入登录ID"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="姓名:" prop="name">
+              <el-input v-model="queryCriteria.name" placeholder="请输入姓名"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="性别:" prop="gender">
+              <el-select v-model="queryCriteria.gender" clearable placeholder="全部">
+                <el-option v-for="item in dictionaries.gender" :key="item.key" :value="item.key" :label="item.value"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="邮箱:" prop="email">
+              <el-input v-model="queryCriteria.email" placeholder="请输入邮箱"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="ID:" prop="id">
+              <el-input v-model="queryCriteria.id" placeholder="请输入ID"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <flex-center>
+              <el-button round type="info" @click="resetHandler">重置</el-button>
+              <el-button round type="primary" @click="queryHandler">查询</el-button>
+            </flex-center>
+          </el-col>
         </el-form>
-      </el-col>
-      <el-col :span="6" class="query-btn">
-        <el-button round type="info" @click="resetHandler">重置</el-button>
-        <el-button round type="primary" @click="queryHandler">查询</el-button>
       </el-col>
     </el-card>
     <el-col :span="24" style="margin: 10px 0px;">
@@ -48,7 +73,7 @@
         </el-table-column>
         <el-table-column prop="state" label="启用状态" width="100" sortable="custom" align="center">
           <template slot-scope="scope">
-            <state :detail="scope.row"/>
+            <state :state="scope.row.state"/>
           </template>
         </el-table-column>
       </el-table>
@@ -58,6 +83,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
 import * as UserAPI from '@/api/system-management/user'
@@ -71,14 +97,23 @@ export default {
       selected: null
     }
   },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
+  },
   activated() {
     this.selected = null
   },
   methods: {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
+        id: '',
         flag: '',
-        name: ''
+        gender: '',
+        name: '',
+        email: '',
+        loginName: ''
       })
     },
     executeQueryPage() {
@@ -99,8 +134,7 @@ export default {
   /deep/ .el-card {
     border: none;
   }
-  .query-btn /deep/ .el-button {
-    float: right;
+  /deep/ .el-button {
     margin-left: 10px;
   }
 </style>

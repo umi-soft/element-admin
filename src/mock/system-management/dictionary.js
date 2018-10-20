@@ -4,7 +4,7 @@ import Utils from '../utils'
 
 const mockConfig = {
   'id|1': Utils.id,
-  'parentId|1': Utils.id, // 上级ID
+  'parentId': null, // 上级ID
   'flag|1': Utils.flag, // 是否删除
   'state|1': Utils.state, // 是否启用
   'category|1': [0, 1], // 类型： 0：业务字典类型, 1：业务字典
@@ -21,8 +21,18 @@ const mockConfig = {
 
 export const dictionaries = []
 
+const dictionary = Mock.mock(mockConfig)
+dictionary.type = null
+dictionary.category = 1
+dictionary.parentId = null
+dictionary.flag = 1
+dictionaries.push(dictionary)
+
 for (let i = 0; i < 30; i++) {
-  dictionaries.push(Mock.mock(mockConfig))
+  const item = Mock.mock(mockConfig)
+  item.category = 0
+  item.type = dictionary.id
+  dictionaries.push(item)
 }
 
 export default {
@@ -70,7 +80,9 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const dictionary = deepMerge(deepClone(params), Mock.mock(mockConfig))
+    const dictionary = Mock.mock(mockConfig)
+    params.id = dictionary.id
+    deepMerge(dictionary, params)
     dictionaries.push(dictionary)
     return {
       code: 1,
