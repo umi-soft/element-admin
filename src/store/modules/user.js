@@ -22,6 +22,10 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    CLEAR_USER: (state) => {
+      state.user = null
+      state.roles = []
     }
   },
 
@@ -31,6 +35,7 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsername(userInfo).then(token => {
           commit('SET_TOKEN', token)
+          commit('CLEAR_USER')
           resolve()
         }).catch(error => {
           reject(error)
@@ -43,13 +48,10 @@ const user = {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(data => {
           commit('SET_USER', data.user)
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
-          } else {
-            reject('未获取到该用户权限信息，请联系系统管理员完善权限配置后使用系统!')
-          }
+          commit('SET_ROLES', data.roles)
           resolve(data)
         }).catch(error => {
+          commit('CLEAR_USER')
           reject(error)
         })
       })
@@ -60,8 +62,7 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', null)
-          commit('SET_USER', null)
-          commit('SET_ROLES', [])
+          commit('CLEAR_USER')
           resolve()
         }).catch(error => {
           reject(error)
@@ -73,8 +74,7 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', null)
-        commit('SET_USER', null)
-        commit('SET_ROLES', [])
+        commit('CLEAR_USER')
         resolve()
       })
     }

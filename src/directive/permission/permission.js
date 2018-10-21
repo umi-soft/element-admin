@@ -17,7 +17,7 @@ export default{
         el.parentNode && el.parentNode.removeChild(el)
       }
     } else {
-      throw new Error(`need roles! Like v-permission="['admin','editor']"`)
+      throw new Error('权限不足')
     }
   }
 }

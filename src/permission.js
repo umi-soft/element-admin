@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // 部分页面可能不会触发路由afterEach钩子
     } else {
-      if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完用户信息
+      if (store.getters.user === null) { // 判断当前用户是否已拉取完用户信息
         store.dispatch('GetUserInfo').then(data => { // 拉取用户信息
           const roles = data.roles // 必须是数组结构
           store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表

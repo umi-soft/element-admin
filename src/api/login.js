@@ -23,3 +23,9 @@ export function getUserInfo(token) {
   })
 }
 
+export function getRouterRoles() {
+  return request({
+    url: '/system/router-roles',
+    method: 'get'
+  })
+}

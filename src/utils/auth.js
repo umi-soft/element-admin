@@ -7,7 +7,8 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, 'Bearer ' + token)
+  token = 'Bearer ' + token
+  return Cookies.set(TokenKey, token)
 }
 
 export function removeToken() {
@@ -20,6 +21,7 @@ export function removeToken() {
  * @param meta meta中规定了有权限操作的所有角色，只要用户具有其中一个即可
  */
 export function hasPermission(roles, { meta }) {
+  console.log(meta)
   if (roles.indexOf('admin') >= 0) return true
   if (meta && meta.roles) {
     return roles.some(role => meta.roles.includes(role))
@@ -36,8 +38,8 @@ export function hasPermission(roles, { meta }) {
 export function filterAsyncRouter(routes, roles) {
   const res = []
 
-  routes.forEach(route => {
-    const temp = { ...route }
+  routes.forEach(router => {
+    const temp = { ...router }
     if (hasPermission(roles, temp)) {
       if (temp.children) {
         temp.children = filterAsyncRouter(temp.children, roles)
@@ -47,4 +49,20 @@ export function filterAsyncRouter(routes, roles) {
   })
 
   return res
+}
+
+export function initRouterRoles(router, routerRolesMap) {
+  if (!router.meta) {
+    router.meta = { }
+  }
+  if (routerRolesMap.get(router.name)) {
+    router.meta.roles = routerRolesMap.get(router.name)
+  } else {
+    router.meta.roles = []
+  }
+  if (router.children) {
+    router.children.forEach(children => {
+      initRouterRoles(children, routerRolesMap)
+    })
+  }
 }
