@@ -26,6 +26,7 @@ Mock.setup({
 Mock.mock(/\/auth/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
+Mock.mock(/\/system\/router-roles\.*/, 'get', loginAPI.getRouterRoles)
 
 //  系统设置相关---用户分组
 Mock.mock(/\/system\/group\/query-all/, 'post', groupAPI.queryAll)

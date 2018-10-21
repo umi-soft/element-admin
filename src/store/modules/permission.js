@@ -1,12 +1,10 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
-import { filterAsyncRouter } from '@/utils/auth'
-// import { deepClone } from '@/utils'
-
-// 将未知路由归置到404页面
-asyncRouterMap.push({ path: '*', redirect: '/404', hidden: true })
+import { filterAsyncRouter, initRouterRoles } from '@/utils/auth'
+import { getRouterRoles } from '@/api/login'
 
 const permission = {
   state: {
+    adminCode: 'admin',
     routers: constantRouterMap,
     addRouters: []
   },
@@ -17,17 +15,29 @@ const permission = {
     }
   },
   actions: {
-    GenerateRoutes({ commit }, data) {
+    GenerateRoutes({ commit, state }, data) {
       return new Promise(resolve => {
         const { roles } = data
-        let accessedRouters
-        if (roles.includes('admin')) {
+        let accessedRouters = null
+        if (roles.includes(state.adminCode)) {
+          // 将未知路由归置到404页面
+          asyncRouterMap.push({ path: '*', redirect: '/404', hidden: true })
           accessedRouters = asyncRouterMap
+          commit('SET_ROUTERS', accessedRouters)
+          resolve()
         } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+          getRouterRoles().then(routerRoles => {
+            const routerRolesMap = new Map(routerRoles)
+            asyncRouterMap.forEach(module => {
+              initRouterRoles(module, routerRolesMap)
+            })
+            accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+            // 将未知路由归置到404页面
+            accessedRouters.push({ path: '*', redirect: '/404', hidden: true })
+            commit('SET_ROUTERS', accessedRouters)
+            resolve()
+          })
         }
-        commit('SET_ROUTERS', accessedRouters)
-        resolve()
       })
     }
   }
