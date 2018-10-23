@@ -221,10 +221,9 @@ export default {
     initForm(form = {}) {
       return deepMerge(form, {
         id: null,
-        state: 1,
+        state: '',
         index: '',
         loginName: '',
-        password: '',
         name: '',
         nickName: '',
         avatar: '',

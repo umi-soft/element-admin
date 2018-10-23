@@ -66,7 +66,6 @@ export default {
         id: null,
         parentId: null,
         state: 1,
-        category: 1,
         type: '',
         name: '',
         code: '',

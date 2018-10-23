@@ -66,7 +66,6 @@ export default {
   methods: {
     initForm(form = {}) {
       return deepMerge(form, {
-        id: null,
         parentId: null,
         state: 1,
         category: 0,

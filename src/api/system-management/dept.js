@@ -10,10 +10,11 @@ export function queryAllDepts(data) {
   })
 }
 
-export function queryAllTreeDepts() {
+export function queryAllTreeDepts(id) {
   return request({
     url: base_url + 'query-all-tree',
-    method: 'get'
+    method: 'get',
+    params: { id }
   })
 }
 

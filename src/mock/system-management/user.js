@@ -42,11 +42,11 @@ export default {
     console.log(config)
     const params = JSON.parse(config.body)
     const query = {}
-    params.filter.filters.forEach(filter => {
+    params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
     const queryResult = deepClone(fieldQueryLike(users, query))
-    params.filter.sorts.forEach(sort => {
+    params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
     })
@@ -58,6 +58,23 @@ export default {
         pageSize: params.pageSize,
         page: params.page,
         list: queryResult.slice((params.page - 1) * params.pageSize, params.page * params.pageSize)
+      }
+    }
+  },
+  checkLoginName: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    const find = users.some(item => {
+      if (params.id) {
+        return item.loginName === params.loginName && item.id === params.id
+      }
+      return item.loginName === params.loginName
+    })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: {
+        exist: find ? 1 : 0
       }
     }
   },

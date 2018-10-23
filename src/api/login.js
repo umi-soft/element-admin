@@ -8,24 +8,26 @@ export function loginByUsername(data) {
   })
 }
 
-export function logout() {
-  return request({
-    url: '/logout',
-    method: 'post'
-  })
-}
-
 export function getUserInfo(token) {
   return request({
-    url: '/user/info',
+    url: '/user-details',
     method: 'get',
     params: { token }
   })
 }
 
-export function getRouterRoles() {
+export function getRouterRoles(token) {
   return request({
-    url: '/system/router-roles',
-    method: 'get'
+    url: '/routers',
+    method: 'get',
+    params: { token }
+  })
+}
+
+export function logout(token) {
+  return request({
+    url: '/logout',
+    method: 'get',
+    params: { token }
   })
 }

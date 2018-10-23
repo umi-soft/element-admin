@@ -35,11 +35,11 @@ export default {
     console.log(config)
     const params = JSON.parse(config.body)
     const query = {}
-    params.filter.filters.forEach(filter => {
+    params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
     const queryResult = deepClone(fieldQueryLike(groups, query))
-    params.filter.sorts.forEach(sort => {
+    params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
     })

@@ -24,9 +24,9 @@ Mock.setup({
 
 // 登录相关
 Mock.mock(/\/auth/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/logout/, 'post', loginAPI.logout)
-Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo)
-Mock.mock(/\/system\/router-roles\.*/, 'get', loginAPI.getRouterRoles)
+Mock.mock(/\/user-details/, 'get', loginAPI.getUserInfo)
+Mock.mock(/\/routers/, 'get', loginAPI.getRouterRoles)
+Mock.mock(/\/logout/, 'get', loginAPI.logout)
 
 //  系统设置相关---用户分组
 Mock.mock(/\/system\/group\/query-all/, 'post', groupAPI.queryAll)
@@ -42,6 +42,7 @@ Mock.mock(/\/system\/user\/query-page/, 'post', userAPI.queryPage)
 Mock.mock(/\/system\/user\/add-group/, 'post', userAPI.addUserGroup)
 Mock.mock(/\/system\/user\/add-dept/, 'post', userAPI.addUserDept)
 Mock.mock(/\/system\/user\/add-role/, 'post', userAPI.addUserRole)
+Mock.mock(/\/system\/user\/check-login-name/, 'post', userAPI.checkLoginName)
 Mock.mock(/\/system\/user\/add/, 'post', userAPI.add)
 Mock.mock(/\/system\/user\/edit/, 'post', userAPI.edit)
 Mock.mock(/\/system\/user\/del-role/, 'post', userAPI.delUserRole)
@@ -83,10 +84,10 @@ Mock.mock(/\/system\/dictionary\/del/, 'get', dictionaryAPI.del)
 Mock.mock(/\/system\/menu\/query-all/, 'post', menuAPI.queryAll)
 Mock.mock(/\/system\/menu\/edit/, 'post', menuAPI.edit)
 Mock.mock(/\/system\/menu\/sync/, 'post', menuAPI.sync)
-Mock.mock(/\/system\/menu\/query-urls/, 'get', menuAPI.queryMenuUrls)
+Mock.mock(/\/system\/menu\/all-urls/, 'get', menuAPI.queryMenuUrls)
 Mock.mock(/\/system\/menu\/add-url/, 'post', menuAPI.addMenuUrl)
 Mock.mock(/\/system\/menu\/del-url/, 'post', menuAPI.delMenuUrl)
-Mock.mock(/\/system\/menu\/query-roles/, 'get', menuAPI.queryMenuRoles)
+Mock.mock(/\/system\/menu\/all-roles/, 'get', menuAPI.queryMenuRoles)
 Mock.mock(/\/system\/menu\/del-role/, 'post', menuAPI.delMenuRole)
 
 export default Mock
