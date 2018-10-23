@@ -97,7 +97,7 @@ export function syncMenus(data) {
 // ####################################MenuURL中间表API####################################
 export function queryAllMenuUrl(params) {
   return request({
-    url: base_url + 'query-urls',
+    url: base_url + 'all-urls',
     method: 'get',
     params
   })
@@ -122,7 +122,7 @@ export function delMenuUrl(data) {
 // ####################################RoleMenu中间表API####################################
 export function queryAllMenuRole(params) {
   return request({
-    url: base_url + 'query-roles',
+    url: base_url + 'all-roles',
     method: 'get',
     params
   })

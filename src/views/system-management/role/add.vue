@@ -52,7 +52,6 @@ export default {
   methods: {
     initForm(form = {}) {
       return deepMerge(form, {
-        id: null,
         name: '',
         state: 1,
         index: '',

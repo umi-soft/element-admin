@@ -3,6 +3,15 @@ import * as UserAPI from '@/api/system-management/user'
 export default {
   methods: {
     initRules() {
+      const validateLoginName = (rule, value, callback) => {
+        UserAPI.checkLoginName({ id: this.id, loginName: value }).then(data => {
+          if (data.exist === 0) {
+            callback()
+          } else {
+            callback(new Error('用户名已存在'))
+          }
+        })
+      }
       return {
         state: [{
           required: true, message: '请选择用户启用状态', trigger: 'blur'
@@ -12,6 +21,8 @@ export default {
         }],
         loginName: [{
           required: true, message: '请输入用户编号', trigger: 'blur'
+        }, {
+          validator: validateLoginName, trigger: 'blur'
         }],
         password: [{
           required: true, message: '请输入用户编号', trigger: 'blur'

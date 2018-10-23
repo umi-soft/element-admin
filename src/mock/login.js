@@ -47,12 +47,7 @@ export default {
       data: user
     }
   },
-  logout: () => {
-    return {
-      code: 1
-    }
-  },
-  getRouterRoles: () => {
+  getRouterRoles: (config) => {
     const routerRoles = new Map()
     routerRoles.set('90a127ce319d5d93b3b49c697cfa138f', ['simple'])
     routerRoles.set('323c76618c6b56109bd490baf0d00902', ['simple'])
@@ -62,6 +57,11 @@ export default {
     return {
       code: 1,
       data: routerRoles
+    }
+  },
+  logout: (config) => {
+    return {
+      code: 1
     }
   }
 }
