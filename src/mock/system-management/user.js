@@ -102,6 +102,18 @@ export default {
       data: {}
     }
   },
+
+  editUserPassword: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    const user = users[users.findIndex(item => { return item.id === params.id })]
+    user.password = params.password
+    return {
+      code: 1,
+      message: '操作成功',
+      data: {}
+    }
+  },
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
@@ -139,7 +151,11 @@ export default {
   addUserDept: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    deptUsers.push(params)
+    console.log(deptUsers.length)
+    params.forEach(item => {
+      deptUsers.push(item)
+    })
+    console.log(deptUsers)
     return {
       code: 1,
       message: '操作成功',
@@ -185,7 +201,9 @@ export default {
   addUserGroup: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    groupUsers.push(params)
+    params.forEach(item => {
+      groupUsers.push(item)
+    })
     return {
       code: 1,
       message: '操作成功',
@@ -231,7 +249,9 @@ export default {
   addUserRole: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    userRoles.push(params)
+    params.forEach(item => {
+      userRoles.push(item)
+    })
     return {
       code: 1,
       message: '操作成功',

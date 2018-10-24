@@ -82,6 +82,30 @@
       </el-form>
     </el-card>
     <el-card>
+      <div slot="header">
+        <button-right>
+          密码修改
+          <template slot="button">
+            <el-button type="primary" @click="submitHandler('password', editUserPassword)">保存</el-button>
+          </template>
+        </button-right>
+      </div>
+      <el-form ref="password" :model="password" :rules="passwordRules" label-width="150px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="value" prop="value">
+              <el-input v-model="password.value" type="password"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="validator" prop="validator">
+              <el-input v-model="password.validator" type="password"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-card>
+    <el-card>
       <template slot="header">
         <select-right>
           <template slot="left">分组信息</template>
@@ -184,6 +208,17 @@ export default {
     rules.id = [{
       required: true, message: '编辑信息时ID不能为空', trigger: 'change'
     }]
+
+    const validatePassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.password.value) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
+
     return {
       form: form,
       rules: rules,
@@ -198,6 +233,23 @@ export default {
         deptId: null,
         roleId: null,
         groupId: null
+      },
+
+      password: {
+        value: '',
+        validator: ''
+      },
+      passwordRules: {
+        value: [{
+          required: true, message: '请输入密码！', trigger: 'change'
+        }, {
+          min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'change'
+        }],
+        validator: [{
+          required: true, message: '请再次输入密码！', trigger: 'change'
+        }, {
+          validator: validatePassword, trigger: 'blur'
+        }]
       }
     }
   },
@@ -240,15 +292,22 @@ export default {
     customSubmitHandler() {
       UserAPI.editUser(this.form).then(this.submitSuccessHandler)
     },
+    editUserPassword() {
+      UserAPI.editUserPassword({
+        id: this.form.id,
+        password: this.password.value
+      }).then(this.submitSuccessHandler)
+    },
     customSubmitSuccessHandler() {
       this.$refs['form'].clearValidate()
+      this.$refs['password'].clearValidate()
     },
     addUserDeptHandler(id) {
       if (!id) return
-      const params = {
+      const params = [{
         userId: this.detail.id,
         deptId: id
-      }
+      }]
       UserAPI.addUserDept(params).then(data => {
         this.queryAllUserDepts()
         this.optionSuccessHandler()
@@ -267,10 +326,10 @@ export default {
     },
     addUserGroupHandler(id) {
       if (!id) return
-      const params = {
+      const params = [{
         userId: this.detail.id,
         groupId: id
-      }
+      }]
       UserAPI.addUserGroup(params).then(data => {
         this.queryAllUserGroups()
         this.optionSuccessHandler()
@@ -289,10 +348,10 @@ export default {
     },
     addUserRoleHandler(id) {
       if (!id) return
-      const params = {
+      const params = [{
         userId: this.detail.id,
         roleId: id
-      }
+      }]
       UserAPI.addUserRole(params).then(data => {
         this.queryAllUserRoles()
         this.optionSuccessHandler()

@@ -34,6 +34,14 @@ export function editUser(data) {
   })
 }
 
+export function editUserPassword(data) {
+  return request({
+    url: base_url + 'edit-password',
+    method: 'post',
+    data
+  })
+}
+
 export function delUser(id) {
   return request({
     url: base_url + 'del',
