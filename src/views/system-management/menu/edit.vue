@@ -79,7 +79,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge, deepMergeLeft } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as MenuAPI from '@/api/system-management/menu'
 import mixins from './mixins'
 
@@ -107,37 +107,16 @@ export default {
     }
   },
   activated() {
-    deepMergeLeft(this.form, this.detail)
-    this.$nextTick(() => {
-      this.$refs['form'].clearValidate()
+    MenuAPI.queryMenuById(this.detail.id).then((data) => {
+      deepMergeLeft(this.form, data)
+      this.$nextTick(() => {
+        this.$refs['form'].clearValidate()
+      })
     })
     this.queryMenuUrls()
     this.queryMenuRoles()
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        id: null,
-        index: '',
-        name: '',
-        remark: ''
-      })
-    },
-    initRules() {
-      return {
-        id: [{
-          required: true, message: '编辑信息时ID不能为空', trigger: 'change'
-        }],
-        index: [{
-          required: true, message: '请输入菜单编号', trigger: 'blur'
-        }],
-        name: [{
-          required: true, message: '请输入菜单名称', trigger: 'blur'
-        }, {
-          min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
-        }]
-      }
-    },
     customSubmitHandler() {
       MenuAPI.editMenu(this.form).then(this.submitSuccessHandler)
     },

@@ -76,22 +76,15 @@ export default {
     }
   },
   activated() {
-    deepMergeLeft(this.form, this.detail)
-    this.$nextTick(() => {
-      this.$refs['form'].clearValidate()
+    GroupAPI.queryGroupById(this.detail.id).then((data) => {
+      deepMergeLeft(this.form, data)
+      this.$nextTick(() => {
+        this.$refs['form'].clearValidate()
+      })
     })
     this.queryAllUsers()
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        id: null,
-        name: '',
-        state: 1,
-        index: '',
-        remark: ''
-      })
-    },
     customSubmitHandler() {
       GroupAPI.editGroup(this.form).then(this.submitSuccessHandler)
     },

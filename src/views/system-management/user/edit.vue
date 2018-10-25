@@ -179,7 +179,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge, deepMergeLeft } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as DeptAPI from '@/api/system-management/dept'
 import * as RoleAPI from '@/api/system-management/role'
 import * as GroupAPI from '@/api/system-management/group'
@@ -197,6 +197,7 @@ export default {
   },
   data() {
     const form = this.initForm()
+    delete form.password
     const rules = this.initRules()
     delete rules.password
     rules.id = [{
@@ -248,9 +249,11 @@ export default {
     }
   },
   activated() {
-    deepMergeLeft(this.form, this.detail)
-    this.$nextTick(() => {
-      this.$refs['form'].clearValidate()
+    UserAPI.queryUserById(this.detail.id).then((data) => {
+      deepMergeLeft(this.form, data)
+      this.$nextTick(() => {
+        this.$refs['form'].clearValidate()
+      })
     })
     this.queryAllUserDepts()
     this.queryAllUserGroups()
@@ -264,25 +267,6 @@ export default {
     RoleAPI.queryAllRoles(params).then(data => { this.addOption.allRoles = data })
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        id: null,
-        state: '',
-        index: '',
-        loginName: '',
-        name: '',
-        nickName: '',
-        avatar: '',
-        idNumber: '',
-        gender: '',
-        birthday: '',
-        phone: '',
-        email: '',
-        address: '',
-        tag: '',
-        remark: ''
-      })
-    },
     customSubmitHandler() {
       UserAPI.editUser(this.form).then(this.submitSuccessHandler)
     },

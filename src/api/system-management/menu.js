@@ -78,6 +78,14 @@ export function queryAllMenus(data) {
   })
 }
 
+export function queryMenuById(id) {
+  return request({
+    url: base_url + 'query-by-id',
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function editMenu(data) {
   return request({
     url: base_url + 'edit',

@@ -78,6 +78,16 @@ export default {
       }
     }
   },
+  queryById: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const user = users[users.findIndex(item => { return item.id === params.id })]
+    return {
+      code: 1,
+      message: '操作成功',
+      data: user
+    }
+  },
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
@@ -198,6 +208,7 @@ export default {
       })
     }
   },
+
   addUserGroup: config => {
     console.log(config)
     const params = JSON.parse(config.body)

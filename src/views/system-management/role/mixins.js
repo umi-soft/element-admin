@@ -4,6 +4,16 @@ import { asyncMenuMap } from '@/router'
 
 export default {
   methods: {
+    initForm() {
+      return {
+        id: null,
+        token: null,
+        name: '',
+        state: 1,
+        index: '',
+        remark: ''
+      }
+    },
     initRules() {
       return {
         name: [{

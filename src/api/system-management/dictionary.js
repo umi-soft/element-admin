@@ -18,6 +18,14 @@ export function queryAllDictionaries(data) {
   })
 }
 
+export function queryDictionaryById(id) {
+  return request({
+    url: base_url + 'query-by-id',
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function addDictionary(data) {
   return request({
     url: base_url + 'add',

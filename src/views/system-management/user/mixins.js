@@ -8,6 +8,26 @@ export default {
     ])
   },
   methods: {
+    initForm() {
+      return {
+        id: null,
+        token: null,
+        state: '',
+        index: '',
+        loginName: '',
+        name: '',
+        nickName: '',
+        avatar: '',
+        idNumber: '',
+        gender: '',
+        birthday: '',
+        phone: '',
+        email: '',
+        address: '',
+        tag: '',
+        remark: ''
+      }
+    },
     initRules() {
       const validateLoginName = (rule, value, callback) => {
         UserAPI.checkLoginName({ id: this.id, loginName: value }).then(data => {

@@ -27,7 +27,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as DeptAPI from '@/api/system-management/dept'
 import mixins from './mixins'
 
@@ -49,7 +49,7 @@ export default {
     }
   },
   activated() {
-    this.initForm(this.form)
+    deepMergeLeft(this.form, this.initForm())
     if (this.detail.id) {
       this.form.parentId = this.detail.id
     }
@@ -58,17 +58,6 @@ export default {
     })
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        id: null,
-        parentId: null,
-        type: '',
-        name: '',
-        state: 1,
-        index: '',
-        remark: ''
-      })
-    },
     customSubmitHandler() {
       DeptAPI.addDept(this.form).then(data => {
         this.submitSuccessHandler(data)

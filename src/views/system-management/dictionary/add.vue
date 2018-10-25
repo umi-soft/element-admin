@@ -32,7 +32,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as DictionaryAPI from '@/api/system-management/dictionary'
 import mixins from './mixins'
 
@@ -54,7 +54,7 @@ export default {
     }
   },
   activated() {
-    this.initForm(this.form)
+    deepMergeLeft(this.form, this.initForm())
     if (this.detail.id) {
       this.form.parentId = this.detail.id
     }
@@ -64,18 +64,6 @@ export default {
     this.queryAllDictionaryType()
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        parentId: null,
-        state: 1,
-        category: 0,
-        type: '',
-        name: '',
-        code: '',
-        index: '',
-        remark: ''
-      })
-    },
     customSubmitHandler() {
       DictionaryAPI.addDictionary(this.form).then(this.submitSuccessHandler)
     }

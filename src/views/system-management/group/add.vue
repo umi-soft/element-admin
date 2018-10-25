@@ -21,7 +21,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as GroupAPI from '@/api/system-management/group'
 import mixins from './mixins'
 
@@ -43,20 +43,12 @@ export default {
     }
   },
   activated() {
-    this.initForm(this.form)
+    deepMergeLeft(this.form, this.initForm())
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        name: '',
-        state: 1,
-        index: '',
-        remark: ''
-      })
-    },
     customSubmitHandler() {
       GroupAPI.addGroup(this.form).then(data => {
         this.submitSuccessHandler(data)

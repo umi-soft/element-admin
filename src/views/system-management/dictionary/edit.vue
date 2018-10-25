@@ -50,6 +50,7 @@ export default {
   },
   data() {
     const form = this.initForm()
+    delete form.category
     const rules = this.initRules()
     rules.id = [{
       required: true, message: '编辑信息时ID不能为空', trigger: 'change'
@@ -60,25 +61,15 @@ export default {
     }
   },
   activated() {
-    deepMergeLeft(this.form, this.detail)
-    this.$nextTick(() => {
-      this.$refs['form'].clearValidate()
+    DictionaryAPI.queryDictionaryById(this.detail.id).then((data) => {
+      deepMergeLeft(this.form, data)
+      this.$nextTick(() => {
+        this.$refs['form'].clearValidate()
+      })
     })
     this.queryAllDictionaryType()
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        id: null,
-        parentId: null,
-        state: 1,
-        type: '',
-        name: '',
-        code: '',
-        index: '',
-        remark: ''
-      })
-    },
     customSubmitHandler() {
       DictionaryAPI.editDictionary(this.form).then(this.submitSuccessHandler)
     }

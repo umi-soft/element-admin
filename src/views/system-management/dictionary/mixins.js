@@ -7,6 +7,19 @@ export default {
     }
   },
   methods: {
+    initForm() {
+      return {
+        id: null,
+        token: null,
+        parentId: null,
+        state: 1,
+        type: '',
+        name: '',
+        code: '',
+        index: '',
+        remark: ''
+      }
+    },
     initRules() {
       return {
         state: [{

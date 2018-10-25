@@ -120,23 +120,16 @@ export default {
     }
   },
   activated() {
-    deepMergeLeft(this.form, this.detail)
-    this.$nextTick(() => {
-      this.$refs['form'].clearValidate()
+    RoleAPI.queryRoleById(this.detail.id).then((data) => {
+      deepMergeLeft(this.form, data)
+      this.$nextTick(() => {
+        this.$refs['form'].clearValidate()
+      })
     })
     this.initMenus()
     this.queryAllUsers()
   },
   methods: {
-    initForm() {
-      return {
-        id: null,
-        name: '',
-        state: 1,
-        index: '',
-        remark: ''
-      }
-    },
     customSubmitHandler() {
       RoleAPI.editRole(this.form).then(this.submitSuccessHandler)
     },

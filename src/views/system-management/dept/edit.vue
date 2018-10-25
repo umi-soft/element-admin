@@ -82,24 +82,15 @@ export default {
     }
   },
   activated() {
-    deepMergeLeft(this.form, this.detail)
-    this.$nextTick(() => {
-      this.$refs['form'].clearValidate()
+    DeptAPI.queryDeptById(this.detail.id).then((data) => {
+      deepMergeLeft(this.form, data)
+      this.$nextTick(() => {
+        this.$refs['form'].clearValidate()
+      })
     })
     this.queryAllUsers()
   },
   methods: {
-    initForm() {
-      return {
-        id: null,
-        parentId: null,
-        type: '',
-        name: '',
-        state: 1,
-        index: '',
-        remark: ''
-      }
-    },
     customSubmitHandler() {
       DeptAPI.editDept(this.form).then(this.submitSuccessHandler)
     },

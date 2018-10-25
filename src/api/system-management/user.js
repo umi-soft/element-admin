@@ -10,6 +10,14 @@ export function queryPageUsers(data) {
   })
 }
 
+export function queryUserById(id) {
+  return request({
+    url: base_url + 'query-by-id',
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function checkLoginName(data) {
   return request({
     url: base_url + 'check-login-name',

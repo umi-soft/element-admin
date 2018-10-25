@@ -18,6 +18,14 @@ export function queryAllGroups(data) {
   })
 }
 
+export function queryGroupById(id) {
+  return request({
+    url: base_url + 'query-by-id',
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function addGroup(data) {
   return request({
     url: base_url + 'add',

@@ -18,6 +18,14 @@ export function queryAllRoles(data) {
   })
 }
 
+export function queryRoleById(id) {
+  return request({
+    url: base_url + 'query-by-id',
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function addRole(data) {
   return request({
     url: base_url + 'add',

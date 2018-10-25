@@ -64,7 +64,16 @@ export default {
       data: menus
     }
   },
-
+  queryById: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const menu = menus[menus.findIndex(item => { return item.id === params.id })]
+    return {
+      code: 1,
+      message: '操作成功',
+      data: menu
+    }
+  },
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)

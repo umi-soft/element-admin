@@ -73,7 +73,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as UserAPI from '@/api/system-management/user'
 import mixins from './mixins'
 
@@ -95,31 +95,12 @@ export default {
     }
   },
   activated() {
-    this.initForm(this.form)
+    deepMergeLeft(this.form, this.initForm())
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })
   },
   methods: {
-    initForm(form = {}) {
-      return deepMerge(form, {
-        state: 1,
-        index: '',
-        loginName: '',
-        password: '',
-        name: '',
-        nickName: '',
-        avatar: '',
-        idNumber: '',
-        gender: '',
-        birthday: '',
-        phone: '',
-        email: '',
-        address: '',
-        tag: '',
-        remark: ''
-      })
-    },
     customSubmitHandler() {
       UserAPI.addUser(this.form).then(data => {
         this.submitSuccessHandler(data)

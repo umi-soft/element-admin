@@ -18,6 +18,14 @@ export function queryAllTreeDepts(id) {
   })
 }
 
+export function queryDeptById(id) {
+  return request({
+    url: base_url + 'query-by-id',
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function addDept(data) {
   return request({
     url: base_url + 'add',

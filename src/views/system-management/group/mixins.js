@@ -2,6 +2,16 @@ import * as GroupAPI from '@/api/system-management/group'
 
 export default {
   methods: {
+    initForm() {
+      return {
+        id: null,
+        token: null,
+        name: '',
+        state: 1,
+        index: '',
+        remark: ''
+      }
+    },
     initRules() {
       return {
         name: [{

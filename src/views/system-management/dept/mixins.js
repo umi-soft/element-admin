@@ -2,6 +2,18 @@ import * as DeptAPI from '@/api/system-management/dept'
 
 export default {
   methods: {
+    initForm() {
+      return {
+        id: null,
+        token: null,
+        parentId: null,
+        type: '',
+        name: '',
+        state: 1,
+        index: '',
+        remark: ''
+      }
+    },
     initRules() {
       return {
         type: [{

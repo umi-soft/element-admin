@@ -106,6 +106,16 @@ export default {
       data: deptsTree
     }
   },
+  queryById: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const dept = findDept(params.id)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: dept
+    }
+  },
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)

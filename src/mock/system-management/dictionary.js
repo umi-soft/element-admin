@@ -77,6 +77,16 @@ export default {
       data: queryResult
     }
   },
+  queryById: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const dictionary = dictionaries[dictionaries.findIndex(item => { return item.id === params.id })]
+    return {
+      code: 1,
+      message: '操作成功',
+      data: dictionary
+    }
+  },
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
