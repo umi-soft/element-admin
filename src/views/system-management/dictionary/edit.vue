@@ -35,7 +35,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge, deepMergeLeft } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as DictionaryAPI from '@/api/system-management/dictionary'
 import mixins from './mixins'
 

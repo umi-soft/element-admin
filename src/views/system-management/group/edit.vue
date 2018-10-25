@@ -50,7 +50,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge, deepMergeLeft } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as GroupAPI from '@/api/system-management/group'
 import mixins from './mixins'
 
