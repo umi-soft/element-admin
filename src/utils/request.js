@@ -14,10 +14,7 @@ const service = axios.create({
 service.interceptors.request.use(
   request => {
     // 后端服务jwt token信息
-    if (store.getters.token) {
-      // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      request.headers['X-Token'] = getToken().token
-    }
+    request.headers['Authorization'] = getToken().token
     return request
   },
   error => {

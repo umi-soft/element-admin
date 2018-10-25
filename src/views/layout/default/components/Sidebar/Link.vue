@@ -21,6 +21,7 @@ export default {
     },
     linkProps(url) {
       if (this.isExternalLink(url)) {
+        url = url + '?token=' + encodeURIComponent(this.$store.state.user.token)
         return {
           is: 'a',
           href: url,
