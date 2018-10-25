@@ -87,7 +87,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge } from '@/utils'
+import { deepMergeLeft } from '@/utils'
 import * as RoleAPI from '@/api/system-management/role'
 import mixins from './mixins'
 
@@ -120,7 +120,7 @@ export default {
     }
   },
   activated() {
-    deepMerge(this.form, this.detail)
+    deepMergeLeft(this.form, this.detail)
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })

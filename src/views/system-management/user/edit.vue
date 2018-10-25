@@ -72,12 +72,6 @@
               <el-input v-model="form.remark" type="textarea"/>
             </el-form-item>
           </el-col>
-          <el-col :span="24">
-            <el-form-item>
-              <el-button type="primary" @click="submitHandler('form')">保存</el-button>
-              <el-button @click="backHandler">取消</el-button>
-            </el-form-item>
-          </el-col>
         </el-row>
       </el-form>
     </el-card>
@@ -185,7 +179,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge } from '@/utils'
+import { deepMerge, deepMergeLeft } from '@/utils'
 import * as DeptAPI from '@/api/system-management/dept'
 import * as RoleAPI from '@/api/system-management/role'
 import * as GroupAPI from '@/api/system-management/group'
@@ -254,7 +248,7 @@ export default {
     }
   },
   activated() {
-    deepMerge(this.form, this.detail)
+    deepMergeLeft(this.form, this.detail)
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })

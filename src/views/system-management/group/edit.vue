@@ -50,7 +50,7 @@
 
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
-import { deepMerge } from '@/utils'
+import { deepMerge, deepMergeLeft } from '@/utils'
 import * as GroupAPI from '@/api/system-management/group'
 import mixins from './mixins'
 
@@ -76,7 +76,7 @@ export default {
     }
   },
   activated() {
-    deepMerge(this.form, this.detail)
+    deepMergeLeft(this.form, this.detail)
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })
