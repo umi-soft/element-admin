@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
 
 // 本工程中axios使用，均通过其API构建请求，可参考https://www.kancloud.cn/yunye/axios/234845
 // create an axios instance
@@ -14,7 +13,9 @@ const service = axios.create({
 service.interceptors.request.use(
   request => {
     // 后端服务jwt token信息
-    request.headers['Authorization'] = getToken().token
+    if (store.getters.token) {
+      request.headers['Authorization'] = store.getters.token
+    }
     return request
   },
   error => {
