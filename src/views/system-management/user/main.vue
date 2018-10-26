@@ -12,9 +12,10 @@ import query from './query'
 import edit from './edit'
 import add from './add'
 import check from './check'
+import authorization from './authorization'
 
 export default {
-  components: { query, edit, add, check },
+  components: { query, edit, add, check, authorization },
   data() {
     return {
       optionType: 'query',

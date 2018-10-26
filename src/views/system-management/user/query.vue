@@ -55,12 +55,14 @@
             <el-button type="primary" @click="$emit('option-changed','add')">新增</el-button>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
             <el-button v-if="selected" type="primary" @click="delHandler">删除</el-button>
+            <el-button v-if="selectedUsers.length > 0" type="primary" @click="$emit('option-changed','authorization', selectedUsers)">批量授权</el-button>
           </el-button-group>
         </template>
       </button-right>
     </el-col>
     <el-col :span="24">
-      <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler">
+      <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler" @selection-change="clickCheckboxHandler">
+        <el-table-column type="selection" label="全选" />
         <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable="custom" align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="name" label="姓名" sortable="custom" align="center"/>
         <el-table-column prop="gender" label="性别" width="100" sortable="custom" align="center">
@@ -94,7 +96,8 @@ export default {
     const queryCriteria = this.initQueryCriteria()
     return {
       queryCriteria: queryCriteria,
-      selected: null
+      selected: null,
+      selectedUsers: []
     }
   },
   activated() {
@@ -120,6 +123,9 @@ export default {
       UserAPI.delUser(this.selected.id).then(() => {
         this.queryHandler()
       })
+    },
+    clickCheckboxHandler(selection) {
+      this.selectedUsers = selection
     }
   }
 }
