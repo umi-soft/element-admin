@@ -55,7 +55,7 @@
             <el-button type="primary" @click="$emit('option-changed','add')">新增</el-button>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
             <el-button v-if="selected" type="primary" @click="delHandler">删除</el-button>
-            <el-button v-if="selectedUsers.length > 0" type="primary" @click="$emit('option-changed','authorization', selectedUsers)">批量授权</el-button>
+            <el-button v-if="selectedUsers.length > 0" type="primary" @click="$emit('option-changed','batchEdit', selectedUsers)">批量编辑</el-button>
           </el-button-group>
         </template>
       </button-right>

@@ -26,7 +26,7 @@ export const groups = []
  */
 export const groupUsers = []
 
-for (let i = 0; i < 13; i++) {
+for (let i = 0; i < 10; i++) {
   groups.push(Mock.mock(mockConfig))
 }
 

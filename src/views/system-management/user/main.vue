@@ -12,10 +12,10 @@ import query from './query'
 import edit from './edit'
 import add from './add'
 import check from './check'
-import authorization from './authorization'
+import batchEdit from './batchEdit'
 
 export default {
-  components: { query, edit, add, check, authorization },
+  components: { query, edit, add, check, batchEdit },
   data() {
     return {
       optionType: 'query',
