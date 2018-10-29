@@ -3,6 +3,7 @@ import * as MenuAPI from '@/api/system-management/menu'
 export default {
   data() {
     return {
+      parentMenuName: '',
       menuUrls: [],
       roles: []
     }
@@ -41,6 +42,13 @@ export default {
       this.menuUrls = []
       const params = { id: this.detail.id }
       MenuAPI.queryAllMenuUrl(params).then(menuUrls => { this.menuUrls = menuUrls })
+    },
+    getParentMenuName(id) {
+      this.parentMenuName = ''
+      if (!id) return
+      MenuAPI.queryMenuById(id).then(menu => {
+        this.parentMenuName = menu.name
+      })
     }
   }
 }

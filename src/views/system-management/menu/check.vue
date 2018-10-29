@@ -5,7 +5,7 @@
       <el-collapse-item title="基本信息" name="base-info">
         <el-form>
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
-          <input-item-view v-if="detail.parentId" label="上级菜单">{{ detail.parentId }}</input-item-view>
+          <input-item-view v-if="parentMenuName" label="上级菜单">{{ parentMenuName }}</input-item-view>
           <input-item-view label="菜单编号">{{ detail.index }}</input-item-view>
           <input-item-view label="菜单名称">{{ detail.name }}</input-item-view>
           <input-item-view label="菜单图标名称">{{ detail.icon }}</input-item-view>
@@ -56,6 +56,7 @@ export default {
     }
   },
   activated() {
+    this.getParentMenuName(this.detail.parentId)
     this.queryMenuUrls()
     this.queryMenuRoles()
   },

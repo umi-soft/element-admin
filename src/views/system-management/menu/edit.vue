@@ -14,6 +14,9 @@
         <el-form-item label="ID" prop="id">
           <el-input v-model="form.id" disabled/>
         </el-form-item>
+        <el-form-item v-if="parentMenuName" label="上级菜单">
+          <el-input :value="parentMenuName" disabled/>
+        </el-form-item>
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="form.name"/>
         </el-form-item>
@@ -109,6 +112,7 @@ export default {
   activated() {
     MenuAPI.queryMenuById(this.detail.id).then((data) => {
       deepMergeLeft(this.form, data)
+      this.getParentMenuName(this.detail.parentId)
       this.$nextTick(() => {
         this.$refs['form'].clearValidate()
       })
