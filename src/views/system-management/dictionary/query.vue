@@ -95,7 +95,7 @@ export default {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
         flag: '',
-        category: '0',
+        category: '2',
         type: '',
         name: ''
       })
