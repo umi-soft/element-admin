@@ -28,9 +28,10 @@ dictionary.parentId = null
 dictionary.flag = 1
 dictionaries.push(dictionary)
 
-for (let i = 0; i < 30; i++) {
+// 单级字典
+for (let i = 0; i < 13; i++) {
   const item = Mock.mock(mockConfig)
-  item.category = 0
+  item.category = 2
   item.type = dictionary.id
   dictionaries.push(item)
 }

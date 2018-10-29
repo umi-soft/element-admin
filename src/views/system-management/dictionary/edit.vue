@@ -3,8 +3,8 @@
     <el-form-item label="ID" prop="id">
       <el-input v-model="form.id" disabled/>
     </el-form-item>
-    <el-form-item v-if="form.parentId !== null" label="上级ID" prop="parentId">
-      <el-input v-model="form.parentId" disabled/>
+    <el-form-item v-if="parentDictionaryName" label="上级字典">
+      <el-input :value="parentDictionaryName" disabled/>
     </el-form-item>
     <el-form-item label="是否启用" prop="state">
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
@@ -63,6 +63,7 @@ export default {
   activated() {
     DictionaryAPI.queryDictionaryById(this.detail.id).then((data) => {
       deepMergeLeft(this.form, data)
+      this.getParentDictionaryName(this.form.parentId)
       this.$nextTick(() => {
         this.$refs['form'].clearValidate()
       })

@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="form" :rules="rules" label-width="200px">
-    <el-form-item v-if="form.parentId !== null" label="上级ID" prop="parentId">
-      <el-input v-model="form.parentId" disabled/>
+    <el-form-item v-if="parentDictionaryName" label="上级字典">
+      <el-input :value="parentDictionaryName" disabled/>
     </el-form-item>
     <el-form-item label="是否启用" prop="state">
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
@@ -58,6 +58,7 @@ export default {
     if (this.detail.id) {
       this.form.parentId = this.detail.id
     }
+    this.getParentDictionaryName(this.form.parentId)
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })

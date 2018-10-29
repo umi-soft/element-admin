@@ -3,6 +3,7 @@ import * as DictionaryAPI from '@/api/system-management/dictionary'
 export default {
   data() {
     return {
+      parentDictionaryName: '',
       dictionaryTypeList: []
     }
   },
@@ -54,6 +55,13 @@ export default {
         return dictionary.name
       }
       return ''
+    },
+    getParentDictionaryName(id) {
+      this.parentDictionaryName = ''
+      if (!id) return
+      DictionaryAPI.queryDictionaryById(id).then(dictionary => {
+        this.parentDictionaryName = dictionary.name
+      })
     }
   }
 }
