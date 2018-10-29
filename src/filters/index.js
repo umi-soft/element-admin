@@ -64,7 +64,6 @@ export function toThousandFilter(num) {
 
 export function translateState(state) {
   const dictionaries = StoreDictionaries.state.flag
-  console.log(dictionaries)
   const index = dictionaries.findIndex(item => { return '' + state === item.key + '' })
   return index === -1 ? '' : dictionaries[index].value
 }

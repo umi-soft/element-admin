@@ -14,8 +14,8 @@
         <el-form-item label="ID" prop="id">
           <el-input v-model="form.id" disabled/>
         </el-form-item>
-        <el-form-item v-if="form.parentId" label="上级部门">
-          <el-input :value="detail.name" disabled/>
+        <el-form-item v-if="parentDeptName" label="上级部门">
+          <el-input :value="parentDeptName" disabled/>
         </el-form-item>
         <el-form-item label="部门类型" prop="type">
           <el-input v-model="form.type"/>
@@ -84,6 +84,7 @@ export default {
   activated() {
     DeptAPI.queryDeptById(this.detail.id).then((data) => {
       deepMergeLeft(this.form, data)
+      this.getParentDeptName(this.form.parentId)
       this.$nextTick(() => {
         this.$refs['form'].clearValidate()
       })

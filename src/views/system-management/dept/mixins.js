@@ -1,6 +1,11 @@
 import * as DeptAPI from '@/api/system-management/dept'
 
 export default {
+  data() {
+    return {
+      parentDeptName: ''
+    }
+  },
   methods: {
     initForm() {
       return {
@@ -36,6 +41,13 @@ export default {
       this.users = []
       DeptAPI.queryAllDeptUsers(this.detail.id).then(users => {
         this.users = users
+      })
+    },
+    getParentDeptName(id) {
+      this.parentDeptName = ''
+      if (!id) return
+      DeptAPI.queryDeptById(id).then(dept => {
+        this.parentDeptName = dept.name
       })
     }
   }

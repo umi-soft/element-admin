@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="form" :rules="rules" label-width="200px">
-    <el-form-item v-if="form.parentId" label="上级部门">
-      <el-input :value="detail.name" disabled/>
+    <el-form-item v-if="parentDeptName" label="上级部门">
+      <el-input :value="parentDeptName" disabled/>
     </el-form-item>
     <el-form-item label="部门类型" prop="type">
       <el-input v-model="form.type"/>
@@ -53,6 +53,7 @@ export default {
     if (this.detail.id) {
       this.form.parentId = this.detail.id
     }
+    this.getParentDeptName(this.form.parentId)
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })

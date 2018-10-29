@@ -5,7 +5,7 @@
       <el-collapse-item title="基本信息" name="base-info">
         <el-form :model="detail" :label-width="labelWidth">
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
-          <input-item-view label="上级部门ID">{{ detail.parentId }}</input-item-view>
+          <input-item-view v-if="parentDeptName" label="上级部门">{{ parentDeptName }}</input-item-view>
           <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
           <input-item-view label="部门编号">{{ detail.index }}</input-item-view>
           <input-item-view label="部门类型">{{ detail.type }}</input-item-view>
@@ -51,6 +51,7 @@ export default {
     }
   },
   activated() {
+    this.getParentDeptName(this.detail.parentId)
     this.queryAllUsers()
   }
 }
