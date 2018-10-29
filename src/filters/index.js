@@ -1,3 +1,5 @@
+import StoreDictionaries from '@/store/modules/dictionaries'
+
 // set function parseTime,formatTime to filter
 export { parseTime, formatTime } from '@/utils'
 
@@ -61,9 +63,20 @@ export function toThousandFilter(num) {
 }
 
 export function translateState(state) {
-  return state === 1 ? '启用' : '未启用'
+  const dictionaries = StoreDictionaries.state.flag
+  console.log(dictionaries)
+  const index = dictionaries.findIndex(item => { return '' + state === item.key + '' })
+  return index === -1 ? '' : dictionaries[index].value
 }
 
 export function translateGender(state) {
-  return state === 1 ? '男' : '女'
+  const dictionaries = StoreDictionaries.state.gender
+  const index = dictionaries.findIndex(item => { return '' + state === item.key + '' })
+  return index === -1 ? '' : dictionaries[index].value
+}
+
+export function translateDicCategory(category) {
+  const dictionaries = StoreDictionaries.state.dictionaryCategory
+  const index = dictionaries.findIndex(item => { return '' + category === item.key + '' })
+  return index === -1 ? '' : dictionaries[index].value
 }
