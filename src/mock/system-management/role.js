@@ -19,7 +19,7 @@ export const mockConfig = {
 
 export const roles = []
 
-for (let i = 0; i < 300; i++) {
+for (let i = 0; i < 10; i++) {
   roles.push(Mock.mock(mockConfig))
 }
 /**

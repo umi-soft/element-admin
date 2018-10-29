@@ -6,7 +6,7 @@
         <button-right>
           角色信息
           <template slot="button">
-            <el-button type="primary" @click="submitUserRoleHandler()" >授权</el-button>
+            <el-button type="primary" @click="submitUserRoleHandler()" >保存</el-button>
           </template>
         </button-right>
       </template>
@@ -34,7 +34,7 @@
         <button-right>
           部门信息
           <template slot="button">
-            <el-button type="primary" @click="submitUserDeptHandler()" >授权</el-button>
+            <el-button type="primary" @click="submitUserDeptHandler()" >保存</el-button>
           </template>
         </button-right>
       </template>
@@ -53,6 +53,27 @@
         </div>
       </el-tree>
     </el-card>
+    <el-card>
+      <template slot="header">
+        <button-right>
+          用户分组信息
+          <template slot="button">
+            <el-button type="primary" @click="submitUserGroupHandler()" >保存</el-button>
+          </template>
+        </button-right>
+      </template>
+      <el-table :data="groups" border style="width: 100%" @selection-change="clickGroupCheckboxHandler" >
+        <el-table-column type="selection" label="全选" />
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+        <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+        </el-table-column>
+      </el-table>
+    </el-card>
   </div>
 </template>
 
@@ -60,6 +81,7 @@
 import * as UserAPI from '@/api/system-management/user'
 import * as RoleAPI from '@/api/system-management/role'
 import * as DeptAPI from '@/api/system-management/dept'
+import * as GroupAPI from '@/api/system-management/group'
 import mixins from './mixins'
 
 export default {
@@ -80,7 +102,9 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'name'
-      }
+      },
+      groups: [],
+      selectedGroups: []
     }
   },
   watch: {
@@ -99,10 +123,16 @@ export default {
     DeptAPI.queryAllTreeDepts({}).then(data => {
       this.depts = data
     })
+    GroupAPI.queryAllGroups(params).then(data => {
+      this.groups = data
+    })
   },
   methods: {
     clickRoleCheckboxHandler(selection) {
       this.selectedRoles = selection
+    },
+    clickGroupCheckboxHandler(selection) {
+      this.selectedGroups = selection
     },
     submitUserRoleHandler() {
       if (this.selectedRoles.length === 0) {
@@ -176,6 +206,40 @@ export default {
     filterNodeHandler(value, data) {
       if (!value) return true
       return data.name.indexOf(value) !== -1
+    },
+    submitUserGroupHandler() {
+      if (this.selectedGroups.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '您未勾选任何用户分组'
+        })
+        return
+      }
+      this.$confirm('此操作将批量授权, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '已授权成功'
+        })
+        const userGroups = []
+        this.detail.forEach(user => {
+          this.selectedGroups.forEach(group => {
+            userGroups.push({
+              userId: user.id,
+              groupId: group.id
+            })
+          })
+        })
+        UserAPI.addUserGroup(userGroups)
+      }).catch(() => {
+        this.$message({
+          type: 'warning',
+          message: '已取消授权'
+        })
+      })
     }
   }
 }
