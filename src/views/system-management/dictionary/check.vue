@@ -7,7 +7,8 @@
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
           <input-item-view v-if="parentDictionaryName" label="上级字典">{{ parentDictionaryName }}</input-item-view>
           <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
-          <input-item-view label="字典类型">{{ getDictionaryTypeName(detail.type) }}</input-item-view>
+          <input-item-view label="字典类型">{{ detail.category | translateDicCategory }}</input-item-view>
+          <input-item-view label="字典分类">{{ getDictionaryTypeName(detail.type) }}</input-item-view>
           <input-item-view label="字典名称">{{ detail.name }}</input-item-view>
           <input-item-view label="字典规则码">{{ detail.code }}</input-item-view>
           <input-item-view label="字典编号">{{ detail.index }}</input-item-view>
@@ -26,13 +27,6 @@ import mixins from './mixins'
 
 export default {
   mixins: [mixins],
-  props: {
-    detail: {
-      required: true,
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     return {
       labelWidth: '200px'

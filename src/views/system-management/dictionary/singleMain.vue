@@ -1,14 +1,14 @@
 <template>
   <transition name="fade-transform" mode="out-in">
     <keep-alive>
-      <component :is="optionType" :detail="detail" @option-changed="optionChangeHandler"/>
+      <component :is="optionType" :detail="detail" category="2" @option-changed="optionChangeHandler"/>
     </keep-alive>
   </transition>
 </template>
 
 <script>
 import NProgress from 'nprogress' // 进度条组件
-import query from './query'
+import query from './singleQuery'
 import edit from './edit'
 import add from './add'
 import check from './check'

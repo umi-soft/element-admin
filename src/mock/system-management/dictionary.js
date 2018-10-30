@@ -7,7 +7,7 @@ const mockConfig = {
   'parentId': null, // 上级ID
   'flag|1': Utils.flag, // 是否删除
   'state|1': Utils.state, // 是否启用
-  'category|1': [0, 1], // 类型： 1：业务字典类型, 0：业务字典
+  'category|1': [1, 2, 3], // 类型： 1：业务字典类型, 2：单级业务字典, 3：多级业务字典
   'type|1': Utils.id, // 字典类型ID
   name: '@cword(5, 10)', // 名称
   'code|1': Utils.id, // 规则码
@@ -24,7 +24,7 @@ export const dictionaries = []
 const dictionary = Mock.mock(mockConfig)
 dictionary.type = null
 dictionary.category = 1
-dictionary.parentId = null
+dictionary.parentId = 'root'
 dictionary.flag = 1
 dictionaries.push(dictionary)
 
@@ -32,6 +32,15 @@ dictionaries.push(dictionary)
 for (let i = 0; i < 13; i++) {
   const item = Mock.mock(mockConfig)
   item.category = 2
+  item.parentId = 'root'
+  item.type = dictionary.id
+  dictionaries.push(item)
+}
+
+for (let i = 0; i < 11; i++) {
+  const item = Mock.mock(mockConfig)
+  item.category = 3
+  item.parentId = 'root'
   item.type = dictionary.id
   dictionaries.push(item)
 }

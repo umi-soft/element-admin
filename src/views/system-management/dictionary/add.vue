@@ -6,8 +6,9 @@
     <el-form-item label="是否启用" prop="state">
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
     </el-form-item>
-    <el-form-item label="字典类型" prop="type">
-      <el-select v-model="form.type" filterable clearable placeholder="请输入字典关键词进行搜索">
+    <!--  禁止多级字典新增子节点时编辑分类，应该直接继承自父节点即可 -->
+    <el-form-item v-if="!(category === '3' && form.type)" label="字典分类" prop="type">
+      <el-select v-model="form.type" filterable clearable placeholder="请输入字典分类关键词进行搜索">
         <el-option v-for="(item, index) in dictionaryTypeList" :key="index" :label="item.name" :value="item.id"/>
       </el-select>
     </el-form-item>
@@ -38,13 +39,6 @@ import mixins from './mixins'
 
 export default {
   mixins: [BaseEditForm, mixins],
-  props: {
-    detail: {
-      required: false,
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     const form = this.initForm()
     const rules = this.initRules()
@@ -55,8 +49,10 @@ export default {
   },
   activated() {
     deepMergeLeft(this.form, this.initForm())
-    if (this.detail.id) {
-      this.form.parentId = this.detail.id
+    this.form.category = this.category
+    if (this.category === '3') {
+      this.form.parentId = this.detail.id ? this.detail.id : 'root'
+      this.form.type = this.detail.type
     }
     this.getParentDictionaryName(this.form.parentId)
     this.$nextTick(() => {

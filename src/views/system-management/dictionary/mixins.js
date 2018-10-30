@@ -1,11 +1,29 @@
+import { mapGetters } from 'vuex'
 import * as DictionaryAPI from '@/api/system-management/dictionary'
 
 export default {
+  props: {
+    category: {
+      required: true,
+      type: String,
+      default: () => {}
+    },
+    detail: {
+      required: false,
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       parentDictionaryName: '',
       dictionaryTypeList: []
     }
+  },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
   },
   methods: {
     initForm() {
@@ -14,6 +32,7 @@ export default {
         token: null,
         parentId: null,
         state: 1,
+        category: 2,
         type: '',
         name: '',
         code: '',
@@ -25,6 +44,9 @@ export default {
       return {
         state: [{
           required: true, message: '请选择字典启用状态', trigger: 'blur'
+        }],
+        category: [{
+          required: true, message: '字典类别为必填项', trigger: 'change'
         }],
         type: [{
           required: true, message: '请选择字典类型', trigger: 'change'
@@ -54,11 +76,11 @@ export default {
       if (dictionary) {
         return dictionary.name
       }
-      return ''
+      return type
     },
     getParentDictionaryName(id) {
       this.parentDictionaryName = ''
-      if (!id) return
+      if (!id || id === 'root') return
       DictionaryAPI.queryDictionaryById(id).then(dictionary => {
         this.parentDictionaryName = dictionary.name
       })

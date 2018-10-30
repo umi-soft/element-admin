@@ -9,11 +9,6 @@
     <el-form-item label="是否启用" prop="state">
       <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
     </el-form-item>
-    <el-form-item label="字典类型" prop="type">
-      <el-select v-model="form.type" filterable clearable placeholder="请输入字典关键词进行搜索">
-        <el-option v-for="(item, index) in dictionaryTypeList" :key="index" :label="item.name" :value="item.id"/>
-      </el-select>
-    </el-form-item>
     <el-form-item label="字典名称" prop="name">
       <el-input v-model="form.name"/>
     </el-form-item>
@@ -41,17 +36,15 @@ import mixins from './mixins'
 
 export default {
   mixins: [BaseEditForm, mixins],
-  props: {
-    detail: {
-      required: false,
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     const form = this.initForm()
-    delete form.category
     const rules = this.initRules()
+    delete form.category
+    delete rules.category
+    delete form.parentId
+    delete rules.parentId
+    delete form.type
+    delete rules.type
     rules.id = [{
       required: true, message: '编辑信息时ID不能为空', trigger: 'change'
     }]

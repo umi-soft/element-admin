@@ -143,17 +143,32 @@ const asyncRouter = {
           }
         },
         {
-          path: 'dictionary',
-          component: () => import('@/views/system-management/dictionary/main'),
+          path: 'dictionary-single',
+          component: () => import('@/views/system-management/dictionary/singleMain'),
           // redirect: 'noredirect',
           hidden: false,
           alwaysShow: true,
           name: '22fc466264e65171a7631b2079a2b7f6',
           meta: {
-            index: 1,
+            index: 2,
             roles: [],
-            title: '业务字典',
-            icon: 'dictionary',
+            title: '单级业务字典',
+            icon: 'dictionary-single',
+            cacheAble: false
+          }
+        },
+        {
+          path: 'dictionary-multi',
+          component: () => import('@/views/system-management/dictionary/multiMain'),
+          // redirect: 'noredirect',
+          hidden: false,
+          alwaysShow: true,
+          name: 'd9369152df124e1aae855f743d3eedc8',
+          meta: {
+            index: 3,
+            roles: [],
+            title: '多级业务字典',
+            icon: 'dictionary-multi',
             cacheAble: false
           }
         }

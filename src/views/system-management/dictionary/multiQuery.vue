@@ -10,7 +10,7 @@
               <el-option v-for="item in dictionaries.flag" :key="item.key" :value="item.key" :label="item.value"/>
             </el-select>
           </el-form-item>
-          <el-form-item label="字典类型:" prop="type">
+          <el-form-item label="字典分类:" prop="type">
             <el-select v-model="queryCriteria.type" filterable clearable placeholder="全部">
               <el-option v-for="(item, index) in dictionaryTypeList" :key="index" :label="item.name" :value="item.id"/>
             </el-select>
@@ -40,34 +40,28 @@
       </button-right>
     </el-col>
     <el-col :span="24">
-      <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler">
-        <el-table-column :show-overflow-tooltip="true" prop="type" label="字典类型" sortable="custom">
-          <template slot-scope="scope">
-            {{ getDictionaryTypeName(scope.row.type) }}
-          </template>
-        </el-table-column>
-        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable="custom" align="center"/>
-        <el-table-column :show-overflow-tooltip="true" prop="code" label="规则码" width="120" sortable="custom" align="center"/>
-        <el-table-column :show-overflow-tooltip="true" prop="index" label="编号" width="80" sortable="custom" align="center"/>
-        <el-table-column prop="createdDate" label="创建时间" width="180" sortable="custom" align="center">
-          <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
-        </el-table-column>
-        <el-table-column prop="modifiedDate" label="最后修改时间" width="180" sortable="custom" align="center">
-          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
-        </el-table-column>
-        <el-table-column prop="state" label="启用状态" width="100" sortable="custom" align="center">
-          <template slot-scope="scope">
-            <state :state="scope.row.state"/>
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-tree :data="[{}]" :props="defaultProps">
+        <div slot-scope="{ data }" class="custom-tree-node">
+          <div class="name">字典名称</div>
+          <div class="state">状态</div>
+          <div class="type">字典分类</div>
+        </div>
+      </el-tree>
+      <el-tree ref="tree" :data="pagination.list" :load="loadChildren" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion lazy @current-change="(value, node) => selected = value">
+        <div slot-scope="{ data }" class="custom-tree-node">
+          <div class="name">{{ data.name }}</div>
+          <div class="state">
+            <state :state="data.state"/>
+          </div>
+          <div class="type">{{ getDictionaryTypeName(data.type) }}</div>
+        </div>
+      </el-tree>
       <pagination :pagination="pagination" @page-size-changed="pageSizeChangeHandler" @page-changed="pageChangeHandler"/>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
 import * as DictionaryAPI from '@/api/system-management/dictionary'
@@ -79,13 +73,12 @@ export default {
     const queryCriteria = this.initQueryCriteria()
     return {
       queryCriteria: queryCriteria,
-      selected: null
+      selected: null,
+      defaultProps: {
+        children: 'children',
+        label: 'name'
+      }
     }
-  },
-  computed: {
-    ...mapGetters([
-      'dictionaries'
-    ])
   },
   activated() {
     this.selected = null
@@ -95,7 +88,8 @@ export default {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
         flag: '',
-        category: '2',
+        category: '3',
+        parentId: 'root',
         type: '',
         name: ''
       })
@@ -109,6 +103,18 @@ export default {
       DictionaryAPI.delDictionary(this.selected.id).then(() => {
         this.queryHandler()
       })
+    },
+    loadChildren(node, resolve) {
+      DictionaryAPI.queryAllDictionaries({
+        filters: [{ field: 'category', value: 3 }, { field: 'parentId', value: node.data.id }],
+        sorts: []
+      }).then(data => {
+        resolve(data)
+      })
+    },
+    filterNodeHandler(value, data) {
+      if (!value) return true
+      return data.name.indexOf(value) !== -1
     }
   }
 }
@@ -121,5 +127,43 @@ export default {
   .query-btn /deep/ .el-button {
     float: right;
     margin-left: 10px;
+  }
+  /deep/ .el-tree {
+    border-bottom: 1px solid #ebeef5;
+
+    .el-tree-node__content {
+      border-top: 1px solid #ebeef5;
+      border-left: 1px solid #ebeef5;
+      border-right: 1px solid #ebeef5;
+      min-height: 40px;
+    }
+  }
+
+  .custom-tree-node {
+    width: 100%;
+
+    .type {
+      float: right;
+      width: 400px;
+      min-height: 40px;
+      line-height: 40px;
+      border-left: 1px solid #ebeef5;
+      text-align: center;
+    }
+
+    .name {
+      float: left;
+      min-height: 40px;
+      line-height: 40px;
+    }
+
+    .state {
+      float: right;
+      width: 100px;
+      min-height: 40px;
+      line-height: 40px;
+      border-left: 1px solid #ebeef5;
+      text-align: center;
+    }
   }
 </style>
