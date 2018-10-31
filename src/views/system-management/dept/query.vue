@@ -94,7 +94,11 @@ export default {
     },
     filterNodeHandler(value, data) {
       if (!value) return true
-      return data.name.indexOf(value) !== -1
+      const show = data.name.indexOf(value) !== -1
+      if (!show && this.selected && this.selected.id === data.id) {
+        this.selected = null
+      }
+      return show
     }
   }
 }

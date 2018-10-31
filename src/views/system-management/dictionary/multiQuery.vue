@@ -40,6 +40,11 @@
       </button-right>
     </el-col>
     <el-col :span="24">
+      <el-card>
+        <el-input v-model="filter" placeholder="输入关键字对已加载的数据进行过滤"/>
+      </el-card>
+    </el-col>
+    <el-col :span="24">
       <el-tree :data="[{}]" :props="defaultProps">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">字典名称</div>
@@ -47,6 +52,7 @@
           <div class="type">字典分类</div>
         </div>
       </el-tree>
+      <!-- eslint-disable-next-line vue/max-attributes-per-line -->
       <el-tree ref="tree" :data="pagination.list" :load="loadChildren" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion lazy @current-change="(value, node) => selected = value">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">{{ data.name }}</div>
@@ -77,7 +83,13 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'name'
-      }
+      },
+      filter: ''
+    }
+  },
+  watch: {
+    filter(filter) {
+      this.$refs.tree.filter(filter)
     }
   },
   activated() {
@@ -114,7 +126,11 @@ export default {
     },
     filterNodeHandler(value, data) {
       if (!value) return true
-      return data.name.indexOf(value) !== -1
+      const show = data.name.indexOf(value) !== -1
+      if (!show && this.selected && this.selected.id === data.id) {
+        this.selected = null
+      }
+      return show
     }
   }
 }
