@@ -8,13 +8,14 @@ const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 5000 // request timeout
 })
+service.defaults.withCredentials = true
 
 // request interceptor
 service.interceptors.request.use(
   request => {
     // 后端服务jwt token信息
     if (store.getters.token) {
-      request.headers['Authorization'] = store.getters.token
+      request.headers.common['Authorization'] = `Bearer ${store.getters.token}`
     }
     return request
   },
