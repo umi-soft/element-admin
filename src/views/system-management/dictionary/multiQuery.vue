@@ -117,6 +117,7 @@ export default {
       })
     },
     loadChildren(node, resolve) {
+      if (!node.data.id) return
       DictionaryAPI.queryAllDictionaries({
         filters: [{ field: 'category', value: 3 }, { field: 'parentId', value: node.data.id }],
         sorts: []
