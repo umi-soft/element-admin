@@ -87,15 +87,6 @@ export default {
       data: queryResult
     }
   },
-  queryAllByParentId: config => {
-    console.log(config)
-    const params = param2Obj(config.url)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: dictionaries.filter(item => { return item.parentId === params.id })
-    }
-  },
   queryById: config => {
     console.log(config)
     const params = param2Obj(config.url)
