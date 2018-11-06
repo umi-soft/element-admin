@@ -36,6 +36,12 @@ export const users = []
 for (let i = 0; i < 25; i++) {
   users.push(Mock.mock(mockConfig))
 }
+const admin = Mock.mock(mockConfig)
+admin.id = '90a127ce319d5d93b3b49c697cfa1382'
+users.push(admin)
+const simple = Mock.mock(mockConfig)
+simple.id = '90a127ce319d5d93b3b49c697cfa1381'
+users.push(simple)
 
 export default {
   queryPage: config => {

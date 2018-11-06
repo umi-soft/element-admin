@@ -16,7 +16,7 @@
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
-            <router-link to="/me/admin"><span style="display:block;" >个人信息</span></router-link>
+            <router-link to="/myself/modify"><span style="display:block;" >个人信息</span></router-link>
 
           </el-dropdown-item>
           <el-dropdown-item divided>

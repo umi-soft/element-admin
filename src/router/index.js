@@ -43,15 +43,15 @@ export const constantRouterMap = [
     hidden: true
   },
   {
-    path: '/me',
+    path: '/myself',
     component: defaultLayout,
     hidden: true,
     meta: { title: '个人设置', icon: 'user', cacheAble: true },
     children: [
       {
-        path: ':id',
-        component: () => import('@/views/system-management/user/edit'),
-        name: 'edit-me',
+        path: 'modify',
+        component: () => import('@/views/system-management/user/myself/modify'),
+        name: 'myself-modify',
         meta: { title: '个人信息编辑', icon: 'user', cacheAble: true }
       }
     ]

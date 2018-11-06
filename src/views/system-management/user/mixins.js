@@ -69,19 +69,22 @@ export default {
         }]
       }
     },
-    queryAllUserDepts() {
+    queryAllUserDepts(id) {
       this.depts = []
-      const params = { id: this.detail.id }
+      if (!id) id = this.detail.id
+      const params = { id: id }
       UserAPI.queryAllUserDepts(params).then(depts => { this.depts = depts })
     },
-    queryAllUserGroups() {
+    queryAllUserGroups(id) {
       this.groups = []
-      const params = { id: this.detail.id }
+      if (!id) id = this.detail.id
+      const params = { id: id }
       UserAPI.queryAllUserGroups(params).then(groups => { this.groups = groups })
     },
-    queryAllUserRoles() {
+    queryAllUserRoles(id) {
       this.roles = []
-      const params = { id: this.detail.id }
+      if (!id) id = this.detail.id
+      const params = { id: id }
       UserAPI.queryAllUserRoles(params).then(roles => { this.roles = roles })
     }
   }

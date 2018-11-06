@@ -4,6 +4,7 @@ const admin = {
   token: 'admin',
   roles: ['admin'],
   user: {
+    id: '90a127ce319d5d93b3b49c697cfa1382',
     name: 'ADMIN',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
   }
@@ -13,6 +14,7 @@ const simple = {
   token: 'simple',
   roles: ['simple'],
   user: {
+    id: '90a127ce319d5d93b3b49c697cfa1381',
     name: 'simple',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
   }
