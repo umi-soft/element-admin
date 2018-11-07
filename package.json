@@ -1,8 +1,8 @@
 {
-  "name": "tdf-sys-vue",
+  "name": "element-admin",
   "version": "3.9.0",
-  "description": "太极创新研究院————TDF基础开发框架————前端实现",
-  "author": "胡杰 <hujie@mail.taiji.com.cn>",
+  "description": "基础",
+  "author": "胡杰<hujie@umisoft.cn>",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env BABEL_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -22,17 +22,15 @@
   "keywords": [
     "vue",
     "element-ui",
-    "TDF",
-    "TDF-SYS",
-    "TDF-SYS-WEB",
-    "TDF-ADMIN"
+    "admin",
+    "element-admin"
   ],
   "repository": {
     "type": "git",
-    "url": "git+http://gitlab.taiji.com.cn/vue/sys-web.git"
+    "url": "git+https://github.com/umi-soft/element-admin.git"
   },
   "bugs": {
-    "url": "http://gitlab.taiji.com.cn/vue/sys-web/issues"
+    "url": "https://github.com/umi-soft/element-admin/issues"
   },
   "dependencies": {
     "axios": "0.18.0",

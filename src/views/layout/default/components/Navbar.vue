@@ -100,6 +100,7 @@ export default {
       height: 50px;
       margin-right: 15px;
       .avatar-wrapper {
+        line-height: initial;
         cursor: pointer;
         margin-top: 5px;
         position: relative;
