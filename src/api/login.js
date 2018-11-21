@@ -1,5 +1,12 @@
 import request from '@/utils/request'
 
+export function captcha(data) {
+  return request({
+    url: '/captcha',
+    method: 'get'
+  })
+}
+
 export function loginByUsername(data) {
   return request({
     url: '/auth',

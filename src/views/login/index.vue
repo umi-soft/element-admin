@@ -34,7 +34,21 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-
+      <el-form-item prop="captcha">
+        <span class="svg-container">
+          <svg-icon icon-class="captcha" />
+        </span>
+        <el-input
+          v-model="loginForm.captcha"
+          type="text"
+          placeholder="请填写验证码"
+          name="captcha"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin" />
+        <span class="captcha">
+          <img :src="captchaBase64" style="width: 100%; height: 100%;" @click="getCaptcha">
+        </span>
+      </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登陆</el-button>
 
     </el-form>
@@ -42,19 +56,15 @@
 </template>
 
 <script>
+import UUID from 'es6-uuid'
+import * as LoginAPI from '@/api/login'
+
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (value) {
-        callback()
-      } else {
-        callback(new Error('请输入用户名'))
-      }
-    }
     const validatePassword = (rule, value, callback) => {
       if (value && value.length < 5) {
-        callback(new Error('请输入密码（至少5位）'))
+        callback(new Error())
       } else {
         callback()
       }
@@ -62,12 +72,15 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '1111111'
+        password: '1111111',
+        captcha: null
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'change', message: '请填写用户名' }],
+        password: [{ required: true, trigger: 'change', message: '请填写密码' }, { validator: validatePassword, trigger: 'change', message: '请输入密码（至少5位）' }],
+        captcha: [{ required: true, trigger: 'change', message: '请填写验证码' }]
       },
+      captchaBase64: null,
       passwordType: 'password',
       loading: false,
       redirect: undefined
@@ -81,6 +94,9 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    this.getCaptcha()
+  },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
@@ -88,6 +104,12 @@ export default {
       } else {
         this.passwordType = 'password'
       }
+    },
+    getCaptcha() {
+      this.uuid = UUID(32)
+      LoginAPI.captcha().then(data => {
+        this.captchaBase64 = data
+      })
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
@@ -214,6 +236,18 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .captcha {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 16px;
+    color: $dark_gray;
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    width: 200px;
+    height: 32px;
   }
   .thirdparty-button {
     position: absolute;

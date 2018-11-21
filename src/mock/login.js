@@ -1,3 +1,4 @@
+import Mock from 'mockjs'
 import { param2Obj } from '@/utils'
 
 const admin = {
@@ -21,6 +22,13 @@ const simple = {
 }
 
 export default {
+  captcha: config => {
+    const captcha = Mock.mock({ 'number|1000-9999': 1000 }).number
+    return {
+      code: 1,
+      data: Mock.Random.image('448x47', '#D6D6D6', captcha)
+    }
+  },
   loginByUsername: config => {
     console.log(config)
     const params = JSON.parse(config.body)

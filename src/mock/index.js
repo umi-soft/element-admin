@@ -23,6 +23,7 @@ Mock.setup({
 })
 
 // 登录相关
+Mock.mock(/\/captcha/, 'get', loginAPI.captcha)
 Mock.mock(/\/auth/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/user-details/, 'get', loginAPI.getUserInfo)
 Mock.mock(/\/routers/, 'get', loginAPI.getRouterRoles)

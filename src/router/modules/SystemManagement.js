@@ -1,6 +1,6 @@
 /** When your routing table is too long, you can split it into small modules**/
 
-import defaultLayout from '@/views/layout/default/index'
+import defaultLayout from '@/views/layout/LeftSidebar/index'
 import Submenu from '@/views/layout/submenu/index'
 
 // name值即为后端ID，请使用http://www.uuid.online/ 在前端生成，后端只允许做同步操作
