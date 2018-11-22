@@ -69,17 +69,27 @@ export default {
         callback()
       }
     }
+    const remoteValidator = (rule, value, callback) => {
+      if ('' + this.remoteError === '3' && rule.field === 'password') {
+        callback(new Error())
+      } else if ('' + this.remoteError === '2' && rule.field === 'captcha') {
+        callback(new Error())
+      } else {
+        callback()
+      }
+    }
     return {
       loginForm: {
         username: 'admin',
-        password: '1111111',
+        password: 'admin',
         captcha: null
       },
       loginRules: {
         username: [{ required: true, trigger: 'change', message: '请填写用户名' }],
-        password: [{ required: true, trigger: 'change', message: '请填写密码' }, { validator: validatePassword, trigger: 'change', message: '请输入密码（至少5位）' }],
-        captcha: [{ required: true, trigger: 'change', message: '请填写验证码' }]
+        password: [{ required: true, trigger: 'change', message: '请填写密码' }, { validator: validatePassword, trigger: 'change', message: '请输入密码（至少5位）' }, { validator: remoteValidator, trigger: 'change', message: '用户名或密码错误' }],
+        captcha: [{ required: true, trigger: 'change', message: '请填写验证码' }, { validator: remoteValidator, trigger: 'change', message: '验证码错误' }]
       },
+      remoteError: null,
       captchaBase64: null,
       passwordType: 'password',
       loading: false,
@@ -115,9 +125,22 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          LoginAPI.loginByUsername(this.loginForm).then(data => {
+            if (data.result === 1) {
+              this.$store.dispatch('LoginByUsername', data.token)
+              this.$router.push({ path: this.redirect || '/' })
+            } else if (data.result === 2) { // 验证码错误
+              this.remoteError = data.result
+              this.$refs.loginForm.validateField('captcha', () => {
+                this.remoteError = null
+              })
+            } else if (data.result === 3) { // 验证码错误
+              this.remoteError = data.result
+              this.$refs.loginForm.validateField('password', () => {
+                this.remoteError = null
+              })
+            }
             this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
             this.loading = false
           })

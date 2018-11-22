@@ -21,9 +21,12 @@ const simple = {
   }
 }
 
+let captcha = null
+
 export default {
   captcha: config => {
-    const captcha = Mock.mock({ 'number|1000-9999': 1000 }).number
+    console.log(config)
+    captcha = Mock.mock({ 'number|1000-9999': 1000 }).number
     return {
       code: 1,
       data: Mock.Random.image('448x47', '#D6D6D6', captcha)
@@ -33,6 +36,24 @@ export default {
     console.log(config)
     const params = JSON.parse(config.body)
     let token = null
+    if ('' + captcha !== '' + params.captcha) {
+      return {
+        code: 1,
+        data: {
+          result: 2,
+          message: '验证码错误'
+        }
+      }
+    }
+    if (params.username === 'admin' && params.password !== 'admin') {
+      return {
+        code: 1,
+        data: {
+          result: 3,
+          message: '用户名或密码错误'
+        }
+      }
+    }
     if (params.username === 'admin') {
       token = admin.token
     } else {
@@ -40,7 +61,11 @@ export default {
     }
     return {
       code: 1,
-      data: token
+      data: {
+        result: 1,
+        message: '登录成功',
+        token: token
+      }
     }
   },
   getUserInfo: config => {

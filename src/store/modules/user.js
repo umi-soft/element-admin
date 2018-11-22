@@ -1,4 +1,4 @@
-import { loginByUsername, logout, getUserInfo } from '@/api/login'
+import { logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -31,16 +31,9 @@ const user = {
 
   actions: {
     // 用户名登录
-    LoginByUsername({ commit }, userInfo) {
-      return new Promise((resolve, reject) => {
-        loginByUsername(userInfo).then(token => {
-          commit('SET_TOKEN', token)
-          commit('CLEAR_USER')
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+    LoginByUsername({ commit }, token) {
+      commit('SET_TOKEN', token)
+      commit('CLEAR_USER')
     },
 
     // 获取用户信息
