@@ -131,11 +131,13 @@ export default {
               this.$router.push({ path: this.redirect || '/' })
             } else if (data.result === 2) { // 验证码错误
               this.remoteError = data.result
+              this.getCaptcha()
               this.$refs.loginForm.validateField('captcha', () => {
                 this.remoteError = null
               })
             } else if (data.result === 3) { // 验证码错误
               this.remoteError = data.result
+              this.getCaptcha()
               this.$refs.loginForm.validateField('password', () => {
                 this.remoteError = null
               })
