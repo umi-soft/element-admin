@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       uploadAvatarHeaders: {
-        Authorization: 'Bearer ' + store.getters.token
+        Authorization: store.getters.token
       },
       uploadAvatar: UserAPI.uploadAvatar
     }

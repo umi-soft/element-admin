@@ -15,7 +15,7 @@ service.interceptors.request.use(
   request => {
     // 后端服务jwt token信息
     if (store.getters.token) {
-      request.headers.common['Authorization'] = `Bearer ${store.getters.token}`
+      request.headers.common['Authorization'] = `${store.getters.token}`
     }
     return request
   },
