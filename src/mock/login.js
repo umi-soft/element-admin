@@ -1,25 +1,18 @@
 import Mock from 'mockjs'
 import { param2Obj } from '@/utils'
+import { users } from './system-management/user'
 
 const admin = {
   token: 'admin',
-  roles: ['admin'],
-  user: {
-    id: '90a127ce319d5d93b3b49c697cfa1382',
-    name: 'ADMIN',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-  }
+  roles: ['admin']
 }
+admin.user = users.find(item => { return item.loginName === 'admin' })
 
 const simple = {
   token: 'simple',
-  roles: ['simple'],
-  user: {
-    id: '90a127ce319d5d93b3b49c697cfa1381',
-    name: 'simple',
-    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-  }
+  roles: ['simple']
 }
+simple.user = users.find(item => { return item.loginName === 'simple' })
 
 let captcha = null
 
@@ -29,7 +22,7 @@ export default {
     captcha = Mock.mock({ 'number|1000-9999': 1000 }).number
     return {
       code: 1,
-      data: Mock.Random.image('448x47', '#D6D6D6', captcha)
+      data: Mock.Random.dataImage('448x47', captcha)
     }
   },
   loginByUsername: config => {
@@ -45,7 +38,7 @@ export default {
         }
       }
     }
-    if (params.username === 'admin' && params.password !== 'admin') {
+    if ((params.username === simple.user.loginName && params.password !== simple.user.password) || (params.username === admin.user.loginName && params.password !== admin.user.password)) {
       return {
         code: 1,
         data: {

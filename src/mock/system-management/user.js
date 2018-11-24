@@ -37,10 +37,16 @@ for (let i = 0; i < 25; i++) {
   users.push(Mock.mock(mockConfig))
 }
 const admin = Mock.mock(mockConfig)
-admin.id = '90a127ce319d5d93b3b49c697cfa1382'
+admin.name = 'admin'
+admin.loginName = 'admin'
+admin.password = 'admin'
+admin.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
 users.push(admin)
 const simple = Mock.mock(mockConfig)
-simple.id = '90a127ce319d5d93b3b49c697cfa1381'
+simple.name = 'simple'
+simple.loginName = 'simple'
+simple.password = 'simple'
+simple.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
 users.push(simple)
 
 export default {
@@ -72,7 +78,7 @@ export default {
     const params = JSON.parse(config.body)
     const find = users.some(item => {
       if (params.id) {
-        return item.loginName === params.loginName && item.id === params.id
+        return item.loginName === params.loginName && item.id !== params.id
       }
       return item.loginName === params.loginName
     })
@@ -82,6 +88,14 @@ export default {
       data: {
         exist: find ? 1 : 0
       }
+    }
+  },
+  uploadAvatar: config => {
+    console.log(config)
+    return {
+      code: 0,
+      message: '操作成功',
+      data: Mock.Random.dataImage('180x180', Mock.mock('@cname'))
     }
   },
   queryById: config => {

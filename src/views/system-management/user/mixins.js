@@ -1,7 +1,16 @@
 import { mapGetters } from 'vuex'
+import store from '@/store'
 import * as UserAPI from '@/api/system-management/user'
 
 export default {
+  data() {
+    return {
+      uploadAvatarHeaders: {
+        Authorization: 'Bearer ' + store.getters.token
+      },
+      uploadAvatar: UserAPI.uploadAvatar
+    }
+  },
   computed: {
     ...mapGetters([
       'dictionaries'
@@ -30,7 +39,7 @@ export default {
     },
     initRules() {
       const validateLoginName = (rule, value, callback) => {
-        UserAPI.checkLoginName({ id: this.id, loginName: value }).then(data => {
+        UserAPI.checkLoginName({ id: this.form.id, loginName: value }).then(data => {
           if (data.exist === 0) {
             callback()
           } else {
@@ -48,7 +57,7 @@ export default {
         loginName: [{
           required: true, message: '请输入用户编号', trigger: 'blur'
         }, {
-          validator: validateLoginName, trigger: 'blur'
+          validator: validateLoginName, trigger: 'change'
         }],
         password: [{
           required: true, message: '请输入用户编号', trigger: 'blur'
@@ -86,6 +95,13 @@ export default {
       if (!id) id = this.detail.id
       const params = { id: id }
       UserAPI.queryAllUserRoles(params).then(roles => { this.roles = roles })
+    },
+    uploadAvatarSuccess(response, file, fileList) {
+      // 上传成功后返回图片base64流值，后端直接存储
+      this.form.avatar = response.data
+    },
+    uploadAvatarError(response, file, fileList) {
+      this.form.avatar = ''
     }
   }
 }

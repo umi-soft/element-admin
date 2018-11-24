@@ -17,7 +17,7 @@
       </el-col>
       <el-col :span="12">
         <el-form-item label="照片" prop="avatar">
-          <el-upload :show-file-list="false" class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/">
+          <el-upload :headers="uploadAvatarHeaders" :show-file-list="false" :with-credentials="true" :on-success="uploadAvatarSuccess" :on-error="uploadAvatarError" :action="uploadAvatar" class="avatar-uploader">
             <img v-if="form.avatar" :src="form.avatar" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"/>
           </el-upload>

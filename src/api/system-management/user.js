@@ -26,6 +26,8 @@ export function checkLoginName(data) {
   })
 }
 
+export const uploadAvatar = base_url + 'upload-avatar'
+
 export function addUser(data) {
   return request({
     url: base_url + 'add',
