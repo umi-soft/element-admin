@@ -88,34 +88,17 @@
       }
     }
   }
-  .sidebar-container .nest-menu .el-submenu>.el-submenu__title,
-  .sidebar-container .el-submenu .el-menu-item {
+  .sidebar-container .nest-menu .el-submenu>.el-submenu__title, .sidebar-container .el-submenu .el-menu-item {
     min-width: 180px !important;
-    background-color: $subMenuBg !important;
+    background-color: #1f2d3d !important;
     &:hover {
-      background-color: $menuHover !important;
+      background-color: #001528 !important;
     }
   }
   .el-menu--collapse .el-menu .el-submenu {
     min-width: 180px !important;
   }
 
-  //适配移动端
-  .mobile {
-    .main-container {
-      margin-left: 0px;
-    }
-    .sidebar-container {
-      transition: transform .28s;
-      width: 180px !important;
-    }
-    &.hideSidebar {
-      .sidebar-container {
-        transition-duration: 0.3s;
-        transform: translate3d(-180px, 0, 0);
-      }
-    }
-  }
   .withoutAnimation {
     .main-container,
     .sidebar-container {
