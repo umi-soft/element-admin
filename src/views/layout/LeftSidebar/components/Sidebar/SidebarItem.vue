@@ -1,9 +1,9 @@
 <template>
-  <div v-if="!item.hidden&&item.children" class="menu-wrapper">
+  <div v-if="!item.hidden && item.children" class="menu-wrapper">
 
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
       <app-link :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-no-dropdown':!isNest}">
           <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" />
         </el-menu-item>
       </app-link>
@@ -20,8 +20,7 @@
           :is-nest="true"
           :item="child"
           :key="child.path"
-          :base-path="resolvePath(child.path)"
-          class="nest-menu" />
+          :base-path="resolvePath(child.path)"/>
 
         <app-link v-else :to="resolvePath(child.path)" :key="child.name">
           <el-menu-item :index="resolvePath(child.path)">
@@ -100,3 +99,21 @@ export default {
   }
 }
 </script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+  .menu-wrapper {
+    .submenu-title-no-dropdown {
+      position: relative;
+
+      /deep/ .el-tooltip {
+        padding: 0px 10px !important;
+      }
+    }
+    /deep/ .el-submenu__title, .el-menu-item{
+      &:hover {
+        background-color: #001528 !important;
+      }
+    }
+  }
+
+</style>

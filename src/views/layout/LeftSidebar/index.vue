@@ -26,9 +26,9 @@ export default {
     },
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation
+        'hide-sidebar': !this.sidebar.opened,
+        'open-sidebar': this.sidebar.opened,
+        'without-animation': this.sidebar.withoutAnimation
       }
     }
   },
@@ -39,19 +39,90 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "src/styles/mixin.scss";
+
+  $sidebar-container-width: 220px !important;
+  $hide-sidebar-container-width: 36px !important;
+
   .app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
-  }
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
+
+    // 主体区域
+    .main-container {
+      min-height: 100%;
+      transition: margin-left .28s;
+      margin-left: $sidebar-container-width;
+      position: relative;
+    }
+
+    // 侧边栏
+    .sidebar-container {
+      transition: width 0.28s;
+      width: $sidebar-container-width;
+      height: 100%;
+      position: fixed;
+      font-size: 0px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1001;
+      overflow: hidden;
+
+      //reset element-ui css
+      /deep/ .horizontal-collapse-transition {
+        transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+      }
+
+      /deep/ .el-scrollbar__bar.is-vertical {
+        right: 0px;
+      }
+      /deep/ .is-horizontal {
+        display: none;
+      }
+      /deep/ a {
+        display: inline-block;
+        width: 100%;
+        overflow: hidden;
+      }
+      /deep/ .svg-icon {
+        margin-right: 16px;
+      }
+      /deep/ .el-menu {
+        border: none;
+        height: 100%;
+        width: 100% !important;
+      }
+    }
+
+    &.hide-sidebar {
+      .sidebar-container {
+        width: $hide-sidebar-container-width;
+      }
+      .main-container {
+        margin-left: $hide-sidebar-container-width;
+      }
+
+      /deep/ .el-submenu {
+        overflow: hidden;
+        & > .el-submenu__title {
+          padding: 0 10px !important;
+          .el-submenu__icon-arrow {
+            display: none;
+          }
+        }
+      }
+
+      .el-menu--vertical > .el-menu .svg-icon {
+        margin-right: 20px;
+      }
+    }
+
+    &.without-animation {
+      .main-container, .sidebar-container {
+        transition: none;
+      }
+    }
   }
 </style>
