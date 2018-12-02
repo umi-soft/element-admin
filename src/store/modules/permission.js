@@ -1,5 +1,5 @@
 import { asyncRouterMap, constantRouterMap } from '@/router'
-import { filterAsyncRouter, initRouterRoles } from '@/utils/auth'
+import { filterAsyncRouter, initRouterRoles, initRouterRedirect } from '@/utils/auth'
 import { getRouterRoles } from '@/api/login'
 
 const permission = {
@@ -23,6 +23,7 @@ const permission = {
           // 将未知路由归置到404页面
           asyncRouterMap.push({ path: '*', redirect: '/404', hidden: true })
           accessedRouters = asyncRouterMap
+          initRouterRedirect(accessedRouters)
           commit('SET_ROUTERS', accessedRouters)
           resolve()
         } else {
@@ -34,6 +35,7 @@ const permission = {
             accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
             // 将未知路由归置到404页面
             accessedRouters.push({ path: '*', redirect: '/404', hidden: true })
+            initRouterRedirect(accessedRouters)
             commit('SET_ROUTERS', accessedRouters)
             resolve()
           })

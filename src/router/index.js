@@ -59,6 +59,7 @@ export const constantRouterMap = [
   {
     path: '',
     component: defaultLayout,
+    hidden: false,
     redirect: 'index',
     children: [
       {

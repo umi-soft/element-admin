@@ -8,7 +8,6 @@ import MenuGroup from '@/views/layout/MenuGroup/index'
 const asyncRouter = {
   path: '/system',
   component: defaultLayout,
-  // redirect: 'noredirect',
   hidden: false,
   alwaysShow: true,
   name: '90a127ce319d5d93b3b49c697cfa138f',
@@ -23,7 +22,6 @@ const asyncRouter = {
     {
       path: 'dept',
       component: () => import('@/views/system-management/dept/main'),
-      // redirect: 'noredirect',
       hidden: false,
       alwaysShow: true,
       name: '323c76618c6b56109bd490baf0d00902',
@@ -38,7 +36,6 @@ const asyncRouter = {
     {
       path: 'user-group',
       component: MenuGroup,
-      // redirect: 'noredirect',
       hidden: false,
       alwaysShow: true,
       name: 'f33d83225bef590d81f61a5afcbbca14',
@@ -53,7 +50,6 @@ const asyncRouter = {
         {
           path: 'group',
           component: () => import('@/views/system-management/group/main'),
-          // redirect: 'noredirect',
           hidden: false,
           alwaysShow: true,
           name: '3de22ff390ab5d06bafcce547ff780bb',
@@ -68,7 +64,6 @@ const asyncRouter = {
         {
           path: 'user',
           component: () => import('@/views/system-management/user/main'),
-          // redirect: 'noredirect',
           hidden: false,
           alwaysShow: true,
           name: '8bdc5038a6585fd2b5d3ef7b1e4bf4e1',
@@ -85,7 +80,6 @@ const asyncRouter = {
     {
       path: 'menu',
       component: () => import('@/views/system-management/menu/main'),
-      // redirect: 'noredirect',
       hidden: false,
       alwaysShow: true,
       name: '6ecb9fd6e70f50b2be035485928b5cd6',
@@ -100,7 +94,6 @@ const asyncRouter = {
     {
       path: 'role',
       component: () => import('@/views/system-management/role/main'),
-      // redirect: 'noredirect',
       hidden: false,
       alwaysShow: true,
       name: 'd2249f50a3235286b173663a6c45122d',
@@ -115,7 +108,6 @@ const asyncRouter = {
     {
       path: 'dictionary-setting',
       component: MenuGroup,
-      // redirect: 'noredirect',
       hidden: false,
       alwaysShow: true,
       name: 'da4c2695c36a50eab041735842b530e7',
@@ -130,7 +122,6 @@ const asyncRouter = {
         {
           path: 'dictionary-type',
           component: () => import('@/views/system-management/dictionary-type/main'),
-          // redirect: 'noredirect',
           hidden: false,
           alwaysShow: true,
           name: 'd9fab44477ba5d2caf1aab1b95281713',
@@ -145,7 +136,6 @@ const asyncRouter = {
         {
           path: 'dictionary-single',
           component: () => import('@/views/system-management/dictionary/singleMain'),
-          // redirect: 'noredirect',
           hidden: false,
           alwaysShow: true,
           name: '22fc466264e65171a7631b2079a2b7f6',
@@ -160,7 +150,6 @@ const asyncRouter = {
         {
           path: 'dictionary-multi',
           component: () => import('@/views/system-management/dictionary/multiMain'),
-          // redirect: 'noredirect',
           hidden: false,
           alwaysShow: true,
           name: 'd9369152df124e1aae855f743d3eedc8',

@@ -20,7 +20,6 @@ export function removeToken() {
  * @param meta meta中规定了有权限操作的所有角色，只要用户具有其中一个即可
  */
 export function hasPermission(roles, { meta }) {
-  console.log(meta)
   if (roles.indexOf('admin') >= 0) return true
   if (meta && meta.roles) {
     return roles.some(role => meta.roles.includes(role))
@@ -38,7 +37,7 @@ export function filterAsyncRouter(routes, roles) {
   const res = []
 
   routes.forEach(router => {
-    const temp = { ...router }
+    const temp = { ...router } // 继承一个router对象,非深度复制
     if (hasPermission(roles, temp)) {
       if (temp.children) {
         temp.children = filterAsyncRouter(temp.children, roles)
@@ -48,6 +47,25 @@ export function filterAsyncRouter(routes, roles) {
   })
 
   return res
+}
+
+export function initRouterRedirect(routes, redirect = '') {
+  routes.forEach(router => {
+    let routerRedirect = router.path
+    // 约束，路由中请勿使用绝对路由路径path
+    if (!router.path.startsWith('/')) {
+      routerRedirect = redirect + '/' + router.path
+    }
+    if (router.children) {
+      for (let i = 0; i < router.children.length; i++) {
+        if (router.children[i].hidden === false) {
+          router.redirect = routerRedirect + '/' + router.children[i].path
+          break
+        }
+      }
+      initRouterRedirect(router.children, routerRedirect)
+    }
+  })
 }
 
 export function initRouterRoles(router, routerRolesMap) {
