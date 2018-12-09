@@ -6,7 +6,7 @@ Vue.use(Router)
 /**
  * Layout，建议在一级路由中应用不同的布局
  */
-import defaultLayout from '@/views/layout/LeftSidebar/index'
+import defaultLayout from '@/views/layout/LeftAccordionSidebar/index'
 
 /* 模块化路由 */
 import systemManagementRouter from './modules/SystemManagement'

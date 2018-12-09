@@ -78,11 +78,10 @@ export default {
   getRouterRoles: (config) => {
     const routerRoles = new Map()
     routerRoles.set('90a127ce319d5d93b3b49c697cfa138f', ['simple'])
-    routerRoles.set('323c76618c6b56109bd490baf0d00902', ['simple'])
+    // routerRoles.set('323c76618c6b56109bd490baf0d00902', ['simple'])
     routerRoles.set('f33d83225bef590d81f61a5afcbbca14', ['simple', 'others'])
     routerRoles.set('3de22ff390ab5d06bafcce547ff780bb', ['simple', 'others'])
-    routerRoles.set('8bdc5038a6585fd2b5d3ef7b1e4bf4e1', ['others'])
-    routerRoles.set('8bdc5038a6585fd2b5d3ef7b1e4bf4e1', ['simple'])
+    // routerRoles.set('8bdc5038a6585fd2b5d3ef7b1e4bf4e1', ['simple'])
     return {
       code: 1,
       data: routerRoles

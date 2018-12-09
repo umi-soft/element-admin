@@ -114,6 +114,10 @@ export default {
         }
       }
 
+      /deep/ .logo {
+        display: none;
+      }
+
       .el-menu--vertical > .el-menu .svg-icon {
         margin-right: 20px;
       }

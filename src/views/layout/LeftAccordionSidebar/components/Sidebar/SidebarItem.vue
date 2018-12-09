@@ -1,10 +1,10 @@
 <template>
   <div v-if="!item.hidden && item.children" class="menu-wrapper">
-
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
-      <app-link :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-no-dropdown':!isNest}">
-          <item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" />
+    <!-- item及其一级子路由中，至多包含一个非hidden路由，记录为onlyOneShowing && onlyOneShowing是item本身或没有子路由 && alwaysShow为false -->
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneShowing.children || onlyOneShowing.noShowingChildren) && !item.alwaysShow">
+      <app-link :to="resolvePath(onlyOneShowing.path)">
+        <el-menu-item :index="resolvePath(onlyOneShowing.path)" :class="{'submenu-title-no-dropdown':!isNest}">
+          <item v-if="onlyOneShowing.meta" :icon="onlyOneShowing.meta.icon||item.meta.icon" :title="onlyOneShowing.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
@@ -59,7 +59,7 @@ export default {
   },
   data() {
     return {
-      onlyOneChild: null
+      onlyOneShowing: null
     }
   },
   methods: {
@@ -68,33 +68,31 @@ export default {
         if (item.hidden) {
           return false
         } else {
-          // Temp set(will be used if only has one showing child)
-          this.onlyOneChild = item
+          // 记录最后一个非hidden子路由
+          this.onlyOneShowing = item
           return true
         }
       })
 
-      // When there is only one child router, the child router is displayed by default
+      // 有且仅有一个可显示的非hidden子路由,根据上述记录结果，显示该子路由
       if (showingChildren.length === 1) {
         return true
       }
 
-      // Show parent if there are no child router to display
+      // 没有可显示的非hidden子路由,显示自身路由
       if (showingChildren.length === 0) {
-        this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        this.onlyOneShowing = { ... parent, noShowingChildren: true }
         return true
       }
 
+      // 非hidden子路由大于1个
       return false
     },
     resolvePath(routePath) {
-      if (this.isExternalLink(routePath)) {
+      if (isExternal(routePath)) {
         return routePath
       }
       return path.resolve(this.basePath, routePath)
-    },
-    isExternalLink(routePath) {
-      return isExternal(routePath)
     }
   }
 }

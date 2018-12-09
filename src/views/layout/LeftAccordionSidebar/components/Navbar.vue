@@ -17,7 +17,6 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
             <router-link to="/myself/modify"><span style="display:block;" >个人信息</span></router-link>
-
           </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">退出</span>
