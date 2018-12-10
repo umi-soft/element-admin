@@ -1,0 +1,59 @@
+
+.break-word[data-v-4900f394] {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap !important;
+}
+
+
+[data-v-035216ec] .el-card {
+  border: none;
+}
+.query-btn[data-v-035216ec] .el-button {
+  float: right;
+  margin-left: 10px;
+}
+[data-v-035216ec] .el-tree {
+  border-bottom: 1px solid #ebeef5;
+}
+[data-v-035216ec] .el-tree .el-tree-node__content {
+    border-top: 1px solid #ebeef5;
+    border-left: 1px solid #ebeef5;
+    border-right: 1px solid #ebeef5;
+    min-height: 40px;
+}
+.custom-tree-node[data-v-035216ec] {
+  width: 100%;
+}
+.custom-tree-node .name[data-v-035216ec] {
+    float: left;
+    min-height: 40px;
+    line-height: 40px;
+}
+.custom-tree-node .remark[data-v-035216ec] {
+    float: right;
+    width: 300px;
+    min-height: 40px;
+    line-height: 40px;
+    border-left: 1px solid #ebeef5;
+    text-align: center;
+}
+.custom-tree-node .icon[data-v-035216ec] {
+    float: right;
+    width: 100px;
+    min-height: 40px;
+    line-height: 40px;
+    border-left: 1px solid #ebeef5;
+    text-align: center;
+}
+
+
+.el-card[data-v-656217d5] {
+  margin-top: 10px;
+}
+
+
+.el-button[data-v-9146e53c] {
+  margin-bottom: 10px;
+}
+

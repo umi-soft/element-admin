@@ -1,0 +1,57 @@
+
+[data-v-29e36932] .el-card {
+  border: none;
+}
+.query-btn[data-v-29e36932] .el-button {
+  float: right;
+  margin-left: 10px;
+}
+[data-v-29e36932] .el-tree {
+  border-bottom: 1px solid #ebeef5;
+}
+[data-v-29e36932] .el-tree .el-tree-node__content {
+    border-top: 1px solid #ebeef5;
+    border-left: 1px solid #ebeef5;
+    border-right: 1px solid #ebeef5;
+    min-height: 40px;
+}
+.custom-tree-node[data-v-29e36932] {
+  width: 100%;
+}
+.custom-tree-node .type[data-v-29e36932] {
+    float: right;
+    width: 400px;
+    min-height: 40px;
+    line-height: 40px;
+    border-left: 1px solid #ebeef5;
+    text-align: center;
+}
+.custom-tree-node .name[data-v-29e36932] {
+    float: left;
+    min-height: 40px;
+    line-height: 40px;
+}
+.custom-tree-node .state[data-v-29e36932] {
+    float: right;
+    width: 100px;
+    min-height: 40px;
+    line-height: 40px;
+    border-left: 1px solid #ebeef5;
+    text-align: center;
+}
+
+
+.el-select[data-v-b152073e] {
+  width: 100%;
+}
+
+
+.el-select[data-v-28bcc67f] {
+  width: 100%;
+}
+
+
+.el-button[data-v-61bc332b] {
+  margin-bottom: 10px;
+}
+

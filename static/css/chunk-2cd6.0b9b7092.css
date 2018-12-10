@@ -1,0 +1,128 @@
+
+[data-v-3204f8fb] .el-card {
+  border: none;
+}
+.query-btn[data-v-3204f8fb] .el-button {
+  float: right;
+  margin-left: 10px;
+}
+[data-v-3204f8fb] .el-tree {
+  border-bottom: 1px solid #ebeef5;
+}
+[data-v-3204f8fb] .el-tree .el-tree-node__content {
+    border-top: 1px solid #ebeef5;
+    border-left: 1px solid #ebeef5;
+    border-right: 1px solid #ebeef5;
+    min-height: 40px;
+}
+.custom-tree-node[data-v-3204f8fb] {
+  width: 100%;
+}
+.custom-tree-node .name[data-v-3204f8fb] {
+    float: left;
+    min-height: 40px;
+    line-height: 40px;
+}
+.custom-tree-node .time[data-v-3204f8fb] {
+    float: right;
+    width: 200px;
+    min-height: 40px;
+    line-height: 40px;
+    border-left: 1px solid #ebeef5;
+    text-align: center;
+}
+.custom-tree-node .state[data-v-3204f8fb] {
+    float: right;
+    width: 100px;
+    min-height: 40px;
+    line-height: 40px;
+    border-left: 1px solid #ebeef5;
+    text-align: center;
+}
+
+
+.el-card[data-v-5ca70f76] {
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.el-button[data-v-446767e2] {
+  margin-bottom: 10px;
+}
+
