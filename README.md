@@ -50,6 +50,13 @@ Modern browsers and Internet Explorer 10+.
 | --------- | --------- | --------- | --------- |
 | IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
 
+## 2.x计划
+
+- 提供更多的页面布局模板，目前仅一种模板
+- 提供后端spring-boot开源工程
+- 微调数据库字段设计，比如废弃state字段，flag字段调整为deleted，增加后端API安全资源表等等
+- 升级vue-cli至3.x
+
 ## License
 
 [MIT](https://github.com/umi-soft/element-admin/blob/master/LICENSE)
