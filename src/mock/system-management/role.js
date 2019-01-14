@@ -2,20 +2,8 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-const userMockConfig = MockDB.userMockConfig
-
-const users = MockDB.users
-
-const roleMenus = MockDB.roleMenus
-
-const mockConfig = MockDB.roleMockConfig
-
-const roles = MockDB.roles
-
-const userRoles = MockDB.userRoles
-
 for (let i = 0; i < 10; i++) {
-  roles.push(Mock.mock(mockConfig))
+  MockDB.roles.push(Mock.mock(MockDB.roleMockConfig))
 }
 
 export default {
@@ -26,7 +14,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(roles, query))
+    const queryResult = deepClone(fieldQueryLike(MockDB.roles, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -49,7 +37,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(roles, query))
+    const queryResult = deepClone(fieldQueryLike(MockDB.roles, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -63,7 +51,7 @@ export default {
   queryById: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const role = roles[roles.findIndex(item => { return item.id === params.id })]
+    const role = MockDB.roles[MockDB.roles.findIndex(item => { return item.id === params.id })]
     return {
       code: 1,
       message: '操作成功',
@@ -73,10 +61,10 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const role = Mock.mock(mockConfig)
+    const role = Mock.mock(MockDB.roleMockConfig)
     params.id = role.id
     deepMerge(role, params)
-    roles.push(role)
+    MockDB.roles.push(role)
     return {
       code: 1,
       message: '操作成功',
@@ -86,7 +74,7 @@ export default {
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const role = roles[roles.findIndex(item => { return item.id === params.id })]
+    const role = MockDB.roles[MockDB.roles.findIndex(item => { return item.id === params.id })]
     deepMerge(role, params)
     return {
       code: 1,
@@ -97,7 +85,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    roles.splice(roles.findIndex(item => { return item.id === params.id }), 1)
+    MockDB.roles.splice(MockDB.roles.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',
@@ -112,7 +100,7 @@ export default {
     return {
       code: 1,
       message: '操作成功',
-      data: roleMenus.filter(item => { return params.id === item.roleId })
+      data: MockDB.roleMenus.filter(item => { return params.id === item.roleId })
     }
   },
   /**
@@ -126,13 +114,13 @@ export default {
   resetRoleMenus: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    roleMenus.forEach(roleMenu => {
-      roleMenus.splice(roleMenus.findIndex(item => {
+    MockDB.roleMenus.forEach(roleMenu => {
+      MockDB.roleMenus.splice(MockDB.roleMenus.findIndex(item => {
         return item.roleId === params.roleId
       }), 1)
     })
     params.menuIds.forEach(menuId => {
-      roleMenus.push({
+      MockDB.roleMenus.push({
         roleId: params.roleId,
         menuId
       })
@@ -147,22 +135,22 @@ export default {
   queryAllRoleUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (userRoles.findIndex(item => { return item.roleId === params.id }) === -1) {
+    if (MockDB.userRoles.findIndex(item => { return item.roleId === params.id }) === -1) {
       // 生成几个user
       for (let i = 0; i < 20; i++) {
-        const user = Mock.mock(userMockConfig)
-        users.push(user)
-        userRoles.push({
+        const user = Mock.mock(MockDB.userMockConfig)
+        MockDB.users.push(user)
+        MockDB.userRoles.push({
           userId: user.id,
           roleId: params.id
         })
       }
     }
-    const userRolesResult = userRoles.filter(item => { return item.roleId === params.id })
+    const userRolesResult = MockDB.userRoles.filter(item => { return item.roleId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: users.filter(user => {
+      data: MockDB.users.filter(user => {
         return userRolesResult.findIndex(userRole => { return user.id === userRole.userId }) !== -1
       })
     }
@@ -171,7 +159,7 @@ export default {
   delRoleUser: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    userRoles.splice(userRoles.findIndex(item => {
+    MockDB.userRoles.splice(MockDB.userRoles.findIndex(item => {
       return item.userId === params.userId && item.roleId === params.roleId
     }), 1)
     return {

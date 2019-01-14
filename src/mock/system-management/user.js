@@ -2,49 +2,27 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-const roleMockConfig = MockDB.roleMockConfig
-
-const groupMockConfig = MockDB.groupMockConfig
-
-const deptMockConfig = MockDB.deptMockConfig
-
-const userRoles = MockDB.userRoles
-
-const roles = MockDB.roles
-
-const groupUsers = MockDB.groupUsers
-
-const groups = MockDB.groups
-
-const deptUsers = MockDB.deptUsers
-
-const depts = MockDB.depts
-
-const mockConfig = MockDB.userMockConfig
-
-const users = MockDB.users
-
 for (let i = 0; i < 25; i++) {
-  users.push(Mock.mock(mockConfig))
+  MockDB.users.push(Mock.mock(MockDB.userMockConfig))
 }
-const admin = Mock.mock(mockConfig)
+const admin = Mock.mock(MockDB.userMockConfig)
 admin.name = 'admin'
 admin.loginName = 'admin'
 admin.password = 'admin'
 admin.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
 
-users.push(admin)
+MockDB.users.push(admin)
 MockDB.admin.token = 'admin'
 MockDB.admin.roles = ['admin']
 MockDB.admin.user = admin
 
-const simple = Mock.mock(mockConfig)
+const simple = Mock.mock(MockDB.userMockConfig)
 simple.name = 'simple'
 simple.loginName = 'simple'
 simple.password = 'simple'
 simple.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
 
-users.push(simple)
+MockDB.users.push(simple)
 MockDB.simple.token = 'simple'
 MockDB.simple.roles = ['simple']
 MockDB.simple.user = admin
@@ -57,7 +35,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(users, query))
+    const queryResult = deepClone(fieldQueryLike(MockDB.users, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -76,7 +54,7 @@ export default {
   checkLoginName: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const find = users.some(item => {
+    const find = MockDB.users.some(item => {
       if (params.id) {
         return item.loginName === params.loginName && item.id !== params.id
       }
@@ -101,7 +79,7 @@ export default {
   queryById: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const user = users[users.findIndex(item => { return item.id === params.id })]
+    const user = MockDB.users[MockDB.users.findIndex(item => { return item.id === params.id })]
     return {
       code: 1,
       message: '操作成功',
@@ -111,10 +89,10 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const user = Mock.mock(mockConfig)
+    const user = Mock.mock(MockDB.userMockConfig)
     params.id = user.id
     deepMerge(user, params)
-    users.push(user)
+    MockDB.users.push(user)
     return {
       code: 1,
       message: '操作成功',
@@ -124,7 +102,7 @@ export default {
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const user = users[users.findIndex(item => { return item.id === params.id })]
+    const user = MockDB.users[MockDB.users.findIndex(item => { return item.id === params.id })]
     deepMerge(user, params)
     return {
       code: 1,
@@ -136,7 +114,7 @@ export default {
   editUserPassword: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const user = users[users.findIndex(item => { return item.id === params.id })]
+    const user = MockDB.users[MockDB.users.findIndex(item => { return item.id === params.id })]
     user.password = params.password
     return {
       code: 1,
@@ -147,7 +125,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    users.splice(users.findIndex(item => { return item.id === params.id }), 1)
+    MockDB.users.splice(MockDB.users.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',
@@ -158,22 +136,22 @@ export default {
   queryAllUserDepts: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (deptUsers.findIndex(item => { return item.userId === params.id }) === -1) {
+    if (MockDB.deptUsers.findIndex(item => { return item.userId === params.id }) === -1) {
       // 生成几个dept
       for (let i = 0; i < 3; i++) {
-        const dept = Mock.mock(deptMockConfig)
-        depts.push(dept)
-        deptUsers.push({
+        const dept = Mock.mock(MockDB.deptMockConfig)
+        MockDB.depts.push(dept)
+        MockDB.deptUsers.push({
           userId: params.id,
           deptId: dept.id
         })
       }
     }
-    const deptUsersResult = deptUsers.filter(item => { return item.userId === params.id })
+    const deptUsersResult = MockDB.deptUsers.filter(item => { return item.userId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: depts.filter(dept => {
+      data: MockDB.depts.filter(dept => {
         return deptUsersResult.findIndex(deptUser => { return dept.id === deptUser.deptId }) !== -1
       })
     }
@@ -181,11 +159,11 @@ export default {
   addUserDept: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    console.log(deptUsers.length)
+    console.log(MockDB.deptUsers.length)
     params.forEach(item => {
-      deptUsers.push(item)
+      MockDB.deptUsers.push(item)
     })
-    console.log(deptUsers)
+    console.log(MockDB.deptUsers)
     return {
       code: 1,
       message: '操作成功',
@@ -195,7 +173,7 @@ export default {
   delUserDept: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    deptUsers.splice(deptUsers.findIndex(item => {
+    MockDB.deptUsers.splice(MockDB.deptUsers.findIndex(item => {
       return item.userId === params.userId && item.deptId === params.deptId
     }), 1)
     return {
@@ -208,22 +186,22 @@ export default {
   queryAllUserGroups: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (groupUsers.findIndex(item => { return item.userId === params.id }) === -1) {
+    if (MockDB.groupUsers.findIndex(item => { return item.userId === params.id }) === -1) {
       // 生成几个group
       for (let i = 0; i < 3; i++) {
-        const group = Mock.mock(groupMockConfig)
-        groups.push(group)
-        groupUsers.push({
+        const group = Mock.mock(MockDB.groupMockConfig)
+        MockDB.groups.push(group)
+        MockDB.groupUsers.push({
           userId: params.id,
           groupId: group.id
         })
       }
     }
-    const groupUsersResult = groupUsers.filter(item => { return item.userId === params.id })
+    const groupUsersResult = MockDB.groupUsers.filter(item => { return item.userId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: groups.filter(group => {
+      data: MockDB.groups.filter(group => {
         return groupUsersResult.findIndex(groupUser => { return group.id === groupUser.groupId }) !== -1
       })
     }
@@ -233,7 +211,7 @@ export default {
     console.log(config)
     const params = JSON.parse(config.body)
     params.forEach(item => {
-      groupUsers.push(item)
+      MockDB.groupUsers.push(item)
     })
     return {
       code: 1,
@@ -244,7 +222,7 @@ export default {
   delUserGroup: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    groupUsers.splice(groupUsers.findIndex(item => {
+    MockDB.groupUsers.splice(MockDB.groupUsers.findIndex(item => {
       return item.userId === params.userId && item.groupId === params.groupId
     }), 1)
     return {
@@ -257,22 +235,22 @@ export default {
   queryAllUserRoles: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (userRoles.findIndex(item => { return item.userId === params.id }) === -1) {
+    if (MockDB.userRoles.findIndex(item => { return item.userId === params.id }) === -1) {
       // 生成几个role
       for (let i = 0; i < 3; i++) {
-        const role = Mock.mock(roleMockConfig)
-        roles.push(role)
-        userRoles.push({
+        const role = Mock.mock(MockDB.roleMockConfig)
+        MockDB.roles.push(role)
+        MockDB.userRoles.push({
           userId: params.id,
           roleId: role.id
         })
       }
     }
-    const userRolesResult = userRoles.filter(item => { return item.userId === params.id })
+    const userRolesResult = MockDB.userRoles.filter(item => { return item.userId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: roles.filter(role => {
+      data: MockDB.roles.filter(role => {
         return userRolesResult.findIndex(userRole => { return role.id === userRole.roleId }) !== -1
       })
     }
@@ -281,7 +259,7 @@ export default {
     console.log(config)
     const params = JSON.parse(config.body)
     params.forEach(item => {
-      userRoles.push(item)
+      MockDB.userRoles.push(item)
     })
     return {
       code: 1,
@@ -292,7 +270,7 @@ export default {
   delUserRole: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    userRoles.splice(userRoles.findIndex(item => {
+    MockDB.userRoles.splice(MockDB.userRoles.findIndex(item => {
       return item.userId === params.userId && item.roleId === params.roleId
     }), 1)
     return {

@@ -2,18 +2,8 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-const userMockConfig = MockDB.userMockConfig
-
-const users = MockDB.users
-
-const mockConfig = MockDB.groupMockConfig
-
-const groups = MockDB.groups
-
-const groupUsers = MockDB.groupUsers
-
 for (let i = 0; i < 10; i++) {
-  groups.push(Mock.mock(mockConfig))
+  MockDB.groups.push(Mock.mock(MockDB.groupMockConfig))
 }
 
 export default {
@@ -24,7 +14,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(groups, query))
+    const queryResult = deepClone(fieldQueryLike(MockDB.groups, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -47,7 +37,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(groups, query))
+    const queryResult = deepClone(fieldQueryLike(MockDB.groups, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -61,7 +51,7 @@ export default {
   queryById: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const group = groups[groups.findIndex(item => { return item.id === params.id })]
+    const group = MockDB.groups[MockDB.groups.findIndex(item => { return item.id === params.id })]
     return {
       code: 1,
       message: '操作成功',
@@ -71,10 +61,10 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const group = Mock.mock(mockConfig)
+    const group = Mock.mock(MockDB.groupMockConfig)
     params.id = group.id
     deepMerge(group, params)
-    groups.push(group)
+    MockDB.groups.push(group)
     return {
       code: 1,
       message: '操作成功',
@@ -84,7 +74,7 @@ export default {
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const group = groups[groups.findIndex(item => { return item.id === params.id })]
+    const group = MockDB.groups[MockDB.groups.findIndex(item => { return item.id === params.id })]
     deepMerge(group, params)
     return {
       code: 1,
@@ -95,7 +85,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    groups.splice(groups.findIndex(item => { return item.id === params.id }), 1)
+    MockDB.groups.splice(MockDB.groups.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',
@@ -105,22 +95,22 @@ export default {
   queryAllGroupUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (groupUsers.findIndex(item => { return item.groupId === params.id }) === -1) {
+    if (MockDB.groupUsers.findIndex(item => { return item.groupId === params.id }) === -1) {
       // 生成几个user
       for (let i = 0; i < 20; i++) {
-        const user = Mock.mock(userMockConfig)
-        users.push(user)
-        groupUsers.push({
+        const user = Mock.mock(MockDB.userMockConfig)
+        MockDB.users.push(user)
+        MockDB.groupUsers.push({
           userId: user.id,
           groupId: params.id
         })
       }
     }
-    const groupUsersResult = groupUsers.filter(item => { return item.groupId === params.id })
+    const groupUsersResult = MockDB.groupUsers.filter(item => { return item.groupId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: users.filter(user => {
+      data: MockDB.users.filter(user => {
         return groupUsersResult.findIndex(groupUser => { return user.id === groupUser.userId }) !== -1
       })
     }
@@ -128,7 +118,7 @@ export default {
   delGroupUser: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    groupUsers.splice(groupUsers.findIndex(item => {
+    MockDB.groupUsers.splice(MockDB.groupUsers.findIndex(item => {
       return item.userId === params.userId && item.groupId === params.groupId
     }), 1)
     return {

@@ -2,32 +2,28 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-const mockConfig = MockDB.dictionaryMockConfig
-
-const dictionaries = MockDB.dictionaries
-
-const dictionary = Mock.mock(mockConfig)
+const dictionary = Mock.mock(MockDB.dictionaryMockConfig)
 dictionary.type = null
 dictionary.category = 1
 dictionary.parentId = 'root'
 dictionary.deleted = 0
-dictionaries.push(dictionary)
+MockDB.dictionaries.push(dictionary)
 
 // 单级字典
 for (let i = 0; i < 13; i++) {
-  const item = Mock.mock(mockConfig)
+  const item = Mock.mock(MockDB.dictionaryMockConfig)
   item.category = 2
   item.parentId = 'root'
   item.type = dictionary.id
-  dictionaries.push(item)
+  MockDB.dictionaries.push(item)
 }
 
 for (let i = 0; i < 11; i++) {
-  const item = Mock.mock(mockConfig)
+  const item = Mock.mock(MockDB.dictionaryMockConfig)
   item.category = 3
   item.parentId = 'root'
   item.type = dictionary.id
-  dictionaries.push(item)
+  MockDB.dictionaries.push(item)
 }
 
 export default {
@@ -38,7 +34,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(dictionaries, query))
+    const queryResult = deepClone(fieldQueryLike(MockDB.dictionaries, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -61,7 +57,7 @@ export default {
     params.filters.forEach(filter => {
       query[filter.field] = filter.value
     })
-    const queryResult = deepClone(fieldQueryLike(dictionaries, query))
+    const queryResult = deepClone(fieldQueryLike(MockDB.dictionaries, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
       sortArray(queryResult, sort.field, sort.value === 'desc')
@@ -75,7 +71,7 @@ export default {
   queryById: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const dictionary = dictionaries[dictionaries.findIndex(item => { return item.id === params.id })]
+    const dictionary = MockDB.dictionaries[MockDB.dictionaries.findIndex(item => { return item.id === params.id })]
     return {
       code: 1,
       message: '操作成功',
@@ -85,10 +81,10 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const dictionary = Mock.mock(mockConfig)
+    const dictionary = Mock.mock(MockDB.dictionaryMockConfig)
     params.id = dictionary.id
     deepMerge(dictionary, params)
-    dictionaries.push(dictionary)
+    MockDB.dictionaries.push(dictionary)
     return {
       code: 1,
       message: '操作成功',
@@ -98,7 +94,7 @@ export default {
   edit: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const dictionary = dictionaries[dictionaries.findIndex(item => { return item.id === params.id })]
+    const dictionary = MockDB.dictionaries[MockDB.dictionaries.findIndex(item => { return item.id === params.id })]
     deepMerge(dictionary, params)
     return {
       code: 1,
@@ -109,7 +105,7 @@ export default {
   del: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    dictionaries.splice(dictionaries.findIndex(item => { return item.id === params.id }), 1)
+    MockDB.dictionaries.splice(MockDB.dictionaries.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
       message: '操作成功',
