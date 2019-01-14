@@ -6,7 +6,6 @@
         <el-form :model="detail" :label-width="labelWidth">
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
           <input-item-view v-if="parentDeptName" label="上级部门">{{ parentDeptName }}</input-item-view>
-          <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
           <input-item-view label="部门编号">{{ detail.index }}</input-item-view>
           <input-item-view label="部门类型">{{ detail.type }}</input-item-view>
           <input-item-view label="部门名称">{{ detail.name }}</input-item-view>

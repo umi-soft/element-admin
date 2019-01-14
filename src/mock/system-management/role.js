@@ -6,8 +6,7 @@ import { mockConfig as userMockConfig, users } from './user'
 
 export const mockConfig = {
   'id|1': Utils.id,
-  'flag|1': Utils.flag, // 是否删除
-  'state|1': Utils.state, // 是否启用
+  'deleted|1': Utils.deleted, // 是否删除
   index: '@increment', // 序号
   name: '@cword(5, 10)', // 名称
   remark: '@cparagraph(1, 3)', // 描述

@@ -21,7 +21,7 @@ export default {
       return {
         id: null,
         token: null,
-        state: '',
+        disabled: '',
         index: '',
         loginName: '',
         name: '',
@@ -48,7 +48,7 @@ export default {
         })
       }
       return {
-        state: [{
+        disabled: [{
           required: true, message: '请选择用户启用状态', trigger: 'blur'
         }],
         index: [{

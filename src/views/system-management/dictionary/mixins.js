@@ -31,7 +31,6 @@ export default {
         id: null,
         token: null,
         parentId: null,
-        state: 1,
         category: 2,
         type: '',
         name: '',
@@ -42,9 +41,6 @@ export default {
     },
     initRules() {
       return {
-        state: [{
-          required: true, message: '请选择字典启用状态', trigger: 'blur'
-        }],
         category: [{
           required: true, message: '字典类别为必填项', trigger: 'change'
         }],

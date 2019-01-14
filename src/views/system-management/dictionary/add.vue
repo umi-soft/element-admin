@@ -3,9 +3,6 @@
     <el-form-item v-if="parentDictionaryName" label="上级字典">
       <el-input :value="parentDictionaryName" disabled/>
     </el-form-item>
-    <el-form-item label="是否启用" prop="state">
-      <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
-    </el-form-item>
     <!--  禁止多级字典新增子节点时编辑分类，应该直接继承自父节点即可 -->
     <el-form-item v-if="categoryEditAble" label="字典分类" prop="type">
       <el-select v-model="form.type" filterable clearable placeholder="请输入字典分类关键词进行搜索">

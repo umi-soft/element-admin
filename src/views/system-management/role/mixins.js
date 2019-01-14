@@ -9,7 +9,6 @@ export default {
         id: null,
         token: null,
         name: '',
-        state: 1,
         index: '',
         remark: ''
       }
@@ -20,9 +19,6 @@ export default {
           required: true, message: '请输入角色名称', trigger: 'blur'
         }, {
           min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
-        }],
-        state: [{
-          required: true, message: '请选择角色启用状态', trigger: 'blur'
         }],
         index: [{
           required: true, message: '请输入角色编号', trigger: 'blur'

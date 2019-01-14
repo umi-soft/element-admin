@@ -8,8 +8,8 @@ import { mockConfig as deptMockConfig, deptUsers, depts } from './dept'
 
 export const mockConfig = {
   'id|1': Utils.id, // 主键
-  'flag|1': Utils.flag, // 是否删除
-  'state|1': Utils.state, // 是否启用
+  'deleted|1': Utils.deleted, // 是否删除
+  'disabled|1': Utils.state, // 是否启用
   index: '@increment', // 序号
   'loginName': /[a-z][A-Z][0-9]/, // 登录ID
   'password': '@id', // 密码

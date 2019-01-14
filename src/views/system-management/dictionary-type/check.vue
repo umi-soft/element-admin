@@ -6,7 +6,6 @@
         <el-form :model="detail" :label-width="labelWidth">
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
           <input-item-view label="上级ID">{{ detail.parentId }}</input-item-view>
-          <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
           <input-item-view label="字典分类名称">{{ detail.name }}</input-item-view>
           <input-item-view label="字典分类规则码">{{ detail.code }}</input-item-view>
           <input-item-view label="字典分类编号">{{ detail.index }}</input-item-view>

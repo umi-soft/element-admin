@@ -5,11 +5,6 @@
         <el-form
           :model="queryCriteria"
           :inline="true">
-          <el-form-item label="启用状态:" prop="flag">
-            <el-select v-model="queryCriteria.flag" clearable placeholder="全部">
-              <el-option v-for="item in dictionaries.flag" :key="item.key" :value="item.key" :label="item.value"/>
-            </el-select>
-          </el-form-item>
           <el-form-item label="字典分类:" prop="type">
             <el-select v-model="queryCriteria.type" filterable clearable placeholder="全部">
               <el-option v-for="(item, index) in dictionaryTypeList" :key="index" :label="item.name" :value="item.id"/>
@@ -54,11 +49,6 @@
         <el-table-column prop="modifiedDate" label="最后修改时间" width="180" sortable="custom" align="center">
           <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
         </el-table-column>
-        <el-table-column prop="state" label="启用状态" width="100" sortable="custom" align="center">
-          <template slot-scope="scope">
-            <state :state="scope.row.state"/>
-          </template>
-        </el-table-column>
       </el-table>
       <pagination :pagination="pagination" @page-size-changed="pageSizeChangeHandler" @page-changed="pageChangeHandler"/>
     </el-col>
@@ -87,7 +77,6 @@ export default {
   methods: {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
-        flag: '',
         category: '2',
         type: '',
         name: ''

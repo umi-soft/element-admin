@@ -6,8 +6,7 @@ import { mockConfig as roleMockConfig, roles } from './role'
 // const mockConfig = {
 //   id: '',
 //   parentId: '', // 上级ID
-//   flag: 1, // 是否删除
-//   state: 0, // 是否启用
+//   deleted: 0, // 是否删除
 //   index: '', // 菜单序号
 //   name: '', // 名称
 //   icon: '', // 图标
@@ -22,8 +21,7 @@ function createMenu(router, parentId, menus) {
   const menu = {}
   menu.id = router.name
   menu.parentId = parentId
-  menu.flag = 1
-  menu.state = 0
+  menu.deleted = 0
   menu.index = router.meta.index
   menu.name = router.meta.title
   menu.icon = router.meta.icon

@@ -62,8 +62,8 @@ export function toThousandFilter(num) {
   return (+num || 0).toString().replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
 
-export function translateState(state) {
-  const dictionaries = StoreDictionaries.state.flag
+export function translateTrueOrFalse(state) {
+  const dictionaries = StoreDictionaries.state.trueOrFalse
   const index = dictionaries.findIndex(item => { return '' + state === item.key + '' })
   return index === -1 ? '' : dictionaries[index].value
 }

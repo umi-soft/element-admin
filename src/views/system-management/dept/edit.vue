@@ -23,9 +23,6 @@
         <el-form-item label="部门名称" prop="name">
           <el-input v-model="form.name"/>
         </el-form-item>
-        <el-form-item label="是否启用" prop="state">
-          <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
-        </el-form-item>
         <el-form-item label="部门编号" prop="index">
           <el-input v-model="form.index"/>
         </el-form-item>
@@ -58,6 +55,7 @@
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as DeptAPI from '@/api/system-management/dept'
+import * as UserDeptAPI from '@/api/system-management/userDept'
 import mixins from './mixins'
 
 export default {
@@ -103,7 +101,7 @@ export default {
         userId: id,
         deptId: this.detail.id
       }
-      DeptAPI.delDeptUser(params).then(data => {
+      UserDeptAPI.delByEntityMapping(params).then(data => {
         this.optionSuccessHandler()
         this.queryAllUsers()
       })

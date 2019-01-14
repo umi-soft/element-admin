@@ -6,8 +6,7 @@ import { mockConfig as userMockConfig, users } from './user'
 export const mockConfig = {
   'id|1': Utils.id,
   'parentId|1': Utils.id, // 父级机构
-  'flag|1': Utils.flag, // 是否删除
-  'state|1': Utils.state, // 是否启用
+  'deleted|1': Utils.deleted, // 是否删除
   index: '@increment', // 机构序号
   'type|1': ['政府机构', '国有企业', '民营企业'], // 机构类型
   name: '@cword(5, 10)', // 机构名称
@@ -189,7 +188,7 @@ export default {
       })
     }
   },
-  delDeptUser: config => {
+  delByEntityMapping: config => {
     console.log(config)
     const params = JSON.parse(config.body)
     deptUsers.splice(deptUsers.findIndex(item => {

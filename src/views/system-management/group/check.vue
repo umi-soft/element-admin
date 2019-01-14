@@ -5,7 +5,6 @@
       <el-collapse-item title="基本信息" name="base-info">
         <el-form :model="detail" :label-width="labelWidth">
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
-          <input-item-view label="启用状态">{{ detail.state | translateState }}</input-item-view>
           <input-item-view label="分组编号">{{ detail.index }}</input-item-view>
           <input-item-view label="分组名称">{{ detail.name }}</input-item-view>
           <text-item-view label="分组备注">{{ detail.remark }}</text-item-view>

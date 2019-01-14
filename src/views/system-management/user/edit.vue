@@ -16,8 +16,8 @@
             <el-form-item label="ID" prop="id">
               <el-input v-model="form.id" disabled/>
             </el-form-item>
-            <el-form-item label="是否启用" prop="state">
-              <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
+            <el-form-item label="是否启用" prop="disabled">
+              <el-switch v-model="form.disabled" :active-value="1" :inactive-value="0"/>
             </el-form-item>
             <el-form-item label="用户编号" prop="index">
               <el-input v-model="form.index"/>

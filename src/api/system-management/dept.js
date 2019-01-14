@@ -57,11 +57,3 @@ export function queryAllDeptUsers(id) {
     params: { id }
   })
 }
-
-export function delDeptUser(data) {
-  return request({
-    url: base_url + 'del-user',
-    method: 'post',
-    data
-  })
-}

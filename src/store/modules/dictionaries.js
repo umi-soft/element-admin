@@ -1,11 +1,11 @@
 const dictionaries = {
   state: {
-    flag: [{
+    trueOrFalse: [{
       key: '0',
-      value: '已禁用'
+      value: '否'
     }, {
       key: '1',
-      value: '已启用'
+      value: '是'
     }],
 
     gender: [{

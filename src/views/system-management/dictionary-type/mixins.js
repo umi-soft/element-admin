@@ -5,7 +5,6 @@ export default {
         id: null,
         token: null,
         parentId: null,
-        state: 1,
         category: 1,
         type: '',
         name: '',
@@ -16,9 +15,6 @@ export default {
     },
     initRules() {
       return {
-        state: [{
-          required: true, message: '请选择字典分类启用状态', trigger: 'blur'
-        }],
         name: [{
           required: true, message: '请输入字典分类名称', trigger: 'blur'
         }, {

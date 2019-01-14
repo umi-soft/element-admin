@@ -7,7 +7,7 @@
           <el-row>
             <el-col :span="12">
               <input-item-view :label-width="labelWidth" label="ID">{{ detail.id }}</input-item-view>
-              <input-item-view :label-width="labelWidth" label="启用状态">{{ detail.state | translateState }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="启用状态">{{ detail.disabled | translateTrueOrFalse }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="用户编号">{{ detail.index }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="登录ID">{{ detail.loginName }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="用户姓名">{{ detail.name }}</input-item-view>

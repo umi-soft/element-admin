@@ -5,8 +5,7 @@ import Utils from '../utils'
 const mockConfig = {
   'id|1': Utils.id,
   'parentId': null, // 上级ID
-  'flag|1': Utils.flag, // 是否删除
-  'state|1': Utils.state, // 是否启用
+  'deleted|1': Utils.deleted, // 是否删除
   'category|1': [1, 2, 3], // 类型： 1：业务字典类型, 2：单级业务字典, 3：多级业务字典
   'type|1': Utils.id, // 字典类型ID
   name: '@cword(5, 10)', // 名称
@@ -25,7 +24,7 @@ const dictionary = Mock.mock(mockConfig)
 dictionary.type = null
 dictionary.category = 1
 dictionary.parentId = 'root'
-dictionary.flag = 1
+dictionary.deleted = 0
 dictionaries.push(dictionary)
 
 // 单级字典

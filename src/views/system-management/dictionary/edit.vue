@@ -6,9 +6,6 @@
     <el-form-item v-if="parentDictionaryName" label="上级字典">
       <el-input :value="parentDictionaryName" disabled/>
     </el-form-item>
-    <el-form-item label="是否启用" prop="state">
-      <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
-    </el-form-item>
     <el-form-item label="字典名称" prop="name">
       <el-input v-model="form.name"/>
     </el-form-item>

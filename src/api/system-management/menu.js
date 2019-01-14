@@ -16,8 +16,7 @@ export function createMenuTree(allMenus, router, parentId) {
   if (remoteMenuIndex === -1) { // 需要同步，本次构建从本地路由中构建
     menu.id = router.name
     menu.parentId = parentId
-    menu.flag = 1
-    menu.state = 0
+    menu.deleted = 0
     menu.index = router.meta.index
     menu.name = router.meta.title
     menu.icon = router.meta.icon
@@ -30,8 +29,7 @@ export function createMenuTree(allMenus, router, parentId) {
     remoteMenu = allMenus[remoteMenuIndex]
     menu.id = remoteMenu.id
     menu.parentId = parentId
-    menu.flag = 1
-    menu.state = 0
+    menu.deleted = 0
     menu.index = remoteMenu.index
     menu.name = remoteMenu.name
     menu.icon = remoteMenu.icon

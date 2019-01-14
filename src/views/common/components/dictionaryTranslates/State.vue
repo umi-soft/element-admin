@@ -1,5 +1,5 @@
 <template>
-  <el-tag :type="state === 1 ? 'success' : 'info'" plain>{{ state | translateState }}</el-tag>
+  <el-tag :type="state === 1 ? 'success' : 'info'" plain>{{ state | translateTrueOrFalse }}</el-tag>
 </template>
 
 <script>

@@ -78,7 +78,6 @@ Mock.mock(/\/system\/dept\/add/, 'post', deptAPI.add)
 Mock.mock(/\/system\/dept\/edit/, 'post', deptAPI.edit)
 Mock.mock(/\/system\/dept\/del/, 'get', deptAPI.del)
 Mock.mock(/\/system\/dept\/all-users/, 'get', deptAPI.queryAllDeptUsers)
-Mock.mock(/\/system\/dept\/del-user/, 'post', deptAPI.delDeptUser)
 
 //  系统设置相关---字典
 Mock.mock(/\/system\/dictionary\/query-all/, 'post', dictionaryAPI.queryAll)
@@ -98,5 +97,8 @@ Mock.mock(/\/system\/menu\/add-url/, 'post', menuAPI.addMenuUrl)
 Mock.mock(/\/system\/menu\/del-url/, 'post', menuAPI.delMenuUrl)
 Mock.mock(/\/system\/menu\/all-roles/, 'get', menuAPI.queryMenuRoles)
 Mock.mock(/\/system\/menu\/del-role/, 'post', menuAPI.delMenuRole)
+
+//  用户部门中间表
+Mock.mock(/\/system\/user-dept\/del-by-entity-mapping/, 'post', deptAPI.delByEntityMapping)
 
 export default Mock

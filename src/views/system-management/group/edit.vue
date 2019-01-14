@@ -17,9 +17,6 @@
         <el-form-item label="分组名称" prop="name">
           <el-input v-model="form.name"/>
         </el-form-item>
-        <el-form-item label="是否启用" prop="state">
-          <el-switch v-model="form.state" :active-value="1" :inactive-value="0"/>
-        </el-form-item>
         <el-form-item label="分组编号" prop="index">
           <el-input v-model="form.index"/>
         </el-form-item>

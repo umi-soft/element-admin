@@ -23,7 +23,6 @@
       <el-tree :data="[{}]" :props="defaultProps">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">名称</div>
-          <div class="state">状态</div>
           <div class="time">最后修改时间</div>
           <div class="time">创建时间</div>
         </div>
@@ -31,9 +30,6 @@
       <el-tree ref="tree" :data="nodes" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">{{ data.name }}</div>
-          <div class="state">
-            <state :state="data.state"/>
-          </div>
           <div class="time">{{ data.modifiedDate | parseTime }}</div>
           <div class="time">{{ data.createdDate | parseTime }}</div>
         </div>
@@ -136,15 +132,6 @@ export default {
     .time {
       float: right;
       width: 200px;
-      min-height: 40px;
-      line-height: 40px;
-      border-left: 1px solid #ebeef5;
-      text-align: center;
-    }
-
-    .state {
-      float: right;
-      width: 100px;
       min-height: 40px;
       line-height: 40px;
       border-left: 1px solid #ebeef5;

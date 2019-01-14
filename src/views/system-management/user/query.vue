@@ -4,9 +4,9 @@
       <el-col :span="24">
         <el-form :model="queryCriteria" label-width="150px">
           <el-col :span="8">
-            <el-form-item label="启用状态:" prop="flag">
-              <el-select v-model="queryCriteria.flag" clearable placeholder="全部">
-                <el-option v-for="item in dictionaries.flag" :key="item.key" :value="item.key" :label="item.value"/>
+            <el-form-item label="是否删除:" prop="deleted">
+              <el-select v-model="queryCriteria.deleted" clearable placeholder="全部">
+                <el-option v-for="item in dictionaries.trueOrFalse" :key="item.key" :value="item.key" :label="item.value"/>
               </el-select>
             </el-form-item>
           </el-col>
@@ -73,9 +73,9 @@
         <el-table-column prop="createdDate" label="创建时间" width="180" sortable="custom" align="center">
           <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
         </el-table-column>
-        <el-table-column prop="state" label="启用状态" width="100" sortable="custom" align="center">
+        <el-table-column prop="disabled" label="是否启用" width="100" sortable="custom" align="center">
           <template slot-scope="scope">
-            <state :state="scope.row.state"/>
+            <state :state="scope.row.disabled"/>
           </template>
         </el-table-column>
       </el-table>
@@ -107,7 +107,7 @@ export default {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
         id: '',
-        flag: '',
+        deleted: '',
         gender: '',
         name: '',
         email: '',

@@ -5,11 +5,6 @@
         <el-form
           :model="queryCriteria"
           :inline="true">
-          <el-form-item label="启用状态:" prop="flag">
-            <el-select v-model="queryCriteria.flag" clearable placeholder="全部">
-              <el-option v-for="item in dictionaries.flag" :key="item.key" :value="item.key" :label="item.value"/>
-            </el-select>
-          </el-form-item>
           <el-form-item label="字典分类:" prop="type">
             <el-select v-model="queryCriteria.type" filterable clearable placeholder="全部">
               <el-option v-for="(item, index) in dictionaryTypeList" :key="index" :label="item.name" :value="item.id"/>
@@ -48,7 +43,6 @@
       <el-tree :data="[{}]" :props="defaultProps">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">字典名称</div>
-          <div class="state">状态</div>
           <div class="type">字典分类</div>
         </div>
       </el-tree>
@@ -56,9 +50,6 @@
       <el-tree ref="tree" :data="pagination.list" :load="loadChildren" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion lazy @current-change="(value, node) => selected = value">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">{{ data.name }}</div>
-          <div class="state">
-            <state :state="data.state"/>
-          </div>
           <div class="type">{{ getDictionaryTypeName(data.type) }}</div>
         </div>
       </el-tree>
@@ -99,7 +90,6 @@ export default {
   methods: {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
-        flag: '',
         category: '3',
         parentId: 'root',
         type: '',
@@ -174,13 +164,5 @@ export default {
       line-height: 40px;
     }
 
-    .state {
-      float: right;
-      width: 100px;
-      min-height: 40px;
-      line-height: 40px;
-      border-left: 1px solid #ebeef5;
-      text-align: center;
-    }
   }
 </style>
