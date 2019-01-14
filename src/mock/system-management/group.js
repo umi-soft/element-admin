@@ -1,29 +1,16 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
-import Utils from '../utils'
-import { mockConfig as userMockConfig, users } from './user'
+import * as MockDB from '../MockDB'
 
-export const mockConfig = {
-  'id|1': Utils.id,
-  'deleted|1': Utils.deleted, // 是否删除
-  index: '@increment', // 编号
-  name: '@cword(5, 10)', // 名称
-  remark: '@cparagraph(1, 3)', // 备注
-  createdBy: '@increment', // 创建人
-  createdDate: +Mock.Random.date('T'), // 创建时间
-  modifiedBy: '@increment', // 最后修改人
-  modifiedDate: +Mock.Random.date('T') // 最后修改时间
-}
+const userMockConfig = MockDB.userMockConfig
 
-export const groups = []
+const users = MockDB.users
 
-/**
- * {
- *  userId: '',
- *  groupId: ''
- * }
- */
-export const groupUsers = []
+const mockConfig = MockDB.groupMockConfig
+
+const groups = MockDB.groups
+
+const groupUsers = MockDB.groupUsers
 
 for (let i = 0; i < 10; i++) {
   groups.push(Mock.mock(mockConfig))

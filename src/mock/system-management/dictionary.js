@@ -1,24 +1,10 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
-import Utils from '../utils'
+import * as MockDB from '../MockDB'
 
-const mockConfig = {
-  'id|1': Utils.id,
-  'parentId': null, // 上级ID
-  'deleted|1': Utils.deleted, // 是否删除
-  'category|1': [1, 2, 3], // 类型： 1：业务字典类型, 2：单级业务字典, 3：多级业务字典
-  'type|1': Utils.id, // 字典类型ID
-  name: '@cword(5, 10)', // 名称
-  'code|1': Utils.id, // 规则码
-  'index': '@increment', // 编号
-  remark: '@cparagraph(1, 3)', // 备注
-  createdBy: '@increment', // 创建人
-  createdDate: +Mock.Random.date('T'), // 创建时间
-  modifiedBy: '@increment', // 最后修改人
-  modifiedDate: +Mock.Random.date('T') // 最后修改时间
-}
+const mockConfig = MockDB.dictionaryMockConfig
 
-export const dictionaries = []
+const dictionaries = MockDB.dictionaries
 
 const dictionary = Mock.mock(mockConfig)
 dictionary.type = null

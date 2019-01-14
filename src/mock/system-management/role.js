@@ -1,33 +1,22 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
-import Utils from '../utils'
-import { roleMenus } from './menu'
-import { mockConfig as userMockConfig, users } from './user'
+import * as MockDB from '../MockDB'
 
-export const mockConfig = {
-  'id|1': Utils.id,
-  'deleted|1': Utils.deleted, // 是否删除
-  index: '@increment', // 序号
-  name: '@cword(5, 10)', // 名称
-  remark: '@cparagraph(1, 3)', // 描述
-  createdBy: '@increment', // 创建人
-  createdDate: +Mock.Random.date('T'), // 创建时间
-  modifiedBy: '@increment', // 最后修改人
-  modifiedDate: +Mock.Random.date('T') // 最后修改时间
-}
+const userMockConfig = MockDB.userMockConfig
 
-export const roles = []
+const users = MockDB.users
+
+const roleMenus = MockDB.roleMenus
+
+const mockConfig = MockDB.roleMockConfig
+
+const roles = MockDB.roles
+
+const userRoles = MockDB.userRoles
 
 for (let i = 0; i < 10; i++) {
   roles.push(Mock.mock(mockConfig))
 }
-/**
- * {
- *  userId: '',
- *  roleId: ''
- * }
- */
-export const userRoles = []
 
 export default {
   queryPage: config => {

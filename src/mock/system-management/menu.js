@@ -1,21 +1,11 @@
 import Mock from 'mockjs'
 import { deepMerge, param2Obj } from '@/utils'
 import { asyncMenuMap } from '@/router'
-import { mockConfig as roleMockConfig, roles } from './role'
+import * as MockDB from '../MockDB'
 
-// const mockConfig = {
-//   id: '',
-//   parentId: '', // 上级ID
-//   deleted: 0, // 是否删除
-//   index: '', // 菜单序号
-//   name: '', // 名称
-//   icon: '', // 图标
-//   remark: '', // 备注
-//   createdBy: '', // 创建人
-//   createdDate: '', // 创建时间
-//   modifiedBy: '', // 最后修改人
-//   modifiedDate: '' // 最后修改时间
-// }
+const roleMockConfig = MockDB.roleMockConfig
+
+const roles = MockDB.roles
 
 function createMenu(router, parentId, menus) {
   const menu = {}
@@ -39,19 +29,11 @@ function createMenu(router, parentId, menus) {
   menus.push(menu)
 }
 
-export const menus = []
+const menus = MockDB.menus
 
-// const mockConfig = {
-//   menuId: '',
-//   url: ''
-// }
-export const menuUrls = []
+const menuUrls = MockDB.menuUrls
 
-// const mockConfig = {
-//   menuId: '',
-//   roleId: ''
-// }
-export const roleMenus = []
+const roleMenus = MockDB.roleMenus
 
 export default {
   queryAll: config => {

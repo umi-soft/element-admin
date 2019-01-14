@@ -1,18 +1,10 @@
 import Mock from 'mockjs'
 import { param2Obj } from '@/utils'
-import { users } from './system-management/user'
+import * as MockDB from './MockDB'
 
-const admin = {
-  token: 'admin',
-  roles: ['admin']
-}
-admin.user = users.find(item => { return item.loginName === 'admin' })
+const admin = MockDB.admin
 
-const simple = {
-  token: 'simple',
-  roles: ['simple']
-}
-simple.user = users.find(item => { return item.loginName === 'simple' })
+const simple = MockDB.simple
 
 let captcha = null
 

@@ -1,37 +1,28 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
-import Utils from '../utils'
+import * as MockDB from '../MockDB'
 
-import { mockConfig as roleMockConfig, userRoles, roles } from './role'
-import { mockConfig as groupMockConfig, groupUsers, groups } from './group'
-import { mockConfig as deptMockConfig, deptUsers, depts } from './dept'
+const roleMockConfig = MockDB.roleMockConfig
 
-export const mockConfig = {
-  'id|1': Utils.id, // 主键
-  'deleted|1': Utils.deleted, // 是否删除
-  'disabled|1': Utils.state, // 是否启用
-  index: '@increment', // 序号
-  'loginName': /[a-z][A-Z][0-9]/, // 登录ID
-  'password': '@id', // 密码
-  'name': '@cname', // 姓名
-  'nickName': '@cname', // 昵称
-  'avatar': '', // 肖像地址
-  'avatarContent': '', // 肖像二进制
-  'idNumber': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/, // 证件号码
-  'gender|1': [0, 1], // 性别
-  'birthday': '@date("yyyy-MM-dd")', // 出生日期
-  'phone': /^1[34578]\d{9}$/, // 联系电话
-  'email': '@email', // 联系邮箱
-  'address': '@county(true)', // 住址
-  'tag': '@cword(5, 10)', // 用户标签
-  'remark': '@cparagraph(1, 3)', // 描述
-  createdBy: '@increment', // 创建人
-  createdDate: +Mock.Random.date('T'), // 创建时间
-  modifiedBy: '@increment', // 最后修改人
-  modifiedDate: +Mock.Random.date('T') // 最后修改时间
-}
+const groupMockConfig = MockDB.groupMockConfig
 
-export const users = []
+const deptMockConfig = MockDB.deptMockConfig
+
+const userRoles = MockDB.userRoles
+
+const roles = MockDB.roles
+
+const groupUsers = MockDB.groupUsers
+
+const groups = MockDB.groups
+
+const deptUsers = MockDB.deptUsers
+
+const depts = MockDB.depts
+
+const mockConfig = MockDB.userMockConfig
+
+const users = MockDB.users
 
 for (let i = 0; i < 25; i++) {
   users.push(Mock.mock(mockConfig))
@@ -41,13 +32,22 @@ admin.name = 'admin'
 admin.loginName = 'admin'
 admin.password = 'admin'
 admin.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+
 users.push(admin)
+MockDB.admin.token = 'admin'
+MockDB.admin.roles = ['admin']
+MockDB.admin.user = admin
+
 const simple = Mock.mock(mockConfig)
 simple.name = 'simple'
 simple.loginName = 'simple'
 simple.password = 'simple'
 simple.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+
 users.push(simple)
+MockDB.simple.token = 'simple'
+MockDB.simple.roles = ['simple']
+MockDB.simple.user = admin
 
 export default {
   queryPage: config => {

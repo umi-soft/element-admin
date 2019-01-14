@@ -1,33 +1,18 @@
 import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
-import Utils from '../utils'
-import { mockConfig as userMockConfig, users } from './user'
+import * as MockDB from '../MockDB'
 
-export const mockConfig = {
-  'id|1': Utils.id,
-  'parentId|1': Utils.id, // 父级机构
-  'deleted|1': Utils.deleted, // 是否删除
-  index: '@increment', // 机构序号
-  'type|1': ['政府机构', '国有企业', '民营企业'], // 机构类型
-  name: '@cword(5, 10)', // 机构名称
-  remark: '@cparagraph(1, 3)', // 机构描述
-  createdBy: '@increment', // 创建人
-  createdDate: +Mock.Random.date('T'), // 创建时间
-  modifiedBy: '@increment', // 最后修改人
-  modifiedDate: +Mock.Random.date('T') // 最后修改时间
-}
+const userMockConfig = MockDB.userMockConfig
 
-export const deptsTree = []
+const users = MockDB.users
 
-export const depts = []
+const mockConfig = MockDB.deptMockConfig
 
-/**
- * {
- *  userId: '',
- *  deptId: ''
- * }
- */
-export const deptUsers = []
+const deptsTree = MockDB.deptsTree
+
+const depts = MockDB.depts
+
+const deptUsers = MockDB.deptUsers
 
 let length = Mock.mock('@integer(10, 40)')
 for (let i = 0; i < length; i++) {
