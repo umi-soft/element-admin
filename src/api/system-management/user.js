@@ -52,11 +52,11 @@ export function editUserPassword(data) {
   })
 }
 
-export function delUser(id) {
+export function delUser(data) {
   return request({
     url: base_url + 'del',
-    method: 'get',
-    params: { id }
+    method: 'post',
+    data
   })
 }
 
@@ -68,22 +68,6 @@ export function queryAllUserRoles(params) {
   })
 }
 
-export function addUserRole(data) {
-  return request({
-    url: base_url + 'add-role',
-    method: 'post',
-    data
-  })
-}
-
-export function delUserRole(data) {
-  return request({
-    url: base_url + 'del-role',
-    method: 'post',
-    data
-  })
-}
-
 export function queryAllUserDepts(params) {
   return request({
     url: base_url + 'all-depts',
@@ -92,42 +76,10 @@ export function queryAllUserDepts(params) {
   })
 }
 
-export function addUserDept(data) {
-  return request({
-    url: base_url + 'add-dept',
-    method: 'post',
-    data
-  })
-}
-
-export function delUserDept(data) {
-  return request({
-    url: base_url + 'del-dept',
-    method: 'post',
-    data
-  })
-}
-
 export function queryAllUserGroups(params) {
   return request({
     url: base_url + 'all-groups',
     method: 'get',
     params: params
-  })
-}
-
-export function addUserGroup(data) {
-  return request({
-    url: base_url + 'add-group',
-    method: 'post',
-    data
-  })
-}
-
-export function delUserGroup(data) {
-  return request({
-    url: base_url + 'del-group',
-    method: 'post',
-    data
   })
 }

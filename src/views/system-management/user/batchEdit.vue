@@ -78,14 +78,17 @@
 </template>
 
 <script>
-import * as UserAPI from '@/api/system-management/user'
+import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import * as RoleAPI from '@/api/system-management/role'
 import * as DeptAPI from '@/api/system-management/dept'
 import * as GroupAPI from '@/api/system-management/group'
+import * as UserRoleAPI from '@/api/system-management/userRole'
+import * as UserDeptAPI from '@/api/system-management/userDept'
+import * as UserGroupAPI from '@/api/system-management/userGroup'
 import mixins from './mixins'
 
 export default {
-  mixins: [mixins],
+  mixins: [BaseEditForm, mixins],
   props: {
     detail: {
       required: true,
@@ -147,10 +150,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '已授权成功'
-        })
         const userRoles = []
         this.detail.forEach(user => {
           this.selectedRoles.forEach(role => {
@@ -160,7 +159,9 @@ export default {
             })
           })
         })
-        UserAPI.addUserRole(userRoles)
+        UserRoleAPI.reset(userRoles).then(data => {
+          this.optionSuccessHandler()
+        })
       }).catch(() => {
         this.$message({
           type: 'warning',
@@ -182,10 +183,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '已授权成功'
-        })
         const userDepts = []
         this.detail.forEach(user => {
           selectedDepts.forEach(dept => {
@@ -195,7 +192,9 @@ export default {
             })
           })
         })
-        UserAPI.addUserDept(userDepts)
+        UserDeptAPI.reset(userDepts).then(data => {
+          this.optionSuccessHandler()
+        })
       }).catch(() => {
         this.$message({
           type: 'warning',
@@ -220,10 +219,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '已授权成功'
-        })
         const userGroups = []
         this.detail.forEach(user => {
           this.selectedGroups.forEach(group => {
@@ -233,7 +228,9 @@ export default {
             })
           })
         })
-        UserAPI.addUserGroup(userGroups)
+        UserGroupAPI.reset(userGroups).then(data => {
+          this.optionSuccessHandler()
+        })
       }).catch(() => {
         this.$message({
           type: 'warning',

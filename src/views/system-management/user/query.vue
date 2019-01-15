@@ -120,7 +120,7 @@ export default {
       })
     },
     customDelHandler() {
-      UserAPI.delUser(this.selected.id).then(() => {
+      UserAPI.delUser({ id: this.selected.id }).then(() => {
         this.queryHandler()
       })
     },

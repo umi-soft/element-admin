@@ -35,25 +35,18 @@ Mock.mock(/\/system\/group\/query-page/, 'post', groupAPI.queryPage)
 Mock.mock(/\/system\/group\/query-by-id/, 'get', groupAPI.queryById)
 Mock.mock(/\/system\/group\/add/, 'post', groupAPI.add)
 Mock.mock(/\/system\/group\/edit/, 'post', groupAPI.edit)
-Mock.mock(/\/system\/group\/del/, 'get', groupAPI.del)
+Mock.mock(/\/system\/group\/del/, 'post', groupAPI.del)
 Mock.mock(/\/system\/group\/all-users/, 'get', groupAPI.queryAllGroupUsers)
-Mock.mock(/\/system\/group\/del-user/, 'post', groupAPI.delGroupUser)
 
 //  系统设置相关---用户
 Mock.mock(/\/system\/user\/query-page/, 'post', userAPI.queryPage)
 Mock.mock(/\/system\/user\/query-by-id/, 'get', userAPI.queryById)
-Mock.mock(/\/system\/user\/add-group/, 'post', userAPI.addUserGroup)
-Mock.mock(/\/system\/user\/add-dept/, 'post', userAPI.addUserDept)
-Mock.mock(/\/system\/user\/add-role/, 'post', userAPI.addUserRole)
 Mock.mock(/\/system\/user\/check-login-name/, 'post', userAPI.checkLoginName)
 Mock.mock(/\/system\/user\/upload-avatar/, 'post', userAPI.uploadAvatar)
 Mock.mock(/\/system\/user\/add/, 'post', userAPI.add)
 Mock.mock(/\/system\/user\/edit/, 'post', userAPI.edit)
 Mock.mock(/\/system\/user\/edit-password/, 'post', userAPI.editUserPassword)
-Mock.mock(/\/system\/user\/del-role/, 'post', userAPI.delUserRole)
-Mock.mock(/\/system\/user\/del-dept/, 'post', userAPI.delUserDept)
-Mock.mock(/\/system\/user\/del-group/, 'post', userAPI.delUserGroup)
-Mock.mock(/\/system\/user\/del/, 'get', userAPI.del)
+Mock.mock(/\/system\/user\/del/, 'post', userAPI.del)
 Mock.mock(/\/system\/user\/all-roles/, 'get', userAPI.queryAllUserRoles)
 Mock.mock(/\/system\/user\/all-depts/, 'get', userAPI.queryAllUserDepts)
 Mock.mock(/\/system\/user\/all-groups/, 'get', userAPI.queryAllUserGroups)
@@ -64,11 +57,9 @@ Mock.mock(/\/system\/role\/query-page/, 'post', roleAPI.queryPage)
 Mock.mock(/\/system\/role\/query-by-id/, 'get', roleAPI.queryById)
 Mock.mock(/\/system\/role\/add/, 'post', roleAPI.add)
 Mock.mock(/\/system\/role\/edit/, 'post', roleAPI.edit)
-Mock.mock(/\/system\/role\/del/, 'get', roleAPI.del)
+Mock.mock(/\/system\/role\/del/, 'post', roleAPI.del)
 Mock.mock(/\/system\/role\/all-menus/, 'get', roleAPI.queryAllRoleMenus)
-Mock.mock(/\/system\/role\/reset-menus/, 'post', roleAPI.resetRoleMenus)
 Mock.mock(/\/system\/role\/all-users/, 'get', roleAPI.queryAllRoleUsers)
-Mock.mock(/\/system\/role\/del-user/, 'post', roleAPI.delRoleUser)
 
 //  系统设置相关---部门
 Mock.mock(/\/system\/dept\/query-all-tree/, 'get', deptAPI.queryAllTree)
@@ -76,7 +67,7 @@ Mock.mock(/\/system\/dept\/query-all/, 'post', deptAPI.queryAll)
 Mock.mock(/\/system\/dept\/query-by-id/, 'get', deptAPI.queryById)
 Mock.mock(/\/system\/dept\/add/, 'post', deptAPI.add)
 Mock.mock(/\/system\/dept\/edit/, 'post', deptAPI.edit)
-Mock.mock(/\/system\/dept\/del/, 'get', deptAPI.del)
+Mock.mock(/\/system\/dept\/del/, 'post', deptAPI.del)
 Mock.mock(/\/system\/dept\/all-users/, 'get', deptAPI.queryAllDeptUsers)
 
 //  系统设置相关---字典
@@ -85,7 +76,7 @@ Mock.mock(/\/system\/dictionary\/query-page/, 'post', dictionaryAPI.queryPage)
 Mock.mock(/\/system\/dictionary\/query-by-id/, 'get', dictionaryAPI.queryById)
 Mock.mock(/\/system\/dictionary\/add/, 'post', dictionaryAPI.add)
 Mock.mock(/\/system\/dictionary\/edit/, 'post', dictionaryAPI.edit)
-Mock.mock(/\/system\/dictionary\/del/, 'get', dictionaryAPI.del)
+Mock.mock(/\/system\/dictionary\/del/, 'post', dictionaryAPI.del)
 
 //  系统设置相关---菜单
 Mock.mock(/\/system\/menu\/query-all/, 'post', menuAPI.queryAll)
@@ -96,9 +87,24 @@ Mock.mock(/\/system\/menu\/all-urls/, 'get', menuAPI.queryMenuUrls)
 Mock.mock(/\/system\/menu\/add-url/, 'post', menuAPI.addMenuUrl)
 Mock.mock(/\/system\/menu\/del-url/, 'post', menuAPI.delMenuUrl)
 Mock.mock(/\/system\/menu\/all-roles/, 'get', menuAPI.queryMenuRoles)
-Mock.mock(/\/system\/menu\/del-role/, 'post', menuAPI.delMenuRole)
 
 //  用户部门中间表
 Mock.mock(/\/system\/user-dept\/del-by-entity-mapping/, 'post', deptAPI.delByEntityMapping)
+Mock.mock(/\/system\/user-dept\/add/, 'post', userAPI.addUserDept)
+Mock.mock(/\/system\/user-dept\/reset/, 'post', userAPI.resetUserDept)
+
+//  用户分组中间表
+Mock.mock(/\/system\/user-group\/del-by-entity-mapping/, 'post', groupAPI.delGroupUser)
+Mock.mock(/\/system\/user-group\/add/, 'post', userAPI.addUserGroup)
+Mock.mock(/\/system\/user-group\/reset/, 'post', userAPI.resetUserGroup)
+
+//  菜单角色中间表
+Mock.mock(/\/system\/menu-role\/del-by-entity-mapping/, 'post', menuAPI.delMenuRole)
+Mock.mock(/\/system\/menu-role\/reset/, 'post', roleAPI.resetRoleMenus)
+
+//  用户角色中间表
+Mock.mock(/\/system\/user-role\/del-by-entity-mapping/, 'post', roleAPI.delRoleUser)
+Mock.mock(/\/system\/user-role\/add/, 'post', userAPI.addUserRole)
+Mock.mock(/\/system\/user-role\/reset/, 'post', userAPI.resetUserRole)
 
 export default Mock

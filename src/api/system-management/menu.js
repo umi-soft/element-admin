@@ -133,11 +133,3 @@ export function queryAllMenuRole(params) {
     params
   })
 }
-
-export function delMenuRole(data) {
-  return request({
-    url: base_url + 'del-role',
-    method: 'post',
-    data
-  })
-}

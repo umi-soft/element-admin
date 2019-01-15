@@ -86,6 +86,8 @@
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as RoleAPI from '@/api/system-management/role'
+import * as MenuRoleAPI from '@/api/system-management/menuRole'
+import * as UserRoleAPI from '@/api/system-management/userRole'
 import mixins from './mixins'
 
 export default {
@@ -138,14 +140,14 @@ export default {
         roleId: this.detail.id,
         menuIds: this.$refs['menusTree'].getCheckedKeys()
       }
-      RoleAPI.resetRoleMenus(params).then(this.optionSuccessHandler)
+      MenuRoleAPI.reset(params).then(this.optionSuccessHandler)
     },
     delUserRoleHandler(id) {
       const params = {
         userId: id,
         roleId: this.detail.id
       }
-      RoleAPI.delRoleUser(params).then(data => {
+      UserRoleAPI.delByEntityMapping(params).then(data => {
         this.optionSuccessHandler()
         this.queryAllUsers()
       })

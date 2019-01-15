@@ -42,11 +42,11 @@ export function editRole(data) {
   })
 }
 
-export function delRole(id) {
+export function delRole(data) {
   return request({
     url: base_url + 'del',
-    method: 'get',
-    params: { id }
+    method: 'post',
+    data
   })
 }
 
@@ -58,26 +58,10 @@ export function queryAllRoleMenus(id) {
   })
 }
 
-export function resetRoleMenus(data) {
-  return request({
-    url: base_url + 'reset-menus',
-    method: 'post',
-    data
-  })
-}
-
 export function queryAllRoleUsers(id) {
   return request({
     url: base_url + 'all-users',
     method: 'get',
     params: { id }
-  })
-}
-
-export function delRoleUser(data) {
-  return request({
-    url: base_url + 'del-user',
-    method: 'post',
-    data
   })
 }

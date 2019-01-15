@@ -42,11 +42,11 @@ export function editDept(data) {
   })
 }
 
-export function delDept(id) {
+export function delDept(data) {
   return request({
     url: base_url + 'del',
-    method: 'get',
-    params: { id }
+    method: 'post',
+    data
   })
 }
 

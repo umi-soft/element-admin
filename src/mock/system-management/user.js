@@ -124,7 +124,7 @@ export default {
   },
   del: config => {
     console.log(config)
-    const params = param2Obj(config.url)
+    const params = JSON.parse(config.body)
     MockDB.users.splice(MockDB.users.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,
@@ -159,27 +159,37 @@ export default {
   addUserDept: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    console.log(MockDB.deptUsers.length)
-    params.forEach(item => {
-      MockDB.deptUsers.push(item)
-    })
-    console.log(MockDB.deptUsers)
+    MockDB.deptUsers.push(params)
     return {
       code: 1,
       message: '操作成功',
       data: params
     }
   },
-  delUserDept: config => {
+  resetUserDept: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    MockDB.deptUsers.splice(MockDB.deptUsers.findIndex(item => {
-      return item.userId === params.userId && item.deptId === params.deptId
-    }), 1)
+    const newDeptUsers = MockDB.deptUsers.filter(item => {
+      let found = false
+      for (let i = 0; i < params.length; i++) {
+        if (item.userId === params[i].userId) {
+          found = true
+          break
+        }
+      }
+      return found
+    })
+    MockDB.deptUsers.splice(0, MockDB.deptUsers.length)
+    newDeptUsers.forEach(item => {
+      MockDB.deptUsers.push(item)
+    })
+    params.forEach(item => {
+      MockDB.deptUsers.push(item)
+    })
     return {
       code: 1,
       message: '操作成功',
-      data: ''
+      data: params
     }
   },
 
@@ -210,6 +220,30 @@ export default {
   addUserGroup: config => {
     console.log(config)
     const params = JSON.parse(config.body)
+    MockDB.groupUsers.push(params)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: params
+    }
+  },
+  resetUserGroup: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    const newGroupUsers = MockDB.groupUsers.filter(item => {
+      let found = false
+      for (let i = 0; i < params.length; i++) {
+        if (item.userId === params[i].userId) {
+          found = true
+          break
+        }
+      }
+      return found
+    })
+    MockDB.groupUsers.splice(0, MockDB.groupUsers.length)
+    newGroupUsers.forEach(item => {
+      MockDB.groupUsers.push(item)
+    })
     params.forEach(item => {
       MockDB.groupUsers.push(item)
     })
@@ -217,18 +251,6 @@ export default {
       code: 1,
       message: '操作成功',
       data: params
-    }
-  },
-  delUserGroup: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.groupUsers.splice(MockDB.groupUsers.findIndex(item => {
-      return item.userId === params.userId && item.groupId === params.groupId
-    }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: ''
     }
   },
 
@@ -258,6 +280,30 @@ export default {
   addUserRole: config => {
     console.log(config)
     const params = JSON.parse(config.body)
+    MockDB.userRoles.push(params)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: params
+    }
+  },
+  resetUserRole: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    const newUserRoles = MockDB.userRoles.filter(item => {
+      let found = false
+      for (let i = 0; i < params.length; i++) {
+        if (item.userId === params[i].userId) {
+          found = true
+          break
+        }
+      }
+      return found
+    })
+    MockDB.userRoles.splice(0, MockDB.userRoles.length)
+    newUserRoles.forEach(item => {
+      MockDB.userRoles.push(item)
+    })
     params.forEach(item => {
       MockDB.userRoles.push(item)
     })
@@ -265,18 +311,6 @@ export default {
       code: 1,
       message: '操作成功',
       data: params
-    }
-  },
-  delUserRole: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.userRoles.splice(MockDB.userRoles.findIndex(item => {
-      return item.userId === params.userId && item.roleId === params.roleId
-    }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: ''
     }
   }
 }

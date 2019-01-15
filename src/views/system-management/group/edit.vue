@@ -49,6 +49,7 @@
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as GroupAPI from '@/api/system-management/group'
+import * as UserGroupAPI from '@/api/system-management/userGroup'
 import mixins from './mixins'
 
 export default {
@@ -93,7 +94,7 @@ export default {
         userId: id,
         groupId: this.detail.id
       }
-      GroupAPI.delGroupUser(params).then(data => {
+      UserGroupAPI.delByEntityMapping(params).then(data => {
         this.optionSuccessHandler()
         this.queryAllUsers()
       })

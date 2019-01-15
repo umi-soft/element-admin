@@ -42,11 +42,11 @@ export function editGroup(data) {
   })
 }
 
-export function delGroup(id) {
+export function delGroup(data) {
   return request({
     url: base_url + 'del',
-    method: 'get',
-    params: { id }
+    method: 'post',
+    data
   })
 }
 
@@ -55,13 +55,5 @@ export function queryAllGroupUsers(id) {
     url: base_url + 'all-users',
     method: 'get',
     params: { id }
-  })
-}
-
-export function delGroupUser(data) {
-  return request({
-    url: base_url + 'del-user',
-    method: 'post',
-    data
   })
 }

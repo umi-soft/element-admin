@@ -184,6 +184,9 @@ import * as DeptAPI from '@/api/system-management/dept'
 import * as RoleAPI from '@/api/system-management/role'
 import * as GroupAPI from '@/api/system-management/group'
 import * as UserAPI from '@/api/system-management/user'
+import * as UserRoleAPI from '@/api/system-management/userRole'
+import * as UserDeptAPI from '@/api/system-management/userDept'
+import * as UserGroupAPI from '@/api/system-management/userGroup'
 import mixins from './mixins'
 
 export default {
@@ -282,11 +285,11 @@ export default {
     },
     addUserDeptHandler(id) {
       if (!id) return
-      const params = [{
+      const params = {
         userId: this.detail.id,
         deptId: id
-      }]
-      UserAPI.addUserDept(params).then(data => {
+      }
+      UserDeptAPI.add(params).then(data => {
         this.queryAllUserDepts()
         this.optionSuccessHandler()
         this.addOption.deptId = null
@@ -297,18 +300,18 @@ export default {
         userId: this.detail.id,
         deptId: id
       }
-      UserAPI.delUserDept(params).then(data => {
+      UserDeptAPI.delByEntityMapping(params).then(data => {
         this.queryAllUserDepts()
         this.optionSuccessHandler()
       })
     },
     addUserGroupHandler(id) {
       if (!id) return
-      const params = [{
+      const params = {
         userId: this.detail.id,
         groupId: id
-      }]
-      UserAPI.addUserGroup(params).then(data => {
+      }
+      UserGroupAPI.add(params).then(data => {
         this.queryAllUserGroups()
         this.optionSuccessHandler()
         this.addOption.groupId = null
@@ -319,18 +322,18 @@ export default {
         userId: this.detail.id,
         groupId: id
       }
-      UserAPI.delUserGroup(params).then(data => {
+      UserGroupAPI.delByEntityMapping(params).then(data => {
         this.queryAllUserGroups()
         this.optionSuccessHandler()
       })
     },
     addUserRoleHandler(id) {
       if (!id) return
-      const params = [{
+      const params = {
         userId: this.detail.id,
         roleId: id
-      }]
-      UserAPI.addUserRole(params).then(data => {
+      }
+      UserRoleAPI.add(params).then(data => {
         this.queryAllUserRoles()
         this.optionSuccessHandler()
         this.addOption.roleId = null
@@ -341,7 +344,7 @@ export default {
         userId: this.detail.id,
         roleId: id
       }
-      UserAPI.delUserRole(params).then(data => {
+      UserRoleAPI.delByEntityMapping(params).then(data => {
         this.queryAllUserRoles()
         this.optionSuccessHandler()
       })

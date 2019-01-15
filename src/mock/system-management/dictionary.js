@@ -104,7 +104,7 @@ export default {
   },
   del: config => {
     console.log(config)
-    const params = param2Obj(config.url)
+    const params = JSON.parse(config.body)
     MockDB.dictionaries.splice(MockDB.dictionaries.findIndex(item => { return item.id === params.id }), 1)
     return {
       code: 1,

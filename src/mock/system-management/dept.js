@@ -124,7 +124,7 @@ export default {
   },
   del: config => {
     console.log(config)
-    const params = param2Obj(config.url)
+    const params = JSON.parse(config.body)
     let dept = findDept(params.id)
     if (dept.parentId === null) {
       MockDB.deptsTree.splice(MockDB.deptsTree.findIndex(item => { return item.id === params.id }), 1)

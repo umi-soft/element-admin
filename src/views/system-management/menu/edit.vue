@@ -84,6 +84,7 @@
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as MenuAPI from '@/api/system-management/menu'
+import * as MenuRoleAPI from '@/api/system-management/menuRole'
 import mixins from './mixins'
 
 export default {
@@ -152,7 +153,7 @@ export default {
         menuId: this.detail.id,
         roleId: id
       }
-      MenuAPI.delMenuRole(params).then(data => {
+      MenuRoleAPI.delByEntityMapping(params).then(data => {
         this.queryMenuRoles()
       })
     }

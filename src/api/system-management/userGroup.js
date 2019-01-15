@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/user-dept/'
+const base_url = '/system/user-group/'
 
 export function add(data) {
   return request({
