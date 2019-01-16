@@ -2,10 +2,6 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-for (let i = 0; i < 10; i++) {
-  MockDB.roles.push(Mock.mock(MockDB.roleMockConfig))
-}
-
 export default {
   queryPage: config => {
     console.log(config)

@@ -94,30 +94,114 @@ export const userMockConfig = {
   modifiedDate: +Mock.Random.date('T') // 最后修改时间
 }
 
-export const deptsTree = []
-
 export const depts = []
 
-export const deptUsers = []
+export const deptsTree = []
 
 export const dictionaries = []
 
 export const groups = []
 
-export const groupUsers = []
-
 export const menus = []
 
 export const menuUrls = []
 
-export const roleMenus = []
-
 export const roles = []
 
+export const roleMenus = []
+
 export const userRoles = []
+
+export const groupUsers = []
+
+export const deptUsers = []
 
 export const users = []
 
 export const admin = {}
 
 export const simple = {}
+
+//  主表mock数据
+//  dept && deptsTree
+let length = Mock.mock('@integer(10, 40)')
+for (let i = 0; i < length; i++) {
+  depts.push(Mock.mock(deptMockConfig))
+}
+
+function createDeptTree(dept) {
+  dept.children = []
+  if (Mock.mock('@boolean')) {
+    const children = Mock.mock(deptMockConfig)
+    children.parentId = dept.id
+    dept.children.push(children)
+    createDeptTree(children)
+  }
+  return dept
+}
+
+length = Mock.mock('@integer(5, 20)')
+for (let i = 0; i < length; i++) {
+  const dept = Mock.mock(deptMockConfig)
+  dept.parentId = null
+  deptsTree.push(createDeptTree(dept))
+}
+
+//  字典类别
+const dictionary = Mock.mock(dictionaryMockConfig)
+dictionary.type = null
+dictionary.category = 1
+dictionary.parentId = 'root'
+dictionary.deleted = 0
+dictionaries.push(dictionary)
+//  单级字典
+for (let i = 0; i < 13; i++) {
+  const item = Mock.mock(dictionaryMockConfig)
+  item.category = 2
+  item.parentId = 'root'
+  item.type = dictionary.id
+  dictionaries.push(item)
+}
+//  多级字典
+for (let i = 0; i < 11; i++) {
+  const item = Mock.mock(dictionaryMockConfig)
+  item.category = 3
+  item.parentId = 'root'
+  item.type = dictionary.id
+  dictionaries.push(item)
+}
+
+//  分组
+for (let i = 0; i < 10; i++) {
+  groups.push(Mock.mock(groupMockConfig))
+}
+
+//  角色
+for (let i = 0; i < 10; i++) {
+  roles.push(Mock.mock(roleMockConfig))
+}
+
+//  用户
+for (let i = 0; i < 25; i++) {
+  users.push(Mock.mock(userMockConfig))
+}
+
+let temp = Mock.mock(userMockConfig)
+temp.name = 'admin'
+temp.loginName = 'admin'
+temp.password = 'admin'
+temp.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+users.push(temp)
+admin.token = 'admin'
+admin.roles = ['admin']
+admin.user = temp
+
+temp = Mock.mock(userMockConfig)
+temp.name = 'simple'
+temp.loginName = 'simple'
+temp.password = 'simple'
+temp.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+users.push(temp)
+simple.token = 'simple'
+simple.roles = ['simple']
+simple.user = temp

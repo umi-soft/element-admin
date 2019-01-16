@@ -2,31 +2,6 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-for (let i = 0; i < 25; i++) {
-  MockDB.users.push(Mock.mock(MockDB.userMockConfig))
-}
-const admin = Mock.mock(MockDB.userMockConfig)
-admin.name = 'admin'
-admin.loginName = 'admin'
-admin.password = 'admin'
-admin.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-
-MockDB.users.push(admin)
-MockDB.admin.token = 'admin'
-MockDB.admin.roles = ['admin']
-MockDB.admin.user = admin
-
-const simple = Mock.mock(MockDB.userMockConfig)
-simple.name = 'simple'
-simple.loginName = 'simple'
-simple.password = 'simple'
-simple.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-
-MockDB.users.push(simple)
-MockDB.simple.token = 'simple'
-MockDB.simple.roles = ['simple']
-MockDB.simple.user = admin
-
 export default {
   queryPage: config => {
     console.log(config)

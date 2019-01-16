@@ -2,10 +2,6 @@ import Mock from 'mockjs'
 import { param2Obj } from '@/utils'
 import * as MockDB from './MockDB'
 
-const admin = MockDB.admin
-
-const simple = MockDB.simple
-
 let captcha = null
 
 export default {
@@ -30,7 +26,7 @@ export default {
         }
       }
     }
-    if ((params.username === simple.user.loginName && params.password !== simple.user.password) || (params.username === admin.user.loginName && params.password !== admin.user.password)) {
+    if ((params.username === MockDB.simple.user.loginName && params.password !== MockDB.simple.user.password) || (params.username === MockDB.admin.user.loginName && params.password !== MockDB.admin.user.password)) {
       return {
         code: 1,
         data: {
@@ -40,9 +36,9 @@ export default {
       }
     }
     if (params.username === 'admin') {
-      token = admin.token
+      token = MockDB.admin.token
     } else {
-      token = simple.token
+      token = MockDB.simple.token
     }
     return {
       code: 1,
@@ -58,9 +54,9 @@ export default {
     const params = param2Obj(config.url)
     let user = null
     if (params.token.endsWith('admin')) {
-      user = admin
+      user = MockDB.admin
     } else {
-      user = simple
+      user = MockDB.simple
     }
     return {
       code: 1,

@@ -2,30 +2,6 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-const dictionary = Mock.mock(MockDB.dictionaryMockConfig)
-dictionary.type = null
-dictionary.category = 1
-dictionary.parentId = 'root'
-dictionary.deleted = 0
-MockDB.dictionaries.push(dictionary)
-
-// 单级字典
-for (let i = 0; i < 13; i++) {
-  const item = Mock.mock(MockDB.dictionaryMockConfig)
-  item.category = 2
-  item.parentId = 'root'
-  item.type = dictionary.id
-  MockDB.dictionaries.push(item)
-}
-
-for (let i = 0; i < 11; i++) {
-  const item = Mock.mock(MockDB.dictionaryMockConfig)
-  item.category = 3
-  item.parentId = 'root'
-  item.type = dictionary.id
-  MockDB.dictionaries.push(item)
-}
-
 export default {
   queryPage: config => {
     console.log(config)

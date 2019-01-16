@@ -2,22 +2,6 @@ import Mock from 'mockjs'
 import { param2Obj, deepMerge, deepClone, fieldQueryLike, sortArray } from '@/utils'
 import * as MockDB from '../MockDB'
 
-let length = Mock.mock('@integer(10, 40)')
-for (let i = 0; i < length; i++) {
-  MockDB.depts.push(Mock.mock(MockDB.deptMockConfig))
-}
-
-function createDeptTree(dept) {
-  dept.children = []
-  if (Mock.mock('@boolean')) {
-    const children = Mock.mock(MockDB.deptMockConfig)
-    children.parentId = dept.id
-    dept.children.push(children)
-    createDeptTree(children)
-  }
-  return dept
-}
-
 function findDept(deptId) {
   let dept = null
   for (let i = 0; i < MockDB.deptsTree.length; i++) {
@@ -42,13 +26,6 @@ function findDeptTreeNode(deptId, dept) {
     }
   }
   return null
-}
-
-length = Mock.mock('@integer(5, 20)')
-for (let i = 0; i < length; i++) {
-  const dept = Mock.mock(MockDB.deptMockConfig)
-  dept.parentId = null
-  MockDB.deptsTree.push(createDeptTree(dept))
 }
 
 export default {
