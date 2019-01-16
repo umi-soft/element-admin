@@ -35,6 +35,7 @@ export const groupMockConfig = {
   'id|1': Utils.id,
   'deleted|1': Utils.deleted, // 是否删除
   index: '@increment', // 编号
+  category: 1, // 分组类型，可面向用户1、角色2等
   name: '@cword(5, 10)', // 名称
   remark: '@cparagraph(1, 3)', // 备注
   createdBy: '@increment', // 创建人
@@ -110,6 +111,8 @@ export const roles = []
 
 export const roleMenus = []
 
+export const roleGroups = []
+
 export const userRoles = []
 
 export const groupUsers = []
@@ -141,9 +144,14 @@ const length = Mock.mock('@integer(10, 20)')
 for (let i = 0; i < length; i++) {
   const tempUser = Mock.mock(userMockConfig)
   users.push(tempUser)
-  //  分组
-  const tempGroup = Mock.mock(groupMockConfig)
-  groups.push(tempGroup)
+  //  用户分组
+  const tempUserGroup = Mock.mock(groupMockConfig)
+  tempUserGroup.category = 1
+  groups.push(tempUserGroup)
+  //  角色分组
+  const tempRoleGroup = Mock.mock(groupMockConfig)
+  tempRoleGroup.category = 2
+  groups.push(tempRoleGroup)
   //  角色
   const tempRole = Mock.mock(roleMockConfig)
   roles.push(tempRole)
@@ -158,7 +166,9 @@ for (let i = 0; i < length; i++) {
   //  userRoles
   userRoles.push({ userId: tempUser.id, roleId: tempRole.id })
   //  groupUsers
-  groupUsers.push({ userId: tempUser.id, groupId: tempGroup.id })
+  groupUsers.push({ userId: tempUser.id, groupId: tempUserGroup.id })
+  //  roleGroups
+  roleGroups.push({ roleId: tempRole.id, groupId: tempRoleGroup.id })
   //  deptUsers
   deptUsers.push({ userId: tempUser.id, deptId: tempDept.id })
 }

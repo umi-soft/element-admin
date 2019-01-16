@@ -37,6 +37,7 @@ Mock.mock(/\/system\/group\/add/, 'post', groupAPI.add)
 Mock.mock(/\/system\/group\/edit/, 'post', groupAPI.edit)
 Mock.mock(/\/system\/group\/del/, 'post', groupAPI.del)
 Mock.mock(/\/system\/group\/all-users/, 'get', groupAPI.queryAllGroupUsers)
+Mock.mock(/\/system\/group\/all-roles/, 'get', groupAPI.queryAllGroupRoles)
 
 //  系统设置相关---用户
 Mock.mock(/\/system\/user\/query-page/, 'post', userAPI.queryPage)
@@ -106,5 +107,8 @@ Mock.mock(/\/system\/menu-role\/reset/, 'post', roleAPI.resetRoleMenus)
 Mock.mock(/\/system\/user-role\/del-by-entity-mapping/, 'post', roleAPI.delRoleUser)
 Mock.mock(/\/system\/user-role\/add/, 'post', userAPI.addUserRole)
 Mock.mock(/\/system\/user-role\/reset/, 'post', userAPI.resetUserRole)
+
+// 角色分组表
+Mock.mock(/\/system\/role-group\/del-by-entity-mapping/, 'post', groupAPI.delGroupRole)
 
 export default Mock

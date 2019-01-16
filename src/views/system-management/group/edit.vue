@@ -4,7 +4,7 @@
     <el-card>
       <div slot="header">
         <button-right>
-          角色信息
+          分组信息
           <template slot="button">
             <el-button type="primary" @click="submitHandler('form')">保存</el-button>
           </template>
@@ -25,7 +25,7 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-card header="用户信息">
+    <el-card v-if="isUserGroup" header="用户信息">
       <el-table :data="users" border style="width: 100%">
         <el-table-column type="index" width="100" align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
@@ -42,6 +42,19 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <el-card v-if="isRoleGroup" header="角色信息">
+      <el-table :data="roles" border style="width: 100%">
+        <el-table-column type="index" width="100" align="center"/>
+        <el-table-column prop="index" label="角色编号" width="100" sortable align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称" sortable align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="角色备注" sortable align="center"/>
+        <el-table-column label="操作" width="100" align="center">
+          <template slot-scope="scope">
+            <el-button type="warning" @click="delGroupRoleHandler(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
   </div>
 </template>
 
@@ -50,17 +63,11 @@ import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as GroupAPI from '@/api/system-management/group'
 import * as UserGroupAPI from '@/api/system-management/userGroup'
+import * as RoleGroupAPI from '@/api/system-management/roleGroup'
 import mixins from './mixins'
 
 export default {
   mixins: [BaseEditForm, mixins],
-  props: {
-    detail: {
-      required: false,
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     const form = this.initForm()
     const rules = this.initRules()
@@ -70,7 +77,8 @@ export default {
     return {
       form: form,
       rules: rules,
-      users: []
+      users: [],
+      roles: []
     }
   },
   activated() {
@@ -80,7 +88,12 @@ export default {
         this.$refs['form'].clearValidate()
       })
     })
-    this.queryAllUsers()
+    if (this.isUserGroup) {
+      this.queryAllUsers()
+    }
+    if (this.isRoleGroup) {
+      this.queryAllRoles()
+    }
   },
   methods: {
     customSubmitHandler() {
@@ -97,6 +110,16 @@ export default {
       UserGroupAPI.delByEntityMapping(params).then(data => {
         this.optionSuccessHandler()
         this.queryAllUsers()
+      })
+    },
+    delGroupRoleHandler(id) {
+      const params = {
+        roleId: id,
+        groupId: this.detail.id
+      }
+      RoleGroupAPI.delByEntityMapping(params).then(data => {
+        this.optionSuccessHandler()
+        this.queryAllRoles()
       })
     }
   }

@@ -24,13 +24,6 @@ import mixins from './mixins'
 
 export default {
   mixins: [BaseEditForm, mixins],
-  props: {
-    detail: {
-      required: false,
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     const form = this.initForm()
     const rules = this.initRules()

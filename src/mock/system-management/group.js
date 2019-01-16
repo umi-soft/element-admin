@@ -111,5 +111,29 @@ export default {
       message: '操作成功',
       data: ''
     }
+  },
+  queryAllGroupRoles: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const roleGroupsResult = MockDB.roleGroups.filter(item => { return item.groupId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: MockDB.roles.filter(role => {
+        return roleGroupsResult.findIndex(roleGroup => { return role.id === roleGroup.roleId }) !== -1
+      })
+    }
+  },
+  delGroupRole: config => {
+    console.log(config)
+    const params = JSON.parse(config.body)
+    MockDB.roleGroups.splice(MockDB.roleGroups.findIndex(item => {
+      return item.roleId === params.roleId && item.groupId === params.groupId
+    }), 1)
+    return {
+      code: 1,
+      message: '操作成功',
+      data: ''
+    }
   }
 }

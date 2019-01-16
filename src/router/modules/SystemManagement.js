@@ -50,6 +50,9 @@ const asyncRouter = {
         {
           path: 'group',
           component: () => import('@/views/system-management/group/main'),
+          query: {
+            category: 1
+          },
           hidden: false,
           alwaysShow: true,
           name: '3de22ff390ab5d06bafcce547ff780bb',
@@ -57,7 +60,7 @@ const asyncRouter = {
             index: 1,
             roles: [],
             title: '用户分组',
-            icon: 'user-group',
+            icon: 'group',
             cacheAble: false
           }
         },
@@ -82,28 +85,61 @@ const asyncRouter = {
       component: () => import('@/views/system-management/menu/main'),
       hidden: false,
       alwaysShow: true,
-      name: '6ecb9fd6e70f50b2be035485928b5cd6',
+      name: '3d2b85978d4c43edb9a7f7396b15d32f',
       meta: {
         index: 1,
         roles: [],
         title: '菜单管理',
-        icon: 'auth-menu',
+        icon: 'menu',
         cacheAble: false
       }
     },
     {
-      path: 'role',
-      component: () => import('@/views/system-management/role/main'),
+      path: 'role-group',
+      component: MenuGroup,
       hidden: false,
       alwaysShow: true,
-      name: 'd2249f50a3235286b173663a6c45122d',
+      name: 'd4a808c28d2c44159fb7cb47e6d524a5',
       meta: {
         index: 1,
         roles: [],
-        title: '角色管理',
-        icon: 'user-role',
+        title: '角色与分组',
+        icon: 'role-setting',
         cacheAble: false
-      }
+      },
+      children: [
+        {
+          path: 'group',
+          component: () => import('@/views/system-management/group/main'),
+          query: {
+            category: 2
+          },
+          hidden: false,
+          alwaysShow: true,
+          name: '81cb5f5db7d141f9bad227ab0c0bc5c9',
+          meta: {
+            index: 1,
+            roles: [],
+            title: '角色分组',
+            icon: 'group',
+            cacheAble: false
+          }
+        },
+        {
+          path: 'role',
+          component: () => import('@/views/system-management/role/main'),
+          hidden: false,
+          alwaysShow: true,
+          name: 'd2249f50a3235286b173663a6c45122d',
+          meta: {
+            index: 1,
+            roles: [],
+            title: '角色管理',
+            icon: 'user-role',
+            cacheAble: false
+          }
+        }
+      ]
     },
     {
       path: 'dictionary-setting',

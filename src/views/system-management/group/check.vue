@@ -13,7 +13,7 @@
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
-      <el-collapse-item title="用户信息" name="group-user">
+      <el-collapse-item v-if="isUserGroup" title="用户信息" name="group-user">
         <el-table :data="users" border style="width: 100%">
           <el-table-column type="index" width="100" align="center"/>
           <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
@@ -25,6 +25,14 @@
           <el-table-column :show-overflow-tooltip="true" prop="phone" label="电话" width="160" sortable align="center"/>
         </el-table>
       </el-collapse-item>
+      <el-collapse-item v-if="isRoleGroup" title="角色信息" name="group-role">
+        <el-table :data="roles" border style="width: 100%">
+          <el-table-column type="index" width="100" align="center"/>
+          <el-table-column prop="index" label="角色编号" width="100" sortable align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称" sortable align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="角色备注" sortable align="center"/>
+        </el-table>
+      </el-collapse-item>
     </el-collapse>
   </div>
 </template>
@@ -34,21 +42,20 @@ import mixins from './mixins'
 
 export default {
   mixins: [mixins],
-  props: {
-    detail: {
-      required: true,
-      type: Object,
-      default: () => {}
-    }
-  },
   data() {
     return {
       labelWidth: '200px',
-      users: []
+      users: [],
+      roles: []
     }
   },
   activated() {
-    this.queryAllUsers()
+    if (this.isUserGroup) {
+      this.queryAllUsers()
+    }
+    if (this.isRoleGroup) {
+      this.queryAllRoles()
+    }
   }
 }
 </script>

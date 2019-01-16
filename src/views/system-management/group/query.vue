@@ -69,6 +69,7 @@ export default {
   methods: {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
+        category: this.$route.query.category,
         name: ''
       })
     },
