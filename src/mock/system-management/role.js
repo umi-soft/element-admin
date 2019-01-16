@@ -131,17 +131,6 @@ export default {
   queryAllRoleUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (MockDB.userRoles.findIndex(item => { return item.roleId === params.id }) === -1) {
-      // 生成几个user
-      for (let i = 0; i < 20; i++) {
-        const user = Mock.mock(MockDB.userMockConfig)
-        MockDB.users.push(user)
-        MockDB.userRoles.push({
-          userId: user.id,
-          roleId: params.id
-        })
-      }
-    }
     const userRolesResult = MockDB.userRoles.filter(item => { return item.roleId === params.id })
     return {
       code: 1,

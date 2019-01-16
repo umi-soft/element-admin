@@ -91,17 +91,6 @@ export default {
   queryAllGroupUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (MockDB.groupUsers.findIndex(item => { return item.groupId === params.id }) === -1) {
-      // 生成几个user
-      for (let i = 0; i < 20; i++) {
-        const user = Mock.mock(MockDB.userMockConfig)
-        MockDB.users.push(user)
-        MockDB.groupUsers.push({
-          userId: user.id,
-          groupId: params.id
-        })
-      }
-    }
     const groupUsersResult = MockDB.groupUsers.filter(item => { return item.groupId === params.id })
     return {
       code: 1,

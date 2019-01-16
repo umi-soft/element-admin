@@ -111,17 +111,6 @@ export default {
   queryAllUserDepts: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (MockDB.deptUsers.findIndex(item => { return item.userId === params.id }) === -1) {
-      // 生成几个dept
-      for (let i = 0; i < 3; i++) {
-        const dept = Mock.mock(MockDB.deptMockConfig)
-        MockDB.depts.push(dept)
-        MockDB.deptUsers.push({
-          userId: params.id,
-          deptId: dept.id
-        })
-      }
-    }
     const deptUsersResult = MockDB.deptUsers.filter(item => { return item.userId === params.id })
     return {
       code: 1,
@@ -152,7 +141,7 @@ export default {
           break
         }
       }
-      return found
+      return !found
     })
     MockDB.deptUsers.splice(0, MockDB.deptUsers.length)
     newDeptUsers.forEach(item => {
@@ -171,17 +160,6 @@ export default {
   queryAllUserGroups: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (MockDB.groupUsers.findIndex(item => { return item.userId === params.id }) === -1) {
-      // 生成几个group
-      for (let i = 0; i < 3; i++) {
-        const group = Mock.mock(MockDB.groupMockConfig)
-        MockDB.groups.push(group)
-        MockDB.groupUsers.push({
-          userId: params.id,
-          groupId: group.id
-        })
-      }
-    }
     const groupUsersResult = MockDB.groupUsers.filter(item => { return item.userId === params.id })
     return {
       code: 1,
@@ -213,7 +191,7 @@ export default {
           break
         }
       }
-      return found
+      return !found
     })
     MockDB.groupUsers.splice(0, MockDB.groupUsers.length)
     newGroupUsers.forEach(item => {
@@ -232,17 +210,6 @@ export default {
   queryAllUserRoles: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (MockDB.userRoles.findIndex(item => { return item.userId === params.id }) === -1) {
-      // 生成几个role
-      for (let i = 0; i < 3; i++) {
-        const role = Mock.mock(MockDB.roleMockConfig)
-        MockDB.roles.push(role)
-        MockDB.userRoles.push({
-          userId: params.id,
-          roleId: role.id
-        })
-      }
-    }
     const userRolesResult = MockDB.userRoles.filter(item => { return item.userId === params.id })
     return {
       code: 1,
@@ -273,7 +240,7 @@ export default {
           break
         }
       }
-      return found
+      return !found
     })
     MockDB.userRoles.splice(0, MockDB.userRoles.length)
     newUserRoles.forEach(item => {

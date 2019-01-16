@@ -122,17 +122,12 @@ export const admin = {}
 
 export const simple = {}
 
-//  主表mock数据
-//  dept && deptsTree
-let length = Mock.mock('@integer(10, 40)')
-for (let i = 0; i < length; i++) {
-  depts.push(Mock.mock(deptMockConfig))
-}
-
+//  随机生成tree
 function createDeptTree(dept) {
   dept.children = []
   if (Mock.mock('@boolean')) {
     const children = Mock.mock(deptMockConfig)
+    depts.push(children)
     children.parentId = dept.id
     dept.children.push(children)
     createDeptTree(children)
@@ -140,11 +135,32 @@ function createDeptTree(dept) {
   return dept
 }
 
-length = Mock.mock('@integer(5, 20)')
+//  主表mock数据
+const length = Mock.mock('@integer(10, 20)')
+//  用户
 for (let i = 0; i < length; i++) {
-  const dept = Mock.mock(deptMockConfig)
-  dept.parentId = null
-  deptsTree.push(createDeptTree(dept))
+  const tempUser = Mock.mock(userMockConfig)
+  users.push(tempUser)
+  //  分组
+  const tempGroup = Mock.mock(groupMockConfig)
+  groups.push(tempGroup)
+  //  角色
+  const tempRole = Mock.mock(roleMockConfig)
+  roles.push(tempRole)
+  //  部门，数组
+  const tempDept = Mock.mock(deptMockConfig)
+  depts.push(tempDept)
+  //  部门，tree结构
+  deptsTree.push(tempDept)
+  createDeptTree(tempDept)
+
+  //  中间表数据关系
+  //  userRoles
+  userRoles.push({ userId: tempUser.id, roleId: tempRole.id })
+  //  groupUsers
+  groupUsers.push({ userId: tempUser.id, groupId: tempGroup.id })
+  //  deptUsers
+  deptUsers.push({ userId: tempUser.id, deptId: tempDept.id })
 }
 
 //  字典类别
@@ -169,21 +185,6 @@ for (let i = 0; i < 11; i++) {
   item.parentId = 'root'
   item.type = dictionary.id
   dictionaries.push(item)
-}
-
-//  分组
-for (let i = 0; i < 10; i++) {
-  groups.push(Mock.mock(groupMockConfig))
-}
-
-//  角色
-for (let i = 0; i < 10; i++) {
-  roles.push(Mock.mock(roleMockConfig))
-}
-
-//  用户
-for (let i = 0; i < 25; i++) {
-  users.push(Mock.mock(userMockConfig))
 }
 
 let temp = Mock.mock(userMockConfig)

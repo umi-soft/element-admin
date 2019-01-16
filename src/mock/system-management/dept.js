@@ -118,17 +118,6 @@ export default {
   queryAllDeptUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    if (MockDB.deptUsers.findIndex(item => { return item.deptId === params.id }) === -1) {
-      // 生成几个user
-      for (let i = 0; i < 5; i++) {
-        const user = Mock.mock(MockDB.userMockConfig)
-        MockDB.users.push(user)
-        MockDB.deptUsers.push({
-          userId: user.id,
-          deptId: params.id
-        })
-      }
-    }
     const deptUsersResult = MockDB.deptUsers.filter(item => { return item.deptId === params.id })
     return {
       code: 1,
