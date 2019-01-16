@@ -2,8 +2,8 @@
   <div v-if="!item.hidden && item.children" class="menu-wrapper">
     <!-- item及其一级子路由中，至多包含一个非hidden路由，记录为onlyOneShowing && onlyOneShowing是item本身或没有子路由 && alwaysShow为false -->
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneShowing.children || onlyOneShowing.noShowingChildren) && !item.alwaysShow">
-      <app-link :to="resolvePath(onlyOneShowing.path)">
-        <el-menu-item :index="resolvePath(onlyOneShowing.path)" :class="{'submenu-title-no-dropdown':!isNest}">
+      <app-link :to="resolvePath(onlyOneShowing)">
+        <el-menu-item :index="resolvePath(onlyOneShowing)" :class="{'submenu-title-no-dropdown':!isNest}">
           <item v-if="onlyOneShowing.meta" :icon="onlyOneShowing.meta.icon||item.meta.icon" :title="onlyOneShowing.meta.title" />
         </el-menu-item>
       </app-link>
@@ -20,10 +20,10 @@
           :is-nest="true"
           :item="child"
           :key="child.path"
-          :base-path="resolvePath(child.path)"/>
+          :base-path="resolvePath(child)"/>
 
-        <app-link v-else :to="resolvePath(child.path)" :key="child.name">
-          <el-menu-item :index="resolvePath(child.path)">
+        <app-link v-else :to="resolvePath(child)" :key="child.name">
+          <el-menu-item :index="resolvePath(child)">
             <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
           </el-menu-item>
         </app-link>
@@ -35,7 +35,7 @@
 
 <script>
 import path from 'path'
-import { isExternal } from '@/utils'
+import { isExternal, obj2Param } from '@/utils'
 import Item from './Item'
 import AppLink from './Link'
 
@@ -88,11 +88,21 @@ export default {
       // 非hidden子路由大于1个
       return false
     },
-    resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath
+    resolvePath(router) {
+      const query = obj2Param(router.query)
+      let routerPath = router.path
+      if (isExternal(routerPath)) {
+        routerPath = routerPath + '?token=' + encodeURIComponent(this.$store.state.user.token)
+        if (query) {
+          routerPath = routerPath + query
+        }
+        return routerPath
       }
-      return path.resolve(this.basePath, routePath)
+      routerPath = path.resolve(this.basePath, routerPath)
+      if (query) {
+        routerPath = routerPath + '?' + query
+      }
+      return routerPath
     }
   }
 }
