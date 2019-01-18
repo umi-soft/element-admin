@@ -4,7 +4,7 @@ export default {
   delByEntityMapping: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    MockDB.groupUsers.splice(MockDB.groupUsers.findIndex(item => {
+    MockDB.userGroups.splice(MockDB.userGroups.findIndex(item => {
       return item.userId === params.userId && item.groupId === params.groupId
     }), 1)
     return {
@@ -16,7 +16,7 @@ export default {
   add: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    MockDB.groupUsers.push(params)
+    MockDB.userGroups.push(params)
     return {
       code: 1,
       message: '操作成功',
@@ -26,7 +26,7 @@ export default {
   reset: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    const newGroupUsers = MockDB.groupUsers.filter(item => {
+    const newGroupUsers = MockDB.userGroups.filter(item => {
       let found = false
       for (let i = 0; i < params.length; i++) {
         if (item.userId === params[i].userId) {
@@ -36,12 +36,12 @@ export default {
       }
       return !found
     })
-    MockDB.groupUsers.splice(0, MockDB.groupUsers.length)
+    MockDB.userGroups.splice(0, MockDB.userGroups.length)
     newGroupUsers.forEach(item => {
-      MockDB.groupUsers.push(item)
+      MockDB.userGroups.push(item)
     })
     params.forEach(item => {
-      MockDB.groupUsers.push(item)
+      MockDB.userGroups.push(item)
     })
     return {
       code: 1,

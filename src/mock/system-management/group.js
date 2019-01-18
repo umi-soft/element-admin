@@ -89,27 +89,39 @@ export default {
       data: {}
     }
   },
-  queryAllGroupUsers: config => {
+  queryAllRoleGroupUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const groupUsersResult = MockDB.groupUsers.filter(item => { return item.groupId === params.id })
+    const tempResult = MockDB.userRoleGroups.filter(item => { return item.roleGroupId === params.id })
     return {
       code: 1,
       message: '操作成功',
       data: MockDB.users.filter(user => {
-        return groupUsersResult.findIndex(groupUser => { return user.id === groupUser.userId }) !== -1
+        return tempResult.findIndex(item => { return user.id === item.userId }) !== -1
+      })
+    }
+  },
+  queryAllUserGroupUsers: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const tempResult = MockDB.userGroups.filter(item => { return item.groupId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: MockDB.users.filter(user => {
+        return tempResult.findIndex(item => { return user.id === item.userId }) !== -1
       })
     }
   },
   queryAllGroupRoles: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const roleGroupsResult = MockDB.roleGroups.filter(item => { return item.groupId === params.id })
+    const tempResult = MockDB.roleGroups.filter(item => { return item.roleGroupId === params.id })
     return {
       code: 1,
       message: '操作成功',
       data: MockDB.roles.filter(role => {
-        return roleGroupsResult.findIndex(roleGroup => { return role.id === roleGroup.roleId }) !== -1
+        return tempResult.findIndex(item => { return role.id === item.roleId }) !== -1
       })
     }
   }

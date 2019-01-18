@@ -43,7 +43,14 @@ export default {
     },
     queryAllUsers() {
       this.users = []
-      GroupAPI.queryAllGroupUsers(this.detail.id).then(users => {
+      let queryAllUsers = null
+      if (this.isUserGroup) {
+        queryAllUsers = GroupAPI.queryAllUserGroupUsers // 用户分组下的所有用户
+      }
+      if (this.isRoleGroup) {
+        queryAllUsers = GroupAPI.queryAllRoleGroupUsers // 角色分组下的所有用户
+      }
+      queryAllUsers(this.detail.id).then(users => {
         this.users = users
       })
     },

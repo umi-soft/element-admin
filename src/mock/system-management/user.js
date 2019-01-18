@@ -124,7 +124,7 @@ export default {
   queryAllUserGroups: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const groupUsersResult = MockDB.groupUsers.filter(item => { return item.userId === params.id })
+    const groupUsersResult = MockDB.userGroups.filter(item => { return item.userId === params.id })
     return {
       code: 1,
       message: '操作成功',

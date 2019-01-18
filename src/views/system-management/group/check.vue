@@ -13,7 +13,7 @@
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
-      <el-collapse-item v-if="isUserGroup" title="用户信息" name="group-user">
+      <el-collapse-item title="用户信息" name="group-user">
         <el-table :data="users" border style="width: 100%">
           <el-table-column type="index" width="100" align="center"/>
           <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
@@ -50,9 +50,7 @@ export default {
     }
   },
   activated() {
-    if (this.isUserGroup) {
-      this.queryAllUsers()
-    }
+    this.queryAllUsers()
     if (this.isRoleGroup) {
       this.queryAllRoles()
     }

@@ -50,9 +50,17 @@ export function delGroup(data) {
   })
 }
 
-export function queryAllGroupUsers(id) {
+export function queryAllRoleGroupUsers(id) {
   return request({
-    url: base_url + 'all-users',
+    url: base_url + 'all-role-group-users',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function queryAllUserGroupUsers(id) {
+  return request({
+    url: base_url + 'all-user-group-users',
     method: 'get',
     params: { id }
   })

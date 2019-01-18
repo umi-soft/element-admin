@@ -25,7 +25,7 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-card v-if="isUserGroup" header="用户信息">
+    <el-card header="用户信息">
       <el-table :data="users" border style="width: 100%">
         <el-table-column type="index" width="100" align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
@@ -37,7 +37,7 @@
         <el-table-column :show-overflow-tooltip="true" prop="phone" label="电话" width="160" sortable align="center"/>
         <el-table-column label="操作" width="100" align="center">
           <template slot-scope="scope">
-            <el-button type="warning" @click="delGroupUserHandler(scope.row.id)">删除</el-button>
+            <el-button type="warning" @click="delUserHandler(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -63,6 +63,7 @@ import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as GroupAPI from '@/api/system-management/group'
 import * as UserGroupAPI from '@/api/system-management/userGroup'
+import * as UserRoleGroupAPI from '@/api/system-management/userRoleGroup'
 import * as RoleGroupAPI from '@/api/system-management/roleGroup'
 import mixins from './mixins'
 
@@ -88,9 +89,7 @@ export default {
         this.$refs['form'].clearValidate()
       })
     })
-    if (this.isUserGroup) {
-      this.queryAllUsers()
-    }
+    this.queryAllUsers()
     if (this.isRoleGroup) {
       this.queryAllRoles()
     }
@@ -102,12 +101,18 @@ export default {
     customSubmitSuccessHandler() {
       this.$refs['form'].clearValidate()
     },
-    delGroupUserHandler(id) {
-      const params = {
-        userId: id,
-        groupId: this.detail.id
+    delUserHandler(id) {
+      const params = { userId: id }
+      let delByEntityMapping = null
+      if (this.isUserGroup) {
+        params.groupId = this.detail.id
+        delByEntityMapping = UserGroupAPI.delByEntityMapping // 用户分组下的用户
       }
-      UserGroupAPI.delByEntityMapping(params).then(data => {
+      if (this.isRoleGroup) {
+        params.roleGroupId = this.detail.id
+        delByEntityMapping = UserRoleGroupAPI.delByEntityMapping // 角色分组下的用户
+      }
+      delByEntityMapping(params).then(data => {
         this.optionSuccessHandler()
         this.queryAllUsers()
       })
@@ -115,7 +120,7 @@ export default {
     delGroupRoleHandler(id) {
       const params = {
         roleId: id,
-        groupId: this.detail.id
+        roleGroupId: this.detail.id
       }
       RoleGroupAPI.delByEntityMapping(params).then(data => {
         this.optionSuccessHandler()

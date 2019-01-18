@@ -121,7 +121,7 @@ export const userRoleGroups = []
 // 用户组与角色组中间表
 export const userGroupRoleGroups = []
 // 用户与用户组
-export const groupUsers = []
+export const userGroups = []
 // 用户与部门中间表
 export const deptUsers = []
 
@@ -170,7 +170,7 @@ for (let i = 0; i < length; i++) {
   //  用户与角色
   userRoles.push({ userId: tempUser.id, roleId: tempRole.id })
   //  用户与用户组
-  groupUsers.push({ userId: tempUser.id, groupId: tempUserGroup.id })
+  userGroups.push({ userId: tempUser.id, groupId: tempUserGroup.id })
   //  用户与角色组
   userRoleGroups.push({ userId: tempUser.id, roleGroupId: tempRoleGroup.id })
   //  角色与角色组

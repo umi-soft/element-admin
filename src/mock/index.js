@@ -42,7 +42,8 @@ Mock.mock(/\/system\/group\/query-by-id/, 'get', groupAPI.queryById)
 Mock.mock(/\/system\/group\/add/, 'post', groupAPI.add)
 Mock.mock(/\/system\/group\/edit/, 'post', groupAPI.edit)
 Mock.mock(/\/system\/group\/del/, 'post', groupAPI.del)
-Mock.mock(/\/system\/group\/all-users/, 'get', groupAPI.queryAllGroupUsers)
+Mock.mock(/\/system\/group\/all-role-group-users/, 'get', groupAPI.queryAllRoleGroupUsers)
+Mock.mock(/\/system\/group\/all-user-group-users/, 'get', groupAPI.queryAllUserGroupUsers)
 Mock.mock(/\/system\/group\/all-roles/, 'get', groupAPI.queryAllGroupRoles)
 
 //  系统设置相关---用户
