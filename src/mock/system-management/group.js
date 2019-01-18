@@ -124,5 +124,29 @@ export default {
         return tempResult.findIndex(item => { return role.id === item.roleId }) !== -1
       })
     }
+  },
+  queryAllUserGroups: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const tempResult = MockDB.userGroupRoleGroups.filter(item => { return item.roleGroupId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: MockDB.groups.filter(group => {
+        return tempResult.findIndex(item => { return group.id === item.userGroupId }) !== -1
+      })
+    }
+  },
+  queryAllRoleGroups: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const tempResult = MockDB.userGroupRoleGroups.filter(item => { return item.userGroupId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: MockDB.groups.filter(group => {
+        return tempResult.findIndex(item => { return group.id === item.roleGroupId }) !== -1
+      })
+    }
   }
 }

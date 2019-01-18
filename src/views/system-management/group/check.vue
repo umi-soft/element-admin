@@ -13,6 +13,19 @@
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
+      <el-collapse-item :title="getGroupName()" name="group">
+        <el-table :data="groups" border style="width: 100%">
+          <el-table-column type="index" width="100" align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+          <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+          </el-table-column>
+        </el-table>
+      </el-collapse-item>
       <el-collapse-item title="用户信息" name="group-user">
         <el-table :data="users" border style="width: 100%">
           <el-table-column type="index" width="100" align="center"/>
@@ -46,11 +59,13 @@ export default {
     return {
       labelWidth: '200px',
       users: [],
-      roles: []
+      roles: [],
+      groups: []
     }
   },
   activated() {
-    this.queryAllUsers()
+    this.queryAllUsers() // 查询分组下的用户
+    this.queryAllGroups() // 查询分组关联的分组
     if (this.isRoleGroup) {
       this.queryAllRoles()
     }

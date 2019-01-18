@@ -8,6 +8,7 @@ import deptAPI from './system-management/dept'
 import dictionaryAPI from './system-management/dictionary'
 import menuAPI from './system-management/menu'
 import userRoleGroupAPI from './system-management/userRoleGroup'
+import userGroupRoleGroupAPI from './system-management/userGroupRoleGroup'
 import userRoleAPI from './system-management/userRole'
 import menuRoleAPI from './system-management/menuRole'
 import roleGroupAPI from './system-management/roleGroup'
@@ -44,6 +45,8 @@ Mock.mock(/\/system\/group\/edit/, 'post', groupAPI.edit)
 Mock.mock(/\/system\/group\/del/, 'post', groupAPI.del)
 Mock.mock(/\/system\/group\/all-role-group-users/, 'get', groupAPI.queryAllRoleGroupUsers)
 Mock.mock(/\/system\/group\/all-user-group-users/, 'get', groupAPI.queryAllUserGroupUsers)
+Mock.mock(/\/system\/group\/all-role-groups/, 'get', groupAPI.queryAllRoleGroups)
+Mock.mock(/\/system\/group\/all-user-groups/, 'get', groupAPI.queryAllUserGroups)
 Mock.mock(/\/system\/group\/all-roles/, 'get', groupAPI.queryAllGroupRoles)
 
 //  系统设置相关---用户
@@ -125,5 +128,9 @@ Mock.mock(/\/system\/user-role\/reset/, 'post', userRoleAPI.reset)
 // 角色-角色组,中间表
 Mock.mock(/\/system\/role-group\/del-by-entity-mapping/, 'post', roleGroupAPI.delByEntityMapping)
 Mock.mock(/\/system\/role-group\/add/, 'post', roleGroupAPI.add)
+
+// 用户组-角色组,中间表
+Mock.mock(/\/system\/user-group-role-group\/del-by-entity-mapping/, 'post', userGroupRoleGroupAPI.delByEntityMapping)
+Mock.mock(/\/system\/user-group-role-group\/add/, 'post', userGroupRoleGroupAPI.add)
 
 export default Mock

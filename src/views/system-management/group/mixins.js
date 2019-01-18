@@ -54,11 +54,29 @@ export default {
         this.users = users
       })
     },
+    queryAllGroups() {
+      this.groups = []
+      let queryAllGroups = null
+      if (this.isUserGroup) {
+        queryAllGroups = GroupAPI.queryAllRoleGroups // 用户分组下的所有角色分组
+      }
+      if (this.isRoleGroup) {
+        queryAllGroups = GroupAPI.queryAllUserGroups // 角色分组下的所有用户分组
+      }
+      queryAllGroups(this.detail.id).then(groups => {
+        this.groups = groups
+      })
+    },
     queryAllRoles() {
       this.roles = []
       GroupAPI.queryAllGroupRoles(this.detail.id).then(roles => {
         this.roles = roles
       })
+    },
+    getGroupName() {
+      if (this.isUserGroup) return '关联的角色组信息'
+      if (this.isRoleGroup) return '关联的用户组信息'
+      return '未知分组信息'
     }
   }
 }
