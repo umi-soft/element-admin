@@ -66,6 +66,14 @@ export function queryAllRoleUsers(id) {
   })
 }
 
+export function queryAllRoleDepts(id) {
+  return request({
+    url: base_url + 'all-depts',
+    method: 'get',
+    params: { id }
+  })
+}
+
 export function queryAllRoleGroups(id) {
   return request({
     url: base_url + 'all-groups',

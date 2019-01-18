@@ -27,6 +27,13 @@
           <el-table-column :show-overflow-tooltip="true" prop="phone" label="电话" width="160" sortable align="center"/>
         </el-table>
       </el-collapse-item>
+      <el-collapse-item title="部门角色信息" name="dept-role">
+        <el-table :data="roles" border style="width: 100%">
+          <el-table-column type="index" width="100" align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+        </el-table>
+      </el-collapse-item>
     </el-collapse>
   </div>
 </template>
@@ -45,13 +52,13 @@ export default {
   },
   data() {
     return {
-      labelWidth: '200px',
-      users: []
+      labelWidth: '200px'
     }
   },
   activated() {
     this.getParentDeptName(this.detail.parentId)
     this.queryAllUsers()
+    this.queryAllRoles()
   }
 }
 </script>

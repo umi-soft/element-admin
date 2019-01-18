@@ -138,6 +138,8 @@ export const userGroupRoleGroups = []
 export const userGroups = []
 // 用户与部门中间表
 export const deptUsers = []
+// 部门与角色中间表
+export const deptRoles = []
 
 export const admin = {}
 
@@ -195,6 +197,8 @@ for (let i = 0; i < length; i++) {
   userGroupRoleGroups.push({ userGroupId: tempUserGroup.id, roleGroupId: tempRoleGroup.id })
   //  用户与部门中间表
   deptUsers.push({ userId: tempUser.id, deptId: tempDept.id })
+  // 部门与角色
+  deptRoles.push({ deptId: tempDept.id, roleId: tempRole.id })
 }
 
 //  字典类别

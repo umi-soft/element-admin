@@ -3,6 +3,14 @@ import * as MenuAPI from '@/api/system-management/menu'
 import { asyncMenuMap } from '@/router'
 
 export default {
+  data() {
+    return {
+      menusTree: [],
+      users: [],
+      groups: [],
+      depts: []
+    }
+  },
   methods: {
     initForm() {
       return {
@@ -35,6 +43,12 @@ export default {
       this.groups = []
       RoleAPI.queryAllRoleGroups(this.detail.id).then(groups => {
         this.groups = groups
+      })
+    },
+    queryAllDepts() {
+      this.depts = []
+      RoleAPI.queryAllRoleDepts(this.detail.id).then(depts => {
+        this.depts = depts
       })
     },
     filterNodeHandler(value, data) {

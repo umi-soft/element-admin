@@ -48,6 +48,13 @@
           </el-table-column>
         </el-table>
       </el-collapse-item>
+      <el-collapse-item title="部门信息" name="dept-role">
+        <el-table :data="depts" border style="width: 100%">
+          <el-table-column type="index" width="100" align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注" sortable/>
+        </el-table>
+      </el-collapse-item>
       <el-collapse-item title="用户信息" name="role-user">
         <el-table :data="users" border style="width: 100%">
           <el-table-column type="index" width="100" align="center"/>
@@ -78,15 +85,13 @@ export default {
   },
   data() {
     return {
-      labelWidth: '200px',
-      users: [],
-      menusTree: [],
-      groups: []
+      labelWidth: '200px'
     }
   },
   activated() {
     this.queryAllUsers()
     this.queryAllGroups()
+    this.queryAllDepts()
     this.initMenus()
   },
   methods: {

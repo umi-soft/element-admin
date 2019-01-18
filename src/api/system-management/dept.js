@@ -57,3 +57,11 @@ export function queryAllDeptUsers(id) {
     params: { id }
   })
 }
+
+export function queryAllDeptRoles(id) {
+  return request({
+    url: base_url + 'all-roles',
+    method: 'get',
+    params: { id }
+  })
+}

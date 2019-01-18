@@ -3,7 +3,9 @@ import * as DeptAPI from '@/api/system-management/dept'
 export default {
   data() {
     return {
-      parentDeptName: ''
+      parentDeptName: '',
+      users: [],
+      roles: []
     }
   },
   methods: {
@@ -37,6 +39,12 @@ export default {
       this.users = []
       DeptAPI.queryAllDeptUsers(this.detail.id).then(users => {
         this.users = users
+      })
+    },
+    queryAllRoles() {
+      this.roles = []
+      DeptAPI.queryAllDeptRoles(this.detail.id).then(roles => {
+        this.roles = roles
       })
     },
     getParentDeptName(id) {

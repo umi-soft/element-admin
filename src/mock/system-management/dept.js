@@ -126,5 +126,17 @@ export default {
         return deptUsersResult.findIndex(deptUser => { return user.id === deptUser.userId }) !== -1
       })
     }
+  },
+  queryAllDeptRoles: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const tempResult = MockDB.deptRoles.filter(item => { return item.deptId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: MockDB.roles.filter(role => {
+        return tempResult.findIndex(item => { return role.id === item.roleId }) !== -1
+      })
+    }
   }
 }

@@ -102,12 +102,24 @@ export default {
   queryAllRoleUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
-    const userRolesResult = MockDB.userRoles.filter(item => { return item.roleId === params.id })
+    const tempResult = MockDB.userRoles.filter(item => { return item.roleId === params.id })
     return {
       code: 1,
       message: '操作成功',
       data: MockDB.users.filter(user => {
-        return userRolesResult.findIndex(userRole => { return user.id === userRole.userId }) !== -1
+        return tempResult.findIndex(item => { return user.id === item.userId }) !== -1
+      })
+    }
+  },
+  queryAllRoleDepts: config => {
+    console.log(config)
+    const params = param2Obj(config.url)
+    const tempResult = MockDB.deptRoles.filter(item => { return item.roleId === params.id })
+    return {
+      code: 1,
+      message: '操作成功',
+      data: MockDB.depts.filter(dept => {
+        return tempResult.findIndex(item => { return dept.id === item.deptId }) !== -1
       })
     }
   },

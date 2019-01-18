@@ -31,7 +31,7 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-card header="用户信息">
+    <el-card header="部门用户信息">
       <el-table :data="users" border style="width: 100%">
         <el-table-column type="index" width="100" align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
@@ -48,6 +48,18 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <el-card header="部门角色信息">
+      <el-table :data="roles" border style="width: 100%">
+        <el-table-column type="index" width="100" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+        <el-table-column label="操作" width="100" align="center">
+          <template slot-scope="scope">
+            <el-button type="warning" @click="delDeptRoleHandler(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
   </div>
 </template>
 
@@ -56,6 +68,7 @@ import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as DeptAPI from '@/api/system-management/dept'
 import * as UserDeptAPI from '@/api/system-management/userDept'
+import * as DeptRoleAPI from '@/api/system-management/deptRole'
 import mixins from './mixins'
 
 export default {
@@ -88,6 +101,7 @@ export default {
       })
     })
     this.queryAllUsers()
+    this.queryAllRoles()
   },
   methods: {
     customSubmitHandler() {
@@ -104,6 +118,16 @@ export default {
       UserDeptAPI.delByEntityMapping(params).then(data => {
         this.optionSuccessHandler()
         this.queryAllUsers()
+      })
+    },
+    delDeptRoleHandler(id) {
+      const params = {
+        roleId: id,
+        deptId: this.detail.id
+      }
+      DeptRoleAPI.delByEntityMapping(params).then(data => {
+        this.optionSuccessHandler()
+        this.queryAllRoles()
       })
     }
   }

@@ -88,6 +88,26 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <el-card>
+      <template slot="header">
+        <select-right>
+          <template slot="left">部门信息</template>
+          <el-select v-model="deptId" placeholder="添加部门" clearable filterable @change="addDeptHandler">
+            <el-option v-for="(item, index) in allDepts" :key="index" :label="item.name" :value="item.id"/>
+          </el-select>
+        </select-right>
+      </template>
+      <el-table :data="depts" border style="width: 100%">
+        <el-table-column type="index" width="100" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注" sortable/>
+        <el-table-column label="操作" width="100" align="center">
+          <template slot-scope="scope">
+            <el-button type="warning" @click="delDeptHandler(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
     <el-card header="用户信息">
       <el-table :data="users" border style="width: 100%">
         <el-table-column type="index" width="100" align="center"/>
@@ -114,8 +134,10 @@ import { deepMergeLeft } from '@/utils'
 import * as RoleGroupAPI from '@/api/system-management/roleGroup'
 import * as RoleAPI from '@/api/system-management/role'
 import * as MenuRoleAPI from '@/api/system-management/menuRole'
+import * as DeptRoleAPI from '@/api/system-management/deptRole'
 import * as UserRoleAPI from '@/api/system-management/userRole'
 import * as GroupAPI from '@/api/system-management/group'
+import * as DeptAPI from '@/api/system-management/dept'
 import mixins from './mixins'
 
 export default {
@@ -136,12 +158,11 @@ export default {
     return {
       form: form,
       rules: rules,
-      menusTree: [],
       menuFilter: null,
       allRoleGroups: [],
-      users: [],
-      groups: [],
-      roleGroupId: null
+      allDepts: [],
+      roleGroupId: null,
+      deptId: null
     }
   },
   watch: {
@@ -159,9 +180,13 @@ export default {
     this.initMenus()
     this.queryAllUsers()
     this.queryAllGroups() // 该角色已有的角色组信息
+    this.queryAllDepts()
     GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
       this.allRoleGroups = data
     }) // 系统已有的所有角色组信息
+    DeptAPI.queryAllDepts({ filters: [], sorts: [] }).then(data => {
+      this.allDepts = data
+    }) // 系统已有的所有部门信息
   },
   methods: {
     customSubmitHandler() {
@@ -200,6 +225,21 @@ export default {
       const params = { roleId: this.detail.id, roleGroupId: id }
       RoleGroupAPI.delByEntityMapping(params).then(data => {
         this.queryAllGroups()
+        this.optionSuccessHandler()
+      })
+    },
+    addDeptHandler() {
+      if (!this.deptId) return // 防止取消选择时触发
+      const params = { roleId: this.detail.id, deptId: this.deptId }
+      DeptRoleAPI.add(params).then(data => {
+        this.queryAllDepts()
+        this.optionSuccessHandler()
+      })
+    },
+    delDeptHandler(id) {
+      const params = { roleId: this.detail.id, deptId: id }
+      DeptRoleAPI.delByEntityMapping(params).then(data => {
+        this.queryAllDepts()
         this.optionSuccessHandler()
       })
     }
