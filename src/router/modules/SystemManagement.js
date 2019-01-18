@@ -81,18 +81,48 @@ const asyncRouter = {
       ]
     },
     {
-      path: 'menu',
-      component: () => import('@/views/system-management/menu/main'),
+      path: 'menu-setting',
+      component: MenuGroup,
       hidden: false,
       alwaysShow: true,
-      name: '3d2b85978d4c43edb9a7f7396b15d32f',
+      name: '9fd0d16c3f454636a8b8f1444c1a3c93',
       meta: {
         index: 1,
         roles: [],
-        title: '菜单管理',
-        icon: 'menu',
+        title: '菜单与资源',
+        icon: 'menu-setting',
         cacheAble: false
-      }
+      },
+      children: [
+        {
+          path: 'security',
+          component: () => import('@/views/system-management/security/main'),
+          hidden: false,
+          alwaysShow: true,
+          name: '7ff5ba3af6c2463296dd0eb5ecedb23c',
+          meta: {
+            index: 1,
+            roles: [],
+            title: '资源管理',
+            icon: 'security',
+            cacheAble: false
+          }
+        },
+        {
+          path: 'menu',
+          component: () => import('@/views/system-management/menu/main'),
+          hidden: false,
+          alwaysShow: true,
+          name: '3d2b85978d4c43edb9a7f7396b15d32f',
+          meta: {
+            index: 1,
+            roles: [],
+            title: '菜单管理',
+            icon: 'menu',
+            cacheAble: false
+          }
+        }
+      ]
     },
     {
       path: 'role-group',

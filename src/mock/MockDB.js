@@ -44,6 +44,18 @@ export const groupMockConfig = {
   modifiedDate: +Mock.Random.date('T') // 最后修改时间
 }
 
+export const securityMockConfig = {
+  'id|1': Utils.id,
+  'deleted|1': Utils.deleted, // 是否删除
+  securityDef: '@url', // 定义，通常为url或url正则等
+  name: '@cword(5, 10)', // 名称
+  remark: '@cparagraph(1, 3)', // 备注
+  createdBy: '@increment', // 创建人
+  createdDate: +Mock.Random.date('T'), // 创建时间
+  modifiedBy: '@increment', // 最后修改人
+  modifiedDate: +Mock.Random.date('T') // 最后修改时间
+}
+
 export const menuMockConfig = {
   id: '',
   parentId: '', // 上级ID
@@ -106,6 +118,8 @@ export const dictionaries = []
 export const groups = []
 // 菜单
 export const menus = []
+// 资源定义
+export const securities = []
 // 菜单与URL
 export const menuUrls = []
 // 角色
@@ -165,6 +179,8 @@ for (let i = 0; i < length; i++) {
   //  部门，tree结构
   deptsTree.push(tempDept)
   createDeptTree(tempDept)
+  //  资源定义
+  securities.push(Mock.mock(securityMockConfig))
 
   //  中间表数据关系
   //  用户与角色

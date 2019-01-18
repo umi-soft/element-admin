@@ -10,6 +10,7 @@ import menuAPI from './system-management/menu'
 import userRoleGroupAPI from './system-management/userRoleGroup'
 import userGroupRoleGroupAPI from './system-management/userGroupRoleGroup'
 import userRoleAPI from './system-management/userRole'
+import securityAPI from './system-management/security'
 import menuRoleAPI from './system-management/menuRole'
 import roleGroupAPI from './system-management/roleGroup'
 import userGroupAPI from './system-management/userGroup'
@@ -90,6 +91,14 @@ Mock.mock(/\/system\/dictionary\/query-by-id/, 'get', dictionaryAPI.queryById)
 Mock.mock(/\/system\/dictionary\/add/, 'post', dictionaryAPI.add)
 Mock.mock(/\/system\/dictionary\/edit/, 'post', dictionaryAPI.edit)
 Mock.mock(/\/system\/dictionary\/del/, 'post', dictionaryAPI.del)
+
+//  系统设置相关---资源定义
+Mock.mock(/\/system\/security\/query-all/, 'post', securityAPI.queryAll)
+Mock.mock(/\/system\/security\/query-page/, 'post', securityAPI.queryPage)
+Mock.mock(/\/system\/security\/query-by-id/, 'get', securityAPI.queryById)
+Mock.mock(/\/system\/security\/add/, 'post', securityAPI.add)
+Mock.mock(/\/system\/security\/edit/, 'post', securityAPI.edit)
+Mock.mock(/\/system\/security\/del/, 'post', securityAPI.del)
 
 //  系统设置相关---菜单
 Mock.mock(/\/system\/menu\/query-all/, 'post', menuAPI.queryAll)
