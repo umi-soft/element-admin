@@ -15,6 +15,7 @@ import menuRoleAPI from './system-management/menuRole'
 import roleGroupAPI from './system-management/roleGroup'
 import userGroupAPI from './system-management/userGroup'
 import userDeptAPI from './system-management/userDept'
+import menuSecurityAPI from './system-management/menuSecurity'
 
 // 修复在使用 MockJS 情况下，设置 withCredentials = true，且未被拦截的跨域请求丢失 Cookies 的问题
 // https://github.com/nuysoft/Mock/issues/300
@@ -105,9 +106,7 @@ Mock.mock(/\/system\/menu\/query-all/, 'post', menuAPI.queryAll)
 Mock.mock(/\/system\/menu\/query-by-id/, 'get', menuAPI.queryById)
 Mock.mock(/\/system\/menu\/edit/, 'post', menuAPI.edit)
 Mock.mock(/\/system\/menu\/sync/, 'post', menuAPI.sync)
-Mock.mock(/\/system\/menu\/all-urls/, 'get', menuAPI.queryMenuUrls)
-Mock.mock(/\/system\/menu\/add-url/, 'post', menuAPI.addMenuUrl)
-Mock.mock(/\/system\/menu\/del-url/, 'post', menuAPI.delMenuUrl)
+Mock.mock(/\/system\/menu\/all-securities/, 'get', menuAPI.queryAllMenuSecurities)
 Mock.mock(/\/system\/menu\/all-roles/, 'get', menuAPI.queryMenuRoles)
 
 //  用户-部门，中间表
@@ -141,5 +140,9 @@ Mock.mock(/\/system\/role-group\/add/, 'post', roleGroupAPI.add)
 // 用户组-角色组,中间表
 Mock.mock(/\/system\/user-group-role-group\/del-by-entity-mapping/, 'post', userGroupRoleGroupAPI.delByEntityMapping)
 Mock.mock(/\/system\/user-group-role-group\/add/, 'post', userGroupRoleGroupAPI.add)
+
+// 菜单-资源,中间表
+Mock.mock(/\/system\/menu-security\/del-by-entity-mapping/, 'post', menuSecurityAPI.delByEntityMapping)
+Mock.mock(/\/system\/menu-security\/add/, 'post', menuSecurityAPI.add)
 
 export default Mock

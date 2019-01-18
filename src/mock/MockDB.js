@@ -120,8 +120,8 @@ export const groups = []
 export const menus = []
 // 资源定义
 export const securities = []
-// 菜单与URL
-export const menuUrls = []
+// 菜单与资源
+export const menuSecurities = []
 // 角色
 export const roles = []
 // 角色与菜单中间表

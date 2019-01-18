@@ -29,47 +29,29 @@
       </el-form>
     </el-card>
     <el-card>
-      <div slot="header">
-        <button-right>
-          URL信息
-          <template slot="button">
-            <el-button v-if="!addUrl.show" type="primary" @click="() => { addUrl.show = true; addUrl.url = null; }">添加</el-button>
+      <template slot="header">
+        <select-right>
+          <template slot="left">资源权限信息</template>
+          <el-select v-model="securityId" placeholder="添加角色" clearable filterable @change="addSecirityHandler">
+            <el-option v-for="(item, index) in allSecurities" :key="index" :label="item.name" :value="item.id"/>
+          </el-select>
+        </select-right>
+      </template>
+      <el-table :data="securities" border style="width: 100%">
+        <el-table-column type="index" width="100" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="securityDef" label="定义" sortable/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable/>
+        <el-table-column label="操作" width="100" align="center">
+          <template slot-scope="scope">
+            <el-button type="warning" @click="delSecirityHandler(scope.row.id)">删除</el-button>
           </template>
-        </button-right>
-      </div>
-      <el-row>
-        <el-col v-if="addUrl.show" :span="24">
-          <el-form ref="addUrl" :model="addUrl" :label-width="labelWidth">
-            <el-form-item :rules="[{ required: true, message: '请输入系统中正在使用的URL', trigger: ['blur', 'change'] }]" label="URL" prop="url">
-              <el-input v-model="addUrl.url" clearable/>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="addMenuUrlHandler">保存</el-button>
-              <el-button type="info" @click="addUrl.show = false">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </el-col>
-        <el-col v-else :span="24">
-          <el-table :data="menuUrls" border style="width: 100%">
-            <el-table-column prop="url" label="URL"/>
-            <el-table-column label="操作" width="100" align="center">
-              <template slot-scope="scope">
-                <el-button type="warning" @click="delMenuUrlHandler(scope.row)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-col>
-      </el-row>
+        </el-table-column>
+      </el-table>
     </el-card>
     <el-card header="角色信息">
       <el-table :data="roles" border style="width: 100%">
-        <el-table-column prop="name" label="角色名称"/>
-        <el-table-column prop="createdDate" label="创建时间">
-          <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
-        </el-table-column>
-        <el-table-column prop="modifiedDate" label="最后修改时间">
-          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
-        </el-table-column>
+        <el-table-column type="index" width="100" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称"/>
         <el-table-column label="操作" width="100" align="center">
           <template slot-scope="scope">
             <el-button type="warning" @click="delMenuRoleHandler(scope.row.id)">删除</el-button>
@@ -85,6 +67,8 @@ import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
 import * as MenuAPI from '@/api/system-management/menu'
 import * as MenuRoleAPI from '@/api/system-management/menuRole'
+import * as SecurityAPI from '@/api/system-management/security'
+import * as MenuSecurityAPI from '@/api/system-management/menuSecurity'
 import mixins from './mixins'
 
 export default {
@@ -103,11 +87,8 @@ export default {
       labelWidth: '200px',
       form: form,
       rules: rules,
-
-      addUrl: {
-        show: false,
-        url: null
-      }
+      securityId: null,
+      allSecurities: []
     }
   },
   activated() {
@@ -118,8 +99,9 @@ export default {
         this.$refs['form'].clearValidate()
       })
     })
-    this.queryMenuUrls()
+    this.queryMenuSecurities()
     this.queryMenuRoles()
+    SecurityAPI.queryAll({ filters: [], sorts: [] }).then(data => { this.allSecurities = data }) // 系统已有的所有资源权限信息
   },
   methods: {
     customSubmitHandler() {
@@ -129,23 +111,26 @@ export default {
       // 便于继续编辑url,此处不返回
       this.$refs['form'].clearValidate()
     },
-    addMenuUrlHandler() {
-      this.$refs.addUrl.validate((valid) => {
-        if (valid) {
-          const params = {
-            menuId: this.detail.id,
-            url: this.addUrl.url
-          }
-          MenuAPI.addMenuUrl(params).then(data => {
-            this.queryMenuUrls()
-            this.addUrl.show = false
-          })
-        }
+    addSecirityHandler() {
+      if (!this.securityId) return
+      const params = {
+        menuId: this.detail.id,
+        securityId: this.securityId
+      }
+      MenuSecurityAPI.add(params).then(data => {
+        this.securityId = null
+        this.queryMenuSecurities()
+        this.optionSuccessHandler()
       })
     },
-    delMenuUrlHandler(menuUrl) {
-      MenuAPI.delMenuUrl(menuUrl).then(data => {
-        this.queryMenuUrls()
+    delSecirityHandler(id) {
+      const params = {
+        menuId: this.detail.id,
+        securityId: id
+      }
+      MenuSecurityAPI.delByEntityMapping(params).then(data => {
+        this.queryMenuSecurities()
+        this.optionSuccessHandler()
       })
     },
     delMenuRoleHandler(id) {

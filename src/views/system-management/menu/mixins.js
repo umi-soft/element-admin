@@ -4,8 +4,8 @@ export default {
   data() {
     return {
       parentMenuName: '',
-      menuUrls: [],
-      roles: []
+      roles: [],
+      securities: []
     }
   },
   methods: {
@@ -35,13 +35,13 @@ export default {
     },
     queryMenuRoles() {
       this.roles = []
-      const params = { id: this.detail.id }
-      MenuAPI.queryAllMenuRole(params).then(roles => { this.roles = roles })
+      MenuAPI.queryAllMenuRole(this.detail.id).then(roles => { this.roles = roles })
     },
-    queryMenuUrls() {
-      this.menuUrls = []
-      const params = { id: this.detail.id }
-      MenuAPI.queryAllMenuUrl(params).then(menuUrls => { this.menuUrls = menuUrls })
+    queryMenuSecurities() {
+      this.securities = []
+      MenuAPI.queryAllMenuSecurities({ id: this.detail.id }).then(securities => {
+        this.securities = securities
+      })
     },
     getParentMenuName(id) {
       this.parentMenuName = ''

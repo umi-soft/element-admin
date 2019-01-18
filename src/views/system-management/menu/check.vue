@@ -15,22 +15,19 @@
       <el-collapse-item title="审计信息" name="audit-info">
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
-      <el-collapse-item title="菜单URL信息" name="menu-url">
+      <el-collapse-item title="菜单资源权限信息" name="menu-security">
         <el-col :span="24">
-          <el-table :data="menuUrls" border style="width: 100%">
-            <el-table-column prop="url" label="URL"/>
+          <el-table :data="securities" border style="width: 100%">
+            <el-table-column type="index" width="100" align="center"/>
+            <el-table-column :show-overflow-tooltip="true" prop="securityDef" label="定义" sortable/>
+            <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable/>
           </el-table>
         </el-col>
       </el-collapse-item>
       <el-collapse-item title="菜单角色信息" name="menu-role">
         <el-table :data="roles" border style="width: 100%">
-          <el-table-column prop="name" label="角色名称"/>
-          <el-table-column prop="createdDate" label="创建时间">
-            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
-          </el-table-column>
-          <el-table-column prop="modifiedDate" label="最后修改时间">
-            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
-          </el-table-column>
+          <el-table-column type="index" width="100" align="center"/>
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称"/>
         </el-table>
       </el-collapse-item>
     </el-collapse>
@@ -38,7 +35,6 @@
 </template>
 
 <script>
-import * as MenuAPI from '@/api/system-management/menu'
 import mixins from './mixins'
 
 export default {
@@ -57,20 +53,8 @@ export default {
   },
   activated() {
     this.getParentMenuName(this.detail.parentId)
-    this.queryMenuUrls()
+    this.queryMenuSecurities()
     this.queryMenuRoles()
-  },
-  methods: {
-    queryMenuUrls() {
-      this.menuUrls = []
-      const params = { id: this.detail.id }
-      MenuAPI.queryAllMenuUrl(params).then(menuUrls => { this.menuUrls = menuUrls })
-    },
-    queryMenuRoles() {
-      this.roles = []
-      const params = { id: this.detail.id }
-      MenuAPI.queryAllMenuRole(params).then(roles => { this.roles = roles })
-    }
   }
 }
 </script>

@@ -65,41 +65,18 @@ export default {
       data: {}
     }
   },
-
-  queryMenuUrls: config => {
+  queryAllMenuSecurities: config => {
     console.log(config)
     const params = param2Obj(config.url)
+    const tempResult = MockDB.menuSecurities.filter(item => { return item.menuId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: MockDB.menuUrls.filter(item => { return item.menuId === params.id })
+      data: MockDB.securities.filter(security => {
+        return tempResult.findIndex(item => { return security.id === item.securityId }) !== -1
+      })
     }
   },
-
-  addMenuUrl: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.menuUrls.push(params)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
-  },
-
-  delMenuUrl: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.menuUrls.splice(MockDB.menuUrls.findIndex(item => {
-      return item.menuId === params.menuId && item.url === params.url
-    }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
-  },
-
   queryMenuRoles: config => {
     console.log(config)
     const params = param2Obj(config.url)
