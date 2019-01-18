@@ -120,43 +120,7 @@ export default {
       })
     }
   },
-  addUserDept: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.deptUsers.push(params)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: params
-    }
-  },
-  resetUserDept: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    const newDeptUsers = MockDB.deptUsers.filter(item => {
-      let found = false
-      for (let i = 0; i < params.length; i++) {
-        if (item.userId === params[i].userId) {
-          found = true
-          break
-        }
-      }
-      return !found
-    })
-    MockDB.deptUsers.splice(0, MockDB.deptUsers.length)
-    newDeptUsers.forEach(item => {
-      MockDB.deptUsers.push(item)
-    })
-    params.forEach(item => {
-      MockDB.deptUsers.push(item)
-    })
-    return {
-      code: 1,
-      message: '操作成功',
-      data: params
-    }
-  },
-
+  // 用户具有的
   queryAllUserGroups: config => {
     console.log(config)
     const params = param2Obj(config.url)
@@ -165,45 +129,20 @@ export default {
       code: 1,
       message: '操作成功',
       data: MockDB.groups.filter(group => {
-        return groupUsersResult.findIndex(groupUser => { return group.id === groupUser.groupId }) !== -1
+        return '' + group.category === '1' && groupUsersResult.findIndex(groupUser => { return group.id === groupUser.groupId }) !== -1
       })
     }
   },
-
-  addUserGroup: config => {
+  queryAllUserRoleGroups: config => {
     console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.groupUsers.push(params)
+    const params = param2Obj(config.url)
+    const tempResults = MockDB.userRoleGroups.filter(item => { return item.userId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: params
-    }
-  },
-  resetUserGroup: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    const newGroupUsers = MockDB.groupUsers.filter(item => {
-      let found = false
-      for (let i = 0; i < params.length; i++) {
-        if (item.userId === params[i].userId) {
-          found = true
-          break
-        }
-      }
-      return !found
-    })
-    MockDB.groupUsers.splice(0, MockDB.groupUsers.length)
-    newGroupUsers.forEach(item => {
-      MockDB.groupUsers.push(item)
-    })
-    params.forEach(item => {
-      MockDB.groupUsers.push(item)
-    })
-    return {
-      code: 1,
-      message: '操作成功',
-      data: params
+      data: MockDB.groups.filter(group => {
+        return '' + group.category === '2' && tempResults.findIndex(item => { return group.id === item.roleGroupId }) !== -1
+      })
     }
   },
 
@@ -217,42 +156,6 @@ export default {
       data: MockDB.roles.filter(role => {
         return userRolesResult.findIndex(userRole => { return role.id === userRole.roleId }) !== -1
       })
-    }
-  },
-  addUserRole: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.userRoles.push(params)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: params
-    }
-  },
-  resetUserRole: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    const newUserRoles = MockDB.userRoles.filter(item => {
-      let found = false
-      for (let i = 0; i < params.length; i++) {
-        if (item.userId === params[i].userId) {
-          found = true
-          break
-        }
-      }
-      return !found
-    })
-    MockDB.userRoles.splice(0, MockDB.userRoles.length)
-    newUserRoles.forEach(item => {
-      MockDB.userRoles.push(item)
-    })
-    params.forEach(item => {
-      MockDB.userRoles.push(item)
-    })
-    return {
-      code: 1,
-      message: '操作成功',
-      data: params
     }
   }
 }

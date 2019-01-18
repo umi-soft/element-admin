@@ -99,35 +99,6 @@ export default {
       data: MockDB.roleMenus.filter(item => { return params.id === item.roleId })
     }
   },
-  /**
-   * {
-   *  roleId: '', //本次操作的roleId
-   *  menuIds: [] //新勾选的菜单IDs
-   * }
-   * @param config
-   * @returns {{code: number, message: string, data: ''}}
-   */
-  resetRoleMenus: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.roleMenus.forEach(roleMenu => {
-      MockDB.roleMenus.splice(MockDB.roleMenus.findIndex(item => {
-        return item.roleId === params.roleId
-      }), 1)
-    })
-    params.menuIds.forEach(menuId => {
-      MockDB.roleMenus.push({
-        roleId: params.roleId,
-        menuId
-      })
-    })
-    return {
-      code: 1,
-      message: '操作成功',
-      data: ''
-    }
-  },
-
   queryAllRoleUsers: config => {
     console.log(config)
     const params = param2Obj(config.url)
@@ -140,17 +111,16 @@ export default {
       })
     }
   },
-
-  delRoleUser: config => {
+  queryAllRoleGroups: config => {
     console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.userRoles.splice(MockDB.userRoles.findIndex(item => {
-      return item.userId === params.userId && item.roleId === params.roleId
-    }), 1)
+    const params = param2Obj(config.url)
+    const tempResults = MockDB.roleGroups.filter(item => { return item.roleId === params.id })
     return {
       code: 1,
       message: '操作成功',
-      data: ''
+      data: MockDB.groups.filter(group => {
+        return '' + group.category === '2' && tempResults.findIndex(item => { return group.id === item.roleGroupId }) !== -1
+      })
     }
   }
 }

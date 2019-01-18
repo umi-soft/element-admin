@@ -94,32 +94,36 @@ export const userMockConfig = {
   modifiedBy: '@increment', // 最后修改人
   modifiedDate: +Mock.Random.date('T') // 最后修改时间
 }
-
-export const depts = []
-
-export const deptsTree = []
-
-export const dictionaries = []
-
-export const groups = []
-
-export const menus = []
-
-export const menuUrls = []
-
-export const roles = []
-
-export const roleMenus = []
-
-export const roleGroups = []
-
-export const userRoles = []
-
-export const groupUsers = []
-
-export const deptUsers = []
-
+// 用户
 export const users = []
+// 部门，数组
+export const depts = []
+// 部门，Tree
+export const deptsTree = []
+// 单级、多级字典、字典类别
+export const dictionaries = []
+// 用户分组、角色分组
+export const groups = []
+// 菜单
+export const menus = []
+// 菜单与URL
+export const menuUrls = []
+// 角色
+export const roles = []
+// 角色与菜单中间表
+export const roleMenus = []
+// 角色与角色组中间表
+export const roleGroups = []
+// 用户与角色中间表
+export const userRoles = []
+// 用户与角色组中间表
+export const userRoleGroups = []
+// 用户组与角色组中间表
+export const userGroupRoleGroups = []
+// 用户与用户组
+export const groupUsers = []
+// 用户与部门中间表
+export const deptUsers = []
 
 export const admin = {}
 
@@ -140,8 +144,8 @@ function createDeptTree(dept) {
 
 //  主表mock数据
 const length = Mock.mock('@integer(10, 20)')
-//  用户
 for (let i = 0; i < length; i++) {
+  //  用户
   const tempUser = Mock.mock(userMockConfig)
   users.push(tempUser)
   //  用户分组
@@ -163,13 +167,17 @@ for (let i = 0; i < length; i++) {
   createDeptTree(tempDept)
 
   //  中间表数据关系
-  //  userRoles
+  //  用户与角色
   userRoles.push({ userId: tempUser.id, roleId: tempRole.id })
-  //  groupUsers
+  //  用户与用户组
   groupUsers.push({ userId: tempUser.id, groupId: tempUserGroup.id })
-  //  roleGroups
-  roleGroups.push({ roleId: tempRole.id, groupId: tempRoleGroup.id })
-  //  deptUsers
+  //  用户与角色组
+  userRoleGroups.push({ userId: tempUser.id, roleGroupId: tempRoleGroup.id })
+  //  角色与角色组
+  roleGroups.push({ roleId: tempRole.id, roleGroupId: tempRoleGroup.id })
+  //  用户组与角色组中间表
+  userGroupRoleGroups.push({ userGroupId: tempUserGroup.id, roleGroupId: tempRoleGroup.id })
+  //  用户与部门中间表
   deptUsers.push({ userId: tempUser.id, deptId: tempDept.id })
 }
 

@@ -83,3 +83,11 @@ export function queryAllUserGroups(params) {
     params: params
   })
 }
+
+export function queryAllUserRoleGroups(params) {
+  return request({
+    url: base_url + 'all-role-groups',
+    method: 'get',
+    params: params
+  })
+}

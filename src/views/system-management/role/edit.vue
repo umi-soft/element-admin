@@ -62,6 +62,32 @@
         </el-col>
       </el-row>
     </el-card>
+    <el-card>
+      <template slot="header">
+        <select-right>
+          <template slot="left">角色分组信息</template>
+          <el-select v-model="roleGroupId" placeholder="添加分组" clearable filterable @change="addGroupHandler">
+            <el-option v-for="(item, index) in allRoleGroups" :key="index" :label="item.name" :value="item.id"/>
+          </el-select>
+        </select-right>
+      </template>
+      <el-table :data="groups" border style="width: 100%">
+        <el-table-column type="index" width="100" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注" sortable/>
+        <el-table-column prop="createdDate" label="创建时间" width="180" align="center" sortable>
+          <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center" sortable>
+          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column label="操作" width="100" align="center">
+          <template slot-scope="scope">
+            <el-button type="warning" @click="delGroupHandler(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
     <el-card header="用户信息">
       <el-table :data="users" border style="width: 100%">
         <el-table-column type="index" width="100" align="center"/>
@@ -85,9 +111,11 @@
 <script>
 import BaseEditForm from '@/views/common/mixins/BaseEditForm'
 import { deepMergeLeft } from '@/utils'
+import * as RoleGroupAPI from '@/api/system-management/roleGroup'
 import * as RoleAPI from '@/api/system-management/role'
 import * as MenuRoleAPI from '@/api/system-management/menuRole'
 import * as UserRoleAPI from '@/api/system-management/userRole'
+import * as GroupAPI from '@/api/system-management/group'
 import mixins from './mixins'
 
 export default {
@@ -110,7 +138,10 @@ export default {
       rules: rules,
       menusTree: [],
       menuFilter: null,
-      users: []
+      allRoleGroups: [],
+      users: [],
+      groups: [],
+      roleGroupId: null
     }
   },
   watch: {
@@ -127,6 +158,10 @@ export default {
     })
     this.initMenus()
     this.queryAllUsers()
+    this.queryAllGroups() // 该角色已有的角色组信息
+    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
+      this.allRoleGroups = data
+    }) // 系统已有的所有角色组信息
   },
   methods: {
     customSubmitHandler() {
@@ -148,8 +183,24 @@ export default {
         roleId: this.detail.id
       }
       UserRoleAPI.delByEntityMapping(params).then(data => {
-        this.optionSuccessHandler()
         this.queryAllUsers()
+        this.optionSuccessHandler()
+      })
+    },
+    addGroupHandler() {
+      if (!this.roleGroupId) return // 防止取消选择时触发
+      const params = { roleId: this.detail.id, roleGroupId: this.roleGroupId }
+
+      RoleGroupAPI.add(params).then(data => {
+        this.queryAllGroups()
+        this.optionSuccessHandler()
+      })
+    },
+    delGroupHandler(id) {
+      const params = { roleId: this.detail.id, roleGroupId: id }
+      RoleGroupAPI.delByEntityMapping(params).then(data => {
+        this.queryAllGroups()
+        this.optionSuccessHandler()
       })
     }
   }

@@ -41,7 +41,7 @@
         <audit-info :detail="detail" :label-width="labelWidth"/>
       </el-collapse-item>
       <el-collapse-item title="用户分组" name="user-group">
-        <el-table :data="groups" border style="width: 100%">
+        <el-table :data="userGroups" border style="width: 100%">
           <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
           <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
           <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
@@ -54,6 +54,18 @@
       </el-collapse-item>
       <el-collapse-item title="用户部门" name="user-dept">
         <el-table :data="depts" border style="width: 100%">
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+          <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+          </el-table-column>
+        </el-table>
+      </el-collapse-item>
+      <el-collapse-item title="用户角色组" name="user-role-group">
+        <el-table :data="roleGroups" border style="width: 100%">
           <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
           <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
           <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
@@ -96,13 +108,15 @@ export default {
     return {
       labelWidth: '150px',
       depts: [],
-      groups: [],
+      userGroups: [],
+      roleGroups: [],
       roles: []
     }
   },
   activated() {
     this.queryAllUserDepts()
     this.queryAllUserGroups()
+    this.queryAllRoleGroups()
     this.queryAllUserRoles()
   }
 }

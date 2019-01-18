@@ -4,13 +4,13 @@
     <el-card>
       <template slot="header">
         <button-right>
-          角色信息
+          用户分组信息
           <template slot="button">
-            <el-button type="primary" @click="submitUserRoleHandler()" >保存</el-button>
+            <el-button type="primary" @click="submitUserGroupHandler()" >保存</el-button>
           </template>
         </button-right>
       </template>
-      <el-table :data="roles" border style="width: 100%" @selection-change="clickRoleCheckboxHandler" >
+      <el-table :data="allUserGroups" border style="width: 100%" @selection-change="clickUserGroupCheckboxHandler" >
         <el-table-column type="selection" label="全选" />
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
@@ -56,13 +56,34 @@
     <el-card>
       <template slot="header">
         <button-right>
-          用户分组信息
+          角色分组信息
           <template slot="button">
-            <el-button type="primary" @click="submitUserGroupHandler()" >保存</el-button>
+            <el-button type="primary" @click="submitUserRoleGroupHandler()" >保存</el-button>
           </template>
         </button-right>
       </template>
-      <el-table :data="groups" border style="width: 100%" @selection-change="clickGroupCheckboxHandler" >
+      <el-table :data="allRoleGroups" border style="width: 100%" @selection-change="clickRoleGroupCheckboxHandler" >
+        <el-table-column type="selection" label="全选" />
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+        <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+    <el-card>
+      <template slot="header">
+        <button-right>
+          角色信息
+          <template slot="button">
+            <el-button type="primary" @click="submitUserRoleHandler()" >保存</el-button>
+          </template>
+        </button-right>
+      </template>
+      <el-table :data="roles" border style="width: 100%" @selection-change="clickRoleCheckboxHandler" >
         <el-table-column type="selection" label="全选" />
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
@@ -85,6 +106,7 @@ import * as GroupAPI from '@/api/system-management/group'
 import * as UserRoleAPI from '@/api/system-management/userRole'
 import * as UserDeptAPI from '@/api/system-management/userDept'
 import * as UserGroupAPI from '@/api/system-management/userGroup'
+import * as UserRoleGroupAPI from '@/api/system-management/userRoleGroup'
 import mixins from './mixins'
 
 export default {
@@ -106,8 +128,10 @@ export default {
         children: 'children',
         label: 'name'
       },
-      groups: [],
-      selectedGroups: []
+      allUserGroups: [],
+      allRoleGroups: [],
+      selectedUserGroups: [],
+      selectedRoleGroups: []
     }
   },
   watch: {
@@ -126,16 +150,24 @@ export default {
     DeptAPI.queryAllTreeDepts({}).then(data => {
       this.depts = data
     })
-    GroupAPI.queryAllGroups(params).then(data => {
-      this.groups = data
-    })
+    this.allUserGroups = []
+    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 1 }], sorts: [] }).then(data => {
+      this.allUserGroups = data
+    }) // 系统已有的所有用户组
+    this.allRoleGroups = []
+    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
+      this.allRoleGroups = data
+    }) // 系统已有的所有角色组
   },
   methods: {
     clickRoleCheckboxHandler(selection) {
       this.selectedRoles = selection
     },
-    clickGroupCheckboxHandler(selection) {
-      this.selectedGroups = selection
+    clickUserGroupCheckboxHandler(selection) {
+      this.selectedUserGroups = selection
+    },
+    clickRoleGroupCheckboxHandler(selection) {
+      this.selectedRoleGroups = selection
     },
     submitUserRoleHandler() {
       if (this.selectedRoles.length === 0) {
@@ -207,7 +239,7 @@ export default {
       return data.name.indexOf(value) !== -1
     },
     submitUserGroupHandler() {
-      if (this.selectedGroups.length === 0) {
+      if (this.selectedUserGroups.length === 0) {
         this.$message({
           type: 'error',
           message: '您未勾选任何用户分组'
@@ -221,7 +253,7 @@ export default {
       }).then(() => {
         const userGroups = []
         this.detail.forEach(user => {
-          this.selectedGroups.forEach(group => {
+          this.selectedUserGroups.forEach(group => {
             userGroups.push({
               userId: user.id,
               groupId: group.id
@@ -229,6 +261,38 @@ export default {
           })
         })
         UserGroupAPI.reset(userGroups).then(data => {
+          this.optionSuccessHandler()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'warning',
+          message: '已取消授权'
+        })
+      })
+    },
+    submitUserRoleGroupHandler() {
+      if (this.selectedRoleGroups.length === 0) {
+        this.$message({
+          type: 'error',
+          message: '您未勾选任何角色分组'
+        })
+        return
+      }
+      this.$confirm('此操作将批量授权, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const userRoleGroups = []
+        this.detail.forEach(user => {
+          this.selectedRoleGroups.forEach(group => {
+            userRoleGroups.push({
+              userId: user.id,
+              roleGroupId: group.id
+            })
+          })
+        })
+        UserRoleGroupAPI.reset(userRoleGroups).then(data => {
           this.optionSuccessHandler()
         })
       }).catch(() => {

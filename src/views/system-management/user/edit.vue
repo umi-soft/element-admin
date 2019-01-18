@@ -102,13 +102,13 @@
     <el-card>
       <template slot="header">
         <select-right>
-          <template slot="left">分组信息</template>
-          <el-select v-model="addOption.groupId" placeholder="添加分组" clearable filterable @change="addUserGroupHandler">
-            <el-option v-for="(item, index) in addOption.allGroups" :key="index" :label="item.name" :value="item.id"/>
+          <template slot="left">用户分组信息</template>
+          <el-select v-model="addOption.userGroupId" placeholder="添加分组" clearable filterable @change="addGroupHandler(addOption.userGroupId, 'user-group')">
+            <el-option v-for="(item, index) in addOption.allUserGroups" :key="index" :label="item.name" :value="item.id"/>
           </el-select>
         </select-right>
       </template>
-      <el-table :data="groups" border style="width: 100%">
+      <el-table :data="userGroups" border style="width: 100%">
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
         <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
@@ -119,7 +119,7 @@
         </el-table-column>
         <el-table-column label="操作" width="100" align="center">
           <template slot-scope="scope">
-            <el-button type="warning" @click="delUserGroupHandler(scope.row.id)">删除</el-button>
+            <el-button type="warning" @click="delGroupHandler(scope.row.id, 'user-group')">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -145,6 +145,31 @@
         <el-table-column label="操作" width="100" align="center">
           <template slot-scope="scope">
             <el-button type="warning" @click="delUserDeptHandler(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+    <el-card>
+      <template slot="header">
+        <select-right>
+          <template slot="left">角色分组信息</template>
+          <el-select v-model="addOption.roleGroupId" placeholder="添加分组" clearable filterable @change="addGroupHandler(addOption.roleGroupId, 'role-group')">
+            <el-option v-for="(item, index) in addOption.allRoleGroups" :key="index" :label="item.name" :value="item.id"/>
+          </el-select>
+        </select-right>
+      </template>
+      <el-table :data="roleGroups" border style="width: 100%">
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+        <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column label="操作" width="100" align="center">
+          <template slot-scope="scope">
+            <el-button type="warning" @click="delGroupHandler(scope.row.id, 'role-group')">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -187,6 +212,7 @@ import * as UserAPI from '@/api/system-management/user'
 import * as UserRoleAPI from '@/api/system-management/userRole'
 import * as UserDeptAPI from '@/api/system-management/userDept'
 import * as UserGroupAPI from '@/api/system-management/userGroup'
+import * as UserRoleGroupAPI from '@/api/system-management/userRoleGroup'
 import mixins from './mixins'
 
 export default {
@@ -220,17 +246,20 @@ export default {
     return {
       form: form,
       rules: rules,
-      depts: [],
-      groups: [],
-      roles: [],
+      depts: [], // 用户所属的
+      userGroups: [], // 用户所属的
+      roleGroups: [], // 用户所属的
+      roles: [], // 用户所属的
 
       addOption: {
-        allDepts: [],
-        allGroups: [],
-        allRoles: [],
+        allDepts: [], // 系统具有的
+        allUserGroups: [], // 系统具有的
+        allRoleGroups: [], // 系统具有的
+        allRoles: [], // 系统具有的
         deptId: null,
         roleId: null,
-        groupId: null
+        userGroupId: null,
+        roleGroupId: null
       },
 
       password: {
@@ -258,16 +287,18 @@ export default {
         this.$refs['form'].clearValidate()
       })
     })
-    this.queryAllUserDepts()
-    this.queryAllUserGroups()
-    this.queryAllUserRoles()
-    const params = {
-      filters: [],
-      sorts: []
-    }
-    DeptAPI.queryAllDepts(params).then(data => { this.addOption.allDepts = data })
-    GroupAPI.queryAllGroups(params).then(data => { this.addOption.allGroups = data })
-    RoleAPI.queryAllRoles(params).then(data => { this.addOption.allRoles = data })
+    this.queryAllUserDepts() // 用户已有的所有部门
+    this.queryAllUserGroups() // 用户已有的所有用户组
+    this.queryAllRoleGroups() // 用户已有的所有角色组
+    this.queryAllUserRoles() // 用户已有的所有角色
+    DeptAPI.queryAllDepts({ filters: [], sorts: [] }).then(data => { this.addOption.allDepts = data }) // 系统已有的所有部门
+    RoleAPI.queryAllRoles({ filters: [], sorts: [] }).then(data => { this.addOption.allRoles = data }) // 系统已有的所有角色
+    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 1 }], sorts: [] }).then(data => {
+      this.addOption.allUserGroups = data
+    }) // 系统已有的所有用户组
+    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
+      this.addOption.allRoleGroups = data
+    }) // 系统已有的所有角色组
   },
   methods: {
     customSubmitHandler() {
@@ -305,25 +336,40 @@ export default {
         this.optionSuccessHandler()
       })
     },
-    addUserGroupHandler(id) {
-      if (!id) return
-      const params = {
-        userId: this.detail.id,
-        groupId: id
+    addGroupHandler(id, category) {
+      if (!id) return // 防止取消选择时触发
+      const params = { userId: this.detail.id }
+      let refreshMethod = null
+      let addMethod = null
+      if (category === 'user-group') {
+        params.groupId = id
+        refreshMethod = this.queryAllUserGroups
+        addMethod = UserGroupAPI.add
+      } else if (category === 'role-group') {
+        params.roleGroupId = id
+        refreshMethod = this.queryAllRoleGroups
+        addMethod = UserRoleGroupAPI.add
       }
-      UserGroupAPI.add(params).then(data => {
-        this.queryAllUserGroups()
+      addMethod(params).then(data => {
+        refreshMethod()
         this.optionSuccessHandler()
-        this.addOption.groupId = null
       })
     },
-    delUserGroupHandler(id) {
-      const params = {
-        userId: this.detail.id,
-        groupId: id
+    delGroupHandler(id, category) {
+      const params = { userId: this.detail.id }
+      let refreshMethod = null
+      let delMethod = null
+      if (category === 'user-group') {
+        params.groupId = id
+        refreshMethod = this.queryAllUserGroups
+        delMethod = UserGroupAPI.delByEntityMapping
+      } else if (category === 'role-group') {
+        params.roleGroupId = id
+        refreshMethod = this.queryAllRoleGroups
+        delMethod = UserRoleGroupAPI.delByEntityMapping
       }
-      UserGroupAPI.delByEntityMapping(params).then(data => {
-        this.queryAllUserGroups()
+      delMethod(params).then(data => {
+        refreshMethod()
         this.optionSuccessHandler()
       })
     },

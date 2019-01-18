@@ -122,19 +122,5 @@ export default {
         return roleMenusResult.findIndex(menuRole => { return role.id === menuRole.roleId }) !== -1
       })
     }
-  },
-
-  delMenuRole: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.roleMenus.splice(MockDB.roleMenus.findIndex(item => {
-      return item.menuId === params.menuId && item.roleId === params.roleId
-    }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: {}
-    }
   }
-
 }

@@ -31,6 +31,12 @@ export default {
         this.users = users
       })
     },
+    queryAllGroups() {
+      this.groups = []
+      RoleAPI.queryAllRoleGroups(this.detail.id).then(groups => {
+        this.groups = groups
+      })
+    },
     filterNodeHandler(value, data) {
       if (!value) return true
       return data.name.indexOf(value) !== -1

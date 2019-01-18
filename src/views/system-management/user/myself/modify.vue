@@ -92,8 +92,8 @@
         </el-row>
       </el-form>
     </el-card>
-    <el-card header="分组信息">
-      <el-table :data="groups" border style="width: 100%">
+    <el-card header="用户分组信息">
+      <el-table :data="userGroups" border style="width: 100%">
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
         <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
@@ -106,6 +106,18 @@
     </el-card>
     <el-card header="部门信息">
       <el-table :data="depts" border style="width: 100%">
+        <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
+        <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
+        <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+        </el-table-column>
+        <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+    <el-card header="角色分组信息">
+      <el-table :data="roleGroups" border style="width: 100%">
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注"/>
         <el-table-column prop="createdDate" label="创建时间" width="180" align="center">
@@ -168,7 +180,8 @@ export default {
       rules: rules,
 
       depts: [],
-      groups: [],
+      userGroups: [],
+      roleGroups: [],
       roles: [],
 
       password: {
@@ -203,6 +216,7 @@ export default {
     })
     this.queryAllUserDepts(this.user.id)
     this.queryAllUserGroups(this.user.id)
+    this.queryAllRoleGroups(this.user.id)
     this.queryAllUserRoles(this.user.id)
   },
   methods: {

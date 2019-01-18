@@ -245,7 +245,7 @@ export function fieldQueryLike(array, query) {
       if (query[key] === null || query[key] === undefined || query[key] === '') {
         return true
       }
-      return new RegExp(query[key] + '').test(item[key])
+      return new RegExp(query[key] + '').test(item[key] + '')
     })
   })
 }

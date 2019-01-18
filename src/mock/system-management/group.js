@@ -31,8 +31,9 @@ export default {
     const params = JSON.parse(config.body)
     const query = {}
     params.filters.forEach(filter => {
-      query[filter.field] = filter.value
+      query[filter.field] = filter.value + ''
     })
+    console.log(query)
     const queryResult = deepClone(fieldQueryLike(MockDB.groups, query))
     params.sorts.forEach(sort => {
       // 前端目前无法实现多字段排序，因此排序以最后一个字段为准
@@ -100,18 +101,6 @@ export default {
       })
     }
   },
-  delGroupUser: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.groupUsers.splice(MockDB.groupUsers.findIndex(item => {
-      return item.userId === params.userId && item.groupId === params.groupId
-    }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: ''
-    }
-  },
   queryAllGroupRoles: config => {
     console.log(config)
     const params = param2Obj(config.url)
@@ -122,18 +111,6 @@ export default {
       data: MockDB.roles.filter(role => {
         return roleGroupsResult.findIndex(roleGroup => { return role.id === roleGroup.roleId }) !== -1
       })
-    }
-  },
-  delGroupRole: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.roleGroups.splice(MockDB.roleGroups.findIndex(item => {
-      return item.roleId === params.roleId && item.groupId === params.groupId
-    }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: ''
     }
   }
 }

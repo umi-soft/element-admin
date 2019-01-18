@@ -7,6 +7,12 @@ import roleAPI from './system-management/role'
 import deptAPI from './system-management/dept'
 import dictionaryAPI from './system-management/dictionary'
 import menuAPI from './system-management/menu'
+import userRoleGroupAPI from './system-management/userRoleGroup'
+import userRoleAPI from './system-management/userRole'
+import menuRoleAPI from './system-management/menuRole'
+import roleGroupAPI from './system-management/roleGroup'
+import userGroupAPI from './system-management/userGroup'
+import userDeptAPI from './system-management/userDept'
 
 // 修复在使用 MockJS 情况下，设置 withCredentials = true，且未被拦截的跨域请求丢失 Cookies 的问题
 // https://github.com/nuysoft/Mock/issues/300
@@ -51,6 +57,7 @@ Mock.mock(/\/system\/user\/del/, 'post', userAPI.del)
 Mock.mock(/\/system\/user\/all-roles/, 'get', userAPI.queryAllUserRoles)
 Mock.mock(/\/system\/user\/all-depts/, 'get', userAPI.queryAllUserDepts)
 Mock.mock(/\/system\/user\/all-groups/, 'get', userAPI.queryAllUserGroups)
+Mock.mock(/\/system\/user\/all-role-groups/, 'get', userAPI.queryAllUserRoleGroups)
 
 //  系统设置相关---角色
 Mock.mock(/\/system\/role\/query-all/, 'post', roleAPI.queryAll)
@@ -61,6 +68,7 @@ Mock.mock(/\/system\/role\/edit/, 'post', roleAPI.edit)
 Mock.mock(/\/system\/role\/del/, 'post', roleAPI.del)
 Mock.mock(/\/system\/role\/all-menus/, 'get', roleAPI.queryAllRoleMenus)
 Mock.mock(/\/system\/role\/all-users/, 'get', roleAPI.queryAllRoleUsers)
+Mock.mock(/\/system\/role\/all-groups/, 'get', roleAPI.queryAllRoleGroups)
 
 //  系统设置相关---部门
 Mock.mock(/\/system\/dept\/query-all-tree/, 'get', deptAPI.queryAllTree)
@@ -89,26 +97,32 @@ Mock.mock(/\/system\/menu\/add-url/, 'post', menuAPI.addMenuUrl)
 Mock.mock(/\/system\/menu\/del-url/, 'post', menuAPI.delMenuUrl)
 Mock.mock(/\/system\/menu\/all-roles/, 'get', menuAPI.queryMenuRoles)
 
-//  用户部门中间表
-Mock.mock(/\/system\/user-dept\/del-by-entity-mapping/, 'post', deptAPI.delByEntityMapping)
-Mock.mock(/\/system\/user-dept\/add/, 'post', userAPI.addUserDept)
-Mock.mock(/\/system\/user-dept\/reset/, 'post', userAPI.resetUserDept)
+//  用户-部门，中间表
+Mock.mock(/\/system\/user-dept\/del-by-entity-mapping/, 'post', userDeptAPI.delByEntityMapping)
+Mock.mock(/\/system\/user-dept\/add/, 'post', userDeptAPI.add)
+Mock.mock(/\/system\/user-dept\/reset/, 'post', userDeptAPI.reset)
 
-//  用户分组中间表
-Mock.mock(/\/system\/user-group\/del-by-entity-mapping/, 'post', groupAPI.delGroupUser)
-Mock.mock(/\/system\/user-group\/add/, 'post', userAPI.addUserGroup)
-Mock.mock(/\/system\/user-group\/reset/, 'post', userAPI.resetUserGroup)
+//  用户-用户组，中间表
+Mock.mock(/\/system\/user-group\/del-by-entity-mapping/, 'post', userGroupAPI.delByEntityMapping)
+Mock.mock(/\/system\/user-group\/add/, 'post', userGroupAPI.add)
+Mock.mock(/\/system\/user-group\/reset/, 'post', userGroupAPI.reset)
 
-//  菜单角色中间表
-Mock.mock(/\/system\/menu-role\/del-by-entity-mapping/, 'post', menuAPI.delMenuRole)
-Mock.mock(/\/system\/menu-role\/reset/, 'post', roleAPI.resetRoleMenus)
+//  菜单-角色,中间表
+Mock.mock(/\/system\/menu-role\/del-by-entity-mapping/, 'post', menuRoleAPI.delByEntityMapping)
+Mock.mock(/\/system\/menu-role\/reset/, 'post', menuRoleAPI.reset)
 
-//  用户角色中间表
-Mock.mock(/\/system\/user-role\/del-by-entity-mapping/, 'post', roleAPI.delRoleUser)
-Mock.mock(/\/system\/user-role\/add/, 'post', userAPI.addUserRole)
-Mock.mock(/\/system\/user-role\/reset/, 'post', userAPI.resetUserRole)
+// 用户-角色组,中间表
+Mock.mock(/\/system\/user-role-group\/del-by-entity-mapping/, 'post', userRoleGroupAPI.delByEntityMapping)
+Mock.mock(/\/system\/user-role-group\/add/, 'post', userRoleGroupAPI.add)
+Mock.mock(/\/system\/user-role-group\/reset/, 'post', userRoleGroupAPI.reset)
 
-// 角色分组表
-Mock.mock(/\/system\/role-group\/del-by-entity-mapping/, 'post', groupAPI.delGroupRole)
+// 用户-角色,中间表
+Mock.mock(/\/system\/user-role\/del-by-entity-mapping/, 'post', userRoleAPI.delByEntityMapping)
+Mock.mock(/\/system\/user-role\/add/, 'post', userRoleAPI.add)
+Mock.mock(/\/system\/user-role\/reset/, 'post', userRoleAPI.reset)
+
+// 角色-角色组,中间表
+Mock.mock(/\/system\/role-group\/del-by-entity-mapping/, 'post', roleGroupAPI.delByEntityMapping)
+Mock.mock(/\/system\/role-group\/add/, 'post', roleGroupAPI.add)
 
 export default Mock

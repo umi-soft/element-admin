@@ -35,9 +35,20 @@
           </div>
         </el-tree>
       </el-collapse-item>
-      <el-collapse-item title="角色用户" name="role-user">
+      <el-collapse-item title="角色组信息" name="role-group">
+        <el-table :data="groups" border style="width: 100%">
+          <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable/>
+          <el-table-column :show-overflow-tooltip="true" prop="remark" label="备注" sortable/>
+          <el-table-column prop="createdDate" label="创建时间" width="180" align="center" sortable>
+            <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
+          </el-table-column>
+          <el-table-column prop="modifiedDate" label="最后修改时间" width="180" align="center" sortable>
+            <template slot-scope="scope">{{ scope.row.modifiedDate | parseTime }}</template>
+          </el-table-column>
+        </el-table>
+      </el-collapse-item>
+      <el-collapse-item title="用户信息" name="role-user">
         <el-table :data="users" border style="width: 100%">
-          <el-table-column type="index" width="100" align="center"/>
           <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable align="center"/>
           <el-table-column :show-overflow-tooltip="true" prop="name" label="姓名" sortable align="center"/>
           <el-table-column prop="gender" label="性别" width="100" sortable align="center">
@@ -67,11 +78,13 @@ export default {
     return {
       labelWidth: '200px',
       users: [],
-      menusTree: []
+      menusTree: [],
+      groups: []
     }
   },
   activated() {
     this.queryAllUsers()
+    this.queryAllGroups()
     this.initMenus()
   },
   methods: {

@@ -78,18 +78,28 @@ export default {
         }]
       }
     },
+    // 用户所属的部门信息
     queryAllUserDepts(id) {
       this.depts = []
       if (!id) id = this.detail.id
       const params = { id: id }
       UserAPI.queryAllUserDepts(params).then(depts => { this.depts = depts })
     },
+    // 用户所属的用户组信息查询
     queryAllUserGroups(id) {
-      this.groups = []
+      this.userGroups = []
       if (!id) id = this.detail.id
       const params = { id: id }
-      UserAPI.queryAllUserGroups(params).then(groups => { this.groups = groups })
+      UserAPI.queryAllUserGroups(params).then(groups => { this.userGroups = groups })
     },
+    // 用户所属的角色组信息查询
+    queryAllRoleGroups(id) {
+      this.roleGroups = []
+      if (!id) id = this.detail.id
+      const params = { id: id }
+      UserAPI.queryAllUserRoleGroups(params).then(groups => { this.roleGroups = groups })
+    },
+    // 用户所属的角色信息
     queryAllUserRoles(id) {
       this.roles = []
       if (!id) id = this.detail.id

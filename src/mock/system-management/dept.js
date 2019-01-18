@@ -126,17 +126,5 @@ export default {
         return deptUsersResult.findIndex(deptUser => { return user.id === deptUser.userId }) !== -1
       })
     }
-  },
-  delByEntityMapping: config => {
-    console.log(config)
-    const params = JSON.parse(config.body)
-    MockDB.deptUsers.splice(MockDB.deptUsers.findIndex(item => {
-      return item.userId === params.userId && item.deptId === params.deptId
-    }), 1)
-    return {
-      code: 1,
-      message: '操作成功',
-      data: ''
-    }
   }
 }
