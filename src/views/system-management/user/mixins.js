@@ -106,10 +106,12 @@ export default {
       const params = { id: id }
       UserAPI.queryAllUserRoles(params).then(roles => { this.roles = roles })
     },
+    // eslint-disable-next-line no-unused-vars
     uploadAvatarSuccess(response, file, fileList) {
       // 上传成功后返回图片base64流值，后端直接存储
       this.form.avatar = response.data
     },
+    // eslint-disable-next-line no-unused-vars
     uploadAvatarError(response, file, fileList) {
       this.form.avatar = ''
     }

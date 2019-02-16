@@ -153,7 +153,7 @@ export default {
         params.roleGroupId = this.detail.id
         delByEntityMapping = UserRoleGroupAPI.delByEntityMapping // 角色分组下的用户
       }
-      delByEntityMapping(params).then(data => {
+      delByEntityMapping(params).then(() => {
         this.optionSuccessHandler()
         this.queryAllUsers()
       })
@@ -163,7 +163,7 @@ export default {
         roleId: id,
         roleGroupId: this.detail.id
       }
-      RoleGroupAPI.delByEntityMapping(params).then(data => {
+      RoleGroupAPI.delByEntityMapping(params).then(() => {
         this.optionSuccessHandler()
         this.queryAllRoles()
       })
@@ -183,7 +183,7 @@ export default {
           userGroupId: this.groupId
         }
       }
-      UserGroupRoleGroupAPI.add(params).then(data => {
+      UserGroupRoleGroupAPI.add(params).then(() => {
         this.queryAllGroups()
         this.optionSuccessHandler()
       })
@@ -202,7 +202,7 @@ export default {
           userGroupId: id
         }
       }
-      UserGroupRoleGroupAPI.delByEntityMapping(params).then(data => {
+      UserGroupRoleGroupAPI.delByEntityMapping(params).then(() => {
         this.queryAllGroups()
         this.optionSuccessHandler()
       })

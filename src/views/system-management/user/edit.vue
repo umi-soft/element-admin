@@ -320,7 +320,7 @@ export default {
         userId: this.detail.id,
         deptId: id
       }
-      UserDeptAPI.add(params).then(data => {
+      UserDeptAPI.add(params).then(() => {
         this.queryAllUserDepts()
         this.optionSuccessHandler()
         this.addOption.deptId = null
@@ -331,7 +331,7 @@ export default {
         userId: this.detail.id,
         deptId: id
       }
-      UserDeptAPI.delByEntityMapping(params).then(data => {
+      UserDeptAPI.delByEntityMapping(params).then(() => {
         this.queryAllUserDepts()
         this.optionSuccessHandler()
       })
@@ -350,7 +350,7 @@ export default {
         refreshMethod = this.queryAllRoleGroups
         addMethod = UserRoleGroupAPI.add
       }
-      addMethod(params).then(data => {
+      addMethod(params).then(() => {
         refreshMethod()
         this.optionSuccessHandler()
       })
@@ -368,7 +368,7 @@ export default {
         refreshMethod = this.queryAllRoleGroups
         delMethod = UserRoleGroupAPI.delByEntityMapping
       }
-      delMethod(params).then(data => {
+      delMethod(params).then(() => {
         refreshMethod()
         this.optionSuccessHandler()
       })
@@ -379,7 +379,7 @@ export default {
         userId: this.detail.id,
         roleId: id
       }
-      UserRoleAPI.add(params).then(data => {
+      UserRoleAPI.add(params).then(() => {
         this.queryAllUserRoles()
         this.optionSuccessHandler()
         this.addOption.roleId = null
@@ -390,7 +390,7 @@ export default {
         userId: this.detail.id,
         roleId: id
       }
-      UserRoleAPI.delByEntityMapping(params).then(data => {
+      UserRoleAPI.delByEntityMapping(params).then(() => {
         this.queryAllUserRoles()
         this.optionSuccessHandler()
       })

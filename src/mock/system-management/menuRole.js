@@ -16,7 +16,7 @@ export default {
   reset: config => {
     console.log(config)
     const params = JSON.parse(config.body)
-    MockDB.roleMenus.forEach(roleMenu => {
+    MockDB.roleMenus.forEach(() => {
       MockDB.roleMenus.splice(MockDB.roleMenus.findIndex(item => {
         return item.roleId === params.roleId
       }), 1)

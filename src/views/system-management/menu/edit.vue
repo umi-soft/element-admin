@@ -117,7 +117,7 @@ export default {
         menuId: this.detail.id,
         securityId: this.securityId
       }
-      MenuSecurityAPI.add(params).then(data => {
+      MenuSecurityAPI.add(params).then(() => {
         this.securityId = null
         this.queryMenuSecurities()
         this.optionSuccessHandler()
@@ -128,7 +128,7 @@ export default {
         menuId: this.detail.id,
         securityId: id
       }
-      MenuSecurityAPI.delByEntityMapping(params).then(data => {
+      MenuSecurityAPI.delByEntityMapping(params).then(() => {
         this.queryMenuSecurities()
         this.optionSuccessHandler()
       })
@@ -138,7 +138,7 @@ export default {
         menuId: this.detail.id,
         roleId: id
       }
-      MenuRoleAPI.delByEntityMapping(params).then(data => {
+      MenuRoleAPI.delByEntityMapping(params).then(() => {
         this.queryMenuRoles()
       })
     }

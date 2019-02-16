@@ -19,7 +19,7 @@
     </el-col>
     <el-col :span="24">
       <el-tree :data="[{}]">
-        <div slot-scope="{ data }" class="custom-tree-node">
+        <div class="custom-tree-node">
           <div class="name">名称</div>
           <div class="remark">备注</div>
           <div class="icon">图标</div>
@@ -43,13 +43,10 @@
 </template>
 
 <script>
-import Abbreviation from '@/components/Abbreviation/index'
-import SvgIcon from '@/components/SvgIcon/index'
 import { asyncMenuMap } from '@/router'
 import * as MenuAPI from '@/api/system-management/menu'
 
 export default {
-  components: { Abbreviation, SvgIcon },
   data() {
     return {
       filter: null,
@@ -96,7 +93,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        MenuAPI.syncMenus(this.menusTree).then(data => {
+        MenuAPI.syncMenus(this.menusTree).then(() => {
           this.needSync = false
           this.initMenus()
           this.$message({

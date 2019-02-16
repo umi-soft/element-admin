@@ -15,7 +15,7 @@
       </el-collapse-item>
       <el-collapse-item title="角色菜单信息" name="role-menu">
         <el-tree :data="[{}]">
-          <div slot-scope="{ data }" class="custom-tree-node">
+          <div class="custom-tree-node">
             <div class="name">名称</div>
             <div class="remark">备注</div>
             <div class="icon">图标</div>

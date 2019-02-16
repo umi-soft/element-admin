@@ -21,7 +21,7 @@
     </el-col>
     <el-col :span="24">
       <el-tree :data="[{}]" :props="defaultProps">
-        <div slot-scope="{ data }" class="custom-tree-node">
+        <div class="custom-tree-node">
           <div class="name">名称</div>
           <div class="time">最后修改时间</div>
           <div class="time">创建时间</div>

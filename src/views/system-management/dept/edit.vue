@@ -115,7 +115,7 @@ export default {
         userId: id,
         deptId: this.detail.id
       }
-      UserDeptAPI.delByEntityMapping(params).then(data => {
+      UserDeptAPI.delByEntityMapping(params).then(() => {
         this.optionSuccessHandler()
         this.queryAllUsers()
       })
@@ -125,7 +125,7 @@ export default {
         roleId: id,
         deptId: this.detail.id
       }
-      DeptRoleAPI.delByEntityMapping(params).then(data => {
+      DeptRoleAPI.delByEntityMapping(params).then(() => {
         this.optionSuccessHandler()
         this.queryAllRoles()
       })

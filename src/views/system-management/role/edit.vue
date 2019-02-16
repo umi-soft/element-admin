@@ -40,7 +40,7 @@
         </el-col>
         <el-col :span="24" style="margin-top: 10px;">
           <el-tree :data="[{}]">
-            <div slot-scope="{ data }" class="custom-tree-node">
+            <div class="custom-tree-node">
               <div class="name">名称</div>
               <div class="remark">备注</div>
               <div class="icon">图标</div>
@@ -207,7 +207,7 @@ export default {
         userId: id,
         roleId: this.detail.id
       }
-      UserRoleAPI.delByEntityMapping(params).then(data => {
+      UserRoleAPI.delByEntityMapping(params).then(() => {
         this.queryAllUsers()
         this.optionSuccessHandler()
       })
@@ -216,14 +216,14 @@ export default {
       if (!this.roleGroupId) return // 防止取消选择时触发
       const params = { roleId: this.detail.id, roleGroupId: this.roleGroupId }
 
-      RoleGroupAPI.add(params).then(data => {
+      RoleGroupAPI.add(params).then(() => {
         this.queryAllGroups()
         this.optionSuccessHandler()
       })
     },
     delGroupHandler(id) {
       const params = { roleId: this.detail.id, roleGroupId: id }
-      RoleGroupAPI.delByEntityMapping(params).then(data => {
+      RoleGroupAPI.delByEntityMapping(params).then(() => {
         this.queryAllGroups()
         this.optionSuccessHandler()
       })
@@ -231,14 +231,14 @@ export default {
     addDeptHandler() {
       if (!this.deptId) return // 防止取消选择时触发
       const params = { roleId: this.detail.id, deptId: this.deptId }
-      DeptRoleAPI.add(params).then(data => {
+      DeptRoleAPI.add(params).then(() => {
         this.queryAllDepts()
         this.optionSuccessHandler()
       })
     },
     delDeptHandler(id) {
       const params = { roleId: this.detail.id, deptId: id }
-      DeptRoleAPI.delByEntityMapping(params).then(data => {
+      DeptRoleAPI.delByEntityMapping(params).then(() => {
         this.queryAllDepts()
         this.optionSuccessHandler()
       })

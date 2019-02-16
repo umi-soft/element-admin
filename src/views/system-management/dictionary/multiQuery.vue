@@ -41,7 +41,7 @@
     </el-col>
     <el-col :span="24">
       <el-tree :data="[{}]" :props="defaultProps">
-        <div slot-scope="{ data }" class="custom-tree-node">
+        <div class="custom-tree-node">
           <div class="name">字典名称</div>
           <div class="type">字典分类</div>
         </div>

@@ -39,7 +39,7 @@
         </button-right>
       </template>
       <el-tree :data="[{}]" :props="defaultProps">
-        <div slot-scope="{ data }" class="custom-tree-node">
+        <div class="custom-tree-node">
           <div class="name">名称</div>
           <div class="time">最后修改时间</div>
           <div class="time">创建时间</div>
@@ -191,7 +191,7 @@ export default {
             })
           })
         })
-        UserRoleAPI.reset(userRoles).then(data => {
+        UserRoleAPI.reset(userRoles).then(() => {
           this.optionSuccessHandler()
         })
       }).catch(() => {
@@ -224,7 +224,7 @@ export default {
             })
           })
         })
-        UserDeptAPI.reset(userDepts).then(data => {
+        UserDeptAPI.reset(userDepts).then(() => {
           this.optionSuccessHandler()
         })
       }).catch(() => {
@@ -260,7 +260,7 @@ export default {
             })
           })
         })
-        UserGroupAPI.reset(userGroups).then(data => {
+        UserGroupAPI.reset(userGroups).then(() => {
           this.optionSuccessHandler()
         })
       }).catch(() => {
@@ -292,7 +292,7 @@ export default {
             })
           })
         })
-        UserRoleGroupAPI.reset(userRoleGroups).then(data => {
+        UserRoleGroupAPI.reset(userRoleGroups).then(() => {
           this.optionSuccessHandler()
         })
       }).catch(() => {

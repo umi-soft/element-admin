@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function captcha(data) {
+export function captcha() {
   return request({
     url: '/captcha',
     method: 'get'
