@@ -42,11 +42,11 @@ export function edit(data) {
   })
 }
 
-export function del(data) {
+export function del(id) {
   return request({
     url: base_url + 'del',
     method: 'post',
-    data
+    data: { id }
   })
 }
 

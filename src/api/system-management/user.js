@@ -52,11 +52,11 @@ export function editUserPassword(data) {
   })
 }
 
-export function delUser(data) {
+export function delUser(id) {
   return request({
     url: base_url + 'del',
     method: 'post',
-    data
+    data: { id }
   })
 }
 

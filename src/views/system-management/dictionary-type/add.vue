@@ -9,8 +9,8 @@
     <el-form-item label="字典分类规则码" prop="code">
       <el-input v-model="form.code"/>
     </el-form-item>
-    <el-form-item label="字典分类编号" prop="index">
-      <el-input v-model="form.index"/>
+    <el-form-item label="字典分类编号" prop="sortNum">
+      <el-input v-model="form.sortNum"/>
     </el-form-item>
     <el-form-item label="字典分类备注" prop="remark">
       <el-input v-model="form.remark" type="textarea"/>

@@ -17,8 +17,8 @@
         <el-form-item label="分组名称" prop="name">
           <el-input v-model="form.name"/>
         </el-form-item>
-        <el-form-item label="分组编号" prop="index">
-          <el-input v-model="form.index"/>
+        <el-form-item label="分组编号" prop="sortNum">
+          <el-input v-model="form.sortNum"/>
         </el-form-item>
         <el-form-item label="分组备注" prop="remark">
           <el-input v-model="form.remark" type="textarea"/>
@@ -71,7 +71,7 @@
     <el-card v-if="isRoleGroup" header="角色信息">
       <el-table :data="roles" border style="width: 100%">
         <el-table-column type="index" width="100" align="center"/>
-        <el-table-column prop="index" label="角色编号" width="100" sortable align="center"/>
+        <el-table-column prop="sortNum" label="角色编号" width="100" sortable align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称" sortable align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="remark" label="角色备注" sortable align="center"/>
         <el-table-column label="操作" width="100" align="center">

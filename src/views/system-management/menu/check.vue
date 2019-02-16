@@ -6,7 +6,7 @@
         <el-form>
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
           <input-item-view v-if="parentMenuName" label="上级菜单">{{ parentMenuName }}</input-item-view>
-          <input-item-view label="菜单编号">{{ detail.index }}</input-item-view>
+          <input-item-view label="菜单编号">{{ detail.sortNum }}</input-item-view>
           <input-item-view label="菜单名称">{{ detail.name }}</input-item-view>
           <input-item-view label="菜单图标名称">{{ detail.icon }}</input-item-view>
           <text-item-view label="菜单备注">{{ detail.remark }}</text-item-view>

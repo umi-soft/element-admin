@@ -22,7 +22,7 @@ export default {
         // 其他操作不允许修改该字段
         category: this.$route.query.category,
         name: '',
-        index: '',
+        sortNum: '',
         remark: ''
       }
     },
@@ -36,7 +36,7 @@ export default {
         }, {
           min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
         }],
-        index: [{
+        sortNum: [{
           required: true, message: '请输入分组编号', trigger: 'blur'
         }]
       }

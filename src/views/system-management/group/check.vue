@@ -5,7 +5,7 @@
       <el-collapse-item title="基本信息" name="base-info">
         <el-form :model="detail" :label-width="labelWidth">
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
-          <input-item-view label="分组编号">{{ detail.index }}</input-item-view>
+          <input-item-view label="分组编号">{{ detail.sortNum }}</input-item-view>
           <input-item-view label="分组名称">{{ detail.name }}</input-item-view>
           <text-item-view label="分组备注">{{ detail.remark }}</text-item-view>
         </el-form>
@@ -41,7 +41,7 @@
       <el-collapse-item v-if="isRoleGroup" title="角色信息" name="group-role">
         <el-table :data="roles" border style="width: 100%">
           <el-table-column type="index" width="100" align="center"/>
-          <el-table-column prop="index" label="角色编号" width="100" sortable align="center"/>
+          <el-table-column prop="sortNum" label="角色编号" width="100" sortable align="center"/>
           <el-table-column :show-overflow-tooltip="true" prop="name" label="角色名称" sortable align="center"/>
           <el-table-column :show-overflow-tooltip="true" prop="remark" label="角色备注" sortable align="center"/>
         </el-table>

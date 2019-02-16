@@ -22,7 +22,7 @@ export default {
         id: null,
         token: null,
         disabled: '',
-        index: '',
+        sortNum: '',
         loginName: '',
         name: '',
         nickName: '',
@@ -51,7 +51,7 @@ export default {
         disabled: [{
           required: true, message: '请选择用户启用状态', trigger: 'blur'
         }],
-        index: [{
+        sortNum: [{
           required: true, message: '请输入用户编号', trigger: 'blur'
         }],
         loginName: [{

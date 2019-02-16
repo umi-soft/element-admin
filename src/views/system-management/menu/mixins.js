@@ -13,7 +13,7 @@ export default {
       return {
         id: null,
         token: null,
-        index: '',
+        sortNum: '',
         name: '',
         remark: ''
       }
@@ -23,7 +23,7 @@ export default {
         id: [{
           required: true, message: '编辑信息时ID不能为空', trigger: 'change'
         }],
-        index: [{
+        sortNum: [{
           required: true, message: '请输入菜单编号', trigger: 'blur'
         }],
         name: [{

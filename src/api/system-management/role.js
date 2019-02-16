@@ -42,11 +42,11 @@ export function editRole(data) {
   })
 }
 
-export function delRole(data) {
+export function delRole(id) {
   return request({
     url: base_url + 'del',
     method: 'post',
-    data
+    data: { id }
   })
 }
 

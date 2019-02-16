@@ -78,7 +78,7 @@ export default {
       })
     },
     customDelHandler() {
-      RoleAPI.delRole({ id: this.selected.id }).then(() => {
+      RoleAPI.delRole(this.selected.id).then(() => {
         this.queryHandler()
       })
     }

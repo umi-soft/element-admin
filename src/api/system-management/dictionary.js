@@ -42,10 +42,10 @@ export function editDictionary(data) {
   })
 }
 
-export function delDictionary(data) {
+export function delDictionary(id) {
   return request({
     url: base_url + 'del',
     method: 'post',
-    data
+    data: { id }
   })
 }

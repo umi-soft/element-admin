@@ -156,11 +156,11 @@ export default {
     const form = this.initForm()
     delete form.password
     delete form.disabled
-    delete form.index
+    delete form.sortNum
     const rules = this.initRules()
     delete rules.password
     delete rules.disabled
-    delete rules.index
+    delete rules.sortNum
     rules.id = [{
       required: true, message: '编辑信息时ID不能为空', trigger: 'change'
     }]

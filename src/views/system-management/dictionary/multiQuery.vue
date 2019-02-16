@@ -102,7 +102,7 @@ export default {
       })
     },
     customDelHandler() {
-      DictionaryAPI.delDictionary({ id: this.selected.id }).then(() => {
+      DictionaryAPI.delDictionary(this.selected.id).then(() => {
         this.queryHandler()
       })
     },

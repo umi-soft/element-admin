@@ -10,7 +10,7 @@
           <input-item-view label="字典分类">{{ getDictionaryTypeName(detail.type) }}</input-item-view>
           <input-item-view label="字典名称">{{ detail.name }}</input-item-view>
           <input-item-view label="字典规则码">{{ detail.code }}</input-item-view>
-          <input-item-view label="字典编号">{{ detail.index }}</input-item-view>
+          <input-item-view label="字典编号">{{ detail.sortNum }}</input-item-view>
           <text-item-view label="字典备注">{{ detail.remark }}</text-item-view>
         </el-form>
       </el-collapse-item>

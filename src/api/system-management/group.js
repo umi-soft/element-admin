@@ -42,11 +42,11 @@ export function editGroup(data) {
   })
 }
 
-export function delGroup(data) {
+export function delGroup(id) {
   return request({
     url: base_url + 'del',
     method: 'post',
-    data
+    data: { id }
   })
 }
 

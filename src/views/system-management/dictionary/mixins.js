@@ -35,7 +35,7 @@ export default {
         type: '',
         name: '',
         code: '',
-        index: '',
+        sortNum: '',
         remark: ''
       }
     },
@@ -52,7 +52,7 @@ export default {
         }, {
           min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
         }],
-        index: [{
+        sortNum: [{
           required: true, message: '请输入字典编号', trigger: 'blur'
         }]
       }

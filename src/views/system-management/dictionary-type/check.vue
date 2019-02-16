@@ -8,7 +8,7 @@
           <input-item-view label="上级ID">{{ detail.parentId }}</input-item-view>
           <input-item-view label="字典分类名称">{{ detail.name }}</input-item-view>
           <input-item-view label="字典分类规则码">{{ detail.code }}</input-item-view>
-          <input-item-view label="字典分类编号">{{ detail.index }}</input-item-view>
+          <input-item-view label="字典分类编号">{{ detail.sortNum }}</input-item-view>
           <text-item-view label="字典分类备注">{{ detail.remark }}</text-item-view>
         </el-form>
       </el-collapse-item>

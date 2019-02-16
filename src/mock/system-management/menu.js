@@ -8,7 +8,7 @@ function createMenu(router, parentId, menus) {
   menu.id = router.name
   menu.parentId = parentId
   menu.deleted = 0
-  menu.index = router.meta.index
+  menu.sortNum = router.meta.sortNum
   menu.name = router.meta.title
   menu.icon = router.meta.icon
   menu.remark = Mock.mock('@cparagraph(1, 3)')

@@ -3,8 +3,8 @@
     <el-form-item label="分组名称" prop="name">
       <el-input v-model="form.name"/>
     </el-form-item>
-    <el-form-item label="分组编号" prop="index">
-      <el-input v-model="form.index"/>
+    <el-form-item label="分组编号" prop="sortNum">
+      <el-input v-model="form.sortNum"/>
     </el-form-item>
     <el-form-item label="分组备注" prop="remark">
       <el-input v-model="form.remark" type="textarea"/>

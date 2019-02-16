@@ -42,7 +42,7 @@
         </el-table-column>
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable="custom" align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="code" label="规则码" width="120" sortable="custom" align="center"/>
-        <el-table-column :show-overflow-tooltip="true" prop="index" label="编号" width="80" sortable="custom" align="center"/>
+        <el-table-column :show-overflow-tooltip="true" prop="sortNum" label="编号" width="80" sortable="custom" align="center"/>
         <el-table-column prop="createdDate" label="创建时间" width="180" sortable="custom" align="center">
           <template slot-scope="scope">{{ scope.row.createdDate | parseTime }}</template>
         </el-table-column>
@@ -88,7 +88,7 @@ export default {
       })
     },
     customDelHandler() {
-      DictionaryAPI.delDictionary({ id: this.selected.id }).then(() => {
+      DictionaryAPI.delDictionary(this.selected.id).then(() => {
         this.queryHandler()
       })
     }

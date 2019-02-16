@@ -74,7 +74,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        DeptAPI.delDept({ id: this.selected.id }).then(() => {
+        DeptAPI.delDept(this.selected.id).then(() => {
           this.queryAllHandler()
           this.$message({
             type: 'success',

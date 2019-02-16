@@ -17,7 +17,7 @@ export function createMenuTree(allMenus, router, parentId) {
     menu.id = router.name
     menu.parentId = parentId
     menu.deleted = 0
-    menu.index = router.meta.index
+    menu.sortNum = router.meta.sortNum
     menu.name = router.meta.title
     menu.icon = router.meta.icon
     menu.remark = null
@@ -30,7 +30,7 @@ export function createMenuTree(allMenus, router, parentId) {
     menu.id = remoteMenu.id
     menu.parentId = parentId
     menu.deleted = 0
-    menu.index = remoteMenu.index
+    menu.sortNum = remoteMenu.sortNum
     menu.name = remoteMenu.name
     menu.icon = remoteMenu.icon
     menu.remark = remoteMenu.remark

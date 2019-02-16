@@ -79,7 +79,7 @@ export default {
       })
     },
     customDelHandler() {
-      GroupAPI.delGroup({ id: this.selected.id }).then(() => {
+      GroupAPI.delGroup(this.selected.id).then(() => {
         this.queryHandler()
       })
     }
