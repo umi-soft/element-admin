@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/user/'
+const base_url = '/admin/user/'
 
 export function queryPageUsers(data) {
   return request({
@@ -14,7 +14,7 @@ export function queryUserById(id) {
   return request({
     url: base_url + 'query-by-id',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -64,7 +64,7 @@ export function queryAllUserRoles(params) {
   return request({
     url: base_url + 'all-roles',
     method: 'get',
-    params: params
+    data: params
   })
 }
 
@@ -72,7 +72,7 @@ export function queryAllUserDepts(params) {
   return request({
     url: base_url + 'all-depts',
     method: 'get',
-    params: params
+    data: params
   })
 }
 
@@ -80,7 +80,7 @@ export function queryAllUserGroups(params) {
   return request({
     url: base_url + 'all-groups',
     method: 'get',
-    params: params
+    data: params
   })
 }
 
@@ -88,6 +88,6 @@ export function queryAllUserRoleGroups(params) {
   return request({
     url: base_url + 'all-role-groups',
     method: 'get',
-    params: params
+    data: params
   })
 }

@@ -7,14 +7,14 @@
         <h3 class="title">UMI-SOFT</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="loginName">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          v-model="loginForm.username"
+          v-model="loginForm.loginName"
           placeholder="请填写用户名"
-          name="username"
+          name="loginName"
           type="text"
           auto-complete="on" />
       </el-form-item>
@@ -80,12 +80,12 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        loginName: 'admin',
         password: 'admin',
         captcha: null
       },
       loginRules: {
-        username: [{ required: true, trigger: 'change', message: '请填写用户名' }],
+        loginName: [{ required: true, trigger: 'change', message: '请填写用户名' }],
         password: [{ required: true, trigger: 'change', message: '请填写密码' }, { validator: validatePassword, trigger: 'change', message: '请输入密码（至少5位）' }, { validator: remoteValidator, trigger: 'change', message: '用户名或密码错误' }],
         captcha: [{ required: true, trigger: 'change', message: '请填写验证码' }, { validator: remoteValidator, trigger: 'change', message: '验证码错误' }]
       },
@@ -116,8 +116,7 @@ export default {
       }
     },
     getCaptcha() {
-      this.uuid = UUID(32)
-      LoginAPI.captcha().then(data => {
+      LoginAPI.captcha({ uuid: UUID(32) }).then(data => {
         this.captchaBase64 = data
       })
     },
@@ -125,17 +124,17 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          LoginAPI.loginByUsername(this.loginForm).then(data => {
-            if (data.result === 1) {
-              this.$store.dispatch('LoginByUsername', data.token)
+          LoginAPI.loginByLoginName(this.loginForm).then(data => {
+            if ('' + data.result === '1') {
+              this.$store.dispatch('LoginByLoginName', data.token)
               this.$router.push({ path: this.redirect || '/' })
-            } else if (data.result === 2) { // 验证码错误
+            } else if ('' + data.result === '2') { // 验证码错误
               this.remoteError = data.result
               this.getCaptcha()
               this.$refs.loginForm.validateField('captcha', () => {
                 this.remoteError = null
               })
-            } else if (data.result === 3) { // 验证码错误
+            } else if ('' + data.result === '3') { // 用户名或密码错误
               this.remoteError = data.result
               this.getCaptcha()
               this.$refs.loginForm.validateField('password', () => {
@@ -265,14 +264,14 @@ $light_gray:#eee;
   .captcha {
     position: absolute;
     right: 10px;
-    top: 7px;
+    top: 3px;
     font-size: 16px;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
     display: inline-block;
     width: 200px;
-    height: 32px;
+    height: 40px;
   }
   .thirdparty-button {
     position: absolute;

@@ -29,15 +29,16 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    // proxy: {
-    //   '/api': {
-    //     target: `http://localhost:${port}/mock`,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       '^/api': ''
-    //     }
-    //   }
-    // }
+    proxy: {
+      '/admin': {
+        // target: `http://localhost:${port}/mock`,
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/' : '/'
+        }
+      }
+    }
   },
   configureWebpack: {
     // We provide the app's title in Webpack's name field, so that

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Qs from 'Qs'
 import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 
@@ -34,8 +35,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code !== 1) {
-      if (res.code === 2 || res.code === 3) {
+    if ('' + res.code !== '1') {
+      if ('' + res.code === '2' || '' + res.code === '3') {
         MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
@@ -71,4 +72,39 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+export default function ({ url, method = 'get', data = null }) {
+  // 解决axios post请求Request Payload问题
+  if (data && method.toLowerCase() === 'post') {
+    // 对 data 进行任意转换处理
+    const isDeep = Object.keys(data).findIndex(prop => {
+      const type = Object.prototype.toString.call(data[prop])
+      console.log(data[prop])
+      return type === '[object Object]' || type === '[object Array]' || type === '[object JSON]'
+    }) !== -1
+
+    if (isDeep) {
+      // 嵌套data,对层JSON对象,提交时采用 Request Payload 方案
+      // data 原样输出
+    } else {
+      // 非嵌套data，提交时采用Request FormData方案
+      // data需要进行转换
+      data = Qs.stringify(data)
+    }
+  }
+  console.log(data)
+  if (method.toLowerCase() === 'post') {
+    return service({
+      url,
+      method,
+      data
+    })
+  } else if(method.toLowerCase() === 'get') {
+    return service({
+      url,
+      method,
+      params: data
+    })
+  } else {
+    throw "目前仅仅支持get/post方法"
+  }
+}

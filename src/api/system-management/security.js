@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/security/'
+const base_url = '/admin/security/'
 
 export function queryPage(data) {
   return request({
@@ -22,7 +22,7 @@ export function queryById(id) {
   return request({
     url: base_url + 'query-by-id',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 

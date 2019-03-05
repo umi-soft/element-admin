@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/menu-security/'
+const base_url = '/admin/menu-security/'
 
 export function add(data) {
   return request({

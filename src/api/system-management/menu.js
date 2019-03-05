@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/menu/'
+const base_url = '/admin/menu/'
 
 // ####################################Menu工具方法####################################
 /**
@@ -80,7 +80,7 @@ export function queryMenuById(id) {
   return request({
     url: base_url + 'query-by-id',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 

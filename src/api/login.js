@@ -1,15 +1,17 @@
 import request from '@/utils/request'
 
+const base_url = '/admin/auth/'
+
 export function captcha() {
   return request({
-    url: '/captcha',
+    url: base_url + 'captcha',
     method: 'get'
   })
 }
 
-export function loginByUsername(data) {
+export function loginByLoginName(data) {
   return request({
-    url: '/auth',
+    url: base_url + 'login',
     method: 'post',
     data
   })
@@ -17,24 +19,24 @@ export function loginByUsername(data) {
 
 export function getUserInfo(token) {
   return request({
-    url: '/user-details',
+    url: base_url + 'user-authorities',
     method: 'get',
-    params: { token }
+    data: { token }
   })
 }
 
 export function getRouterRoles(token) {
   return request({
-    url: '/routers',
+    url: base_url + 'system-authorities',
     method: 'get',
-    params: { token }
+    data: { token }
   })
 }
 
 export function logout(token) {
   return request({
-    url: '/logout',
+    url: base_url + 'logout',
     method: 'get',
-    params: { token }
+    data: { token }
   })
 }

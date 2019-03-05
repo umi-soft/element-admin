@@ -13,7 +13,7 @@ export default {
       data: Mock.Random.dataImage('448x47', captcha)
     }
   },
-  loginByUsername: config => {
+  loginByLoginName: config => {
     console.log(config)
     const params = JSON.parse(config.body)
     let token = null
@@ -26,7 +26,7 @@ export default {
         }
       }
     }
-    if ((params.username === MockDB.simple.user.loginName && params.password !== MockDB.simple.user.password) || (params.username === MockDB.admin.user.loginName && params.password !== MockDB.admin.user.password)) {
+    if ((params.loginName === MockDB.simple.user.loginName && params.password !== MockDB.simple.user.password) || (params.loginName === MockDB.admin.user.loginName && params.password !== MockDB.admin.user.password)) {
       return {
         code: 1,
         data: {
@@ -35,7 +35,7 @@ export default {
         }
       }
     }
-    if (params.username === 'admin') {
+    if (params.loginName === 'admin') {
       token = MockDB.admin.token
     } else {
       token = MockDB.simple.token
@@ -51,16 +51,9 @@ export default {
   },
   getUserInfo: config => {
     console.log(config)
-    const params = param2Obj(config.url)
-    let user = null
-    if (params.token.endsWith('admin')) {
-      user = MockDB.admin
-    } else {
-      user = MockDB.simple
-    }
     return {
       code: 1,
-      data: user
+      data: MockDB.admin
     }
   },
   getRouterRoles: () => {

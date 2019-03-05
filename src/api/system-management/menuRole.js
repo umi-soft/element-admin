@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/menu-role/'
+const base_url = '/admin/menu-role/'
 
 export function delByEntityMapping(data) {
   return request({

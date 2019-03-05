@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/dept/'
+const base_url = '/admin/dept/'
 
 export function queryAllDepts(data) {
   return request({
@@ -14,7 +14,7 @@ export function queryAllTreeDepts(id) {
   return request({
     url: base_url + 'query-all-tree',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -22,7 +22,7 @@ export function queryDeptById(id) {
   return request({
     url: base_url + 'query-by-id',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -54,7 +54,7 @@ export function queryAllDeptUsers(id) {
   return request({
     url: base_url + 'all-users',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -62,6 +62,6 @@ export function queryAllDeptRoles(id) {
   return request({
     url: base_url + 'all-roles',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }

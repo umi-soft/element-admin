@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/role/'
+const base_url = '/admin/role/'
 
 export function queryPageRoles(data) {
   return request({
@@ -22,7 +22,7 @@ export function queryRoleById(id) {
   return request({
     url: base_url + 'query-by-id',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -54,7 +54,7 @@ export function queryAllRoleMenus(id) {
   return request({
     url: base_url + 'all-menus',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -62,7 +62,7 @@ export function queryAllRoleUsers(id) {
   return request({
     url: base_url + 'all-users',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -70,7 +70,7 @@ export function queryAllRoleDepts(id) {
   return request({
     url: base_url + 'all-depts',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
@@ -78,6 +78,6 @@ export function queryAllRoleGroups(id) {
   return request({
     url: base_url + 'all-groups',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }

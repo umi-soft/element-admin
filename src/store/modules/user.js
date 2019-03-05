@@ -31,7 +31,7 @@ const user = {
 
   actions: {
     // 用户名登录
-    LoginByUsername({ commit }, token) {
+    LoginByLoginName({ commit }, token) {
       commit('SET_TOKEN', token)
       commit('CLEAR_USER')
     },

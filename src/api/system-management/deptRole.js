@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/dept-role/'
+const base_url = '/admin/dept-role/'
 
 export function add(data) {
   return request({

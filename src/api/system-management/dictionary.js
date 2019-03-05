@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const base_url = '/system/dictionary/'
+const base_url = '/admin/dictionary/'
 
 export function queryPageDictionaries(data) {
   return request({
@@ -22,7 +22,7 @@ export function queryDictionaryById(id) {
   return request({
     url: base_url + 'query-by-id',
     method: 'get',
-    params: { id }
+    data: { id }
   })
 }
 
