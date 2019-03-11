@@ -51,11 +51,15 @@ export default {
           }
         }
       })
+      let filters = this.pagination.filters;
+      if (this.pagination.sorts) {
+        filters = filters.concat(this.pagination.sorts)
+      }
+      console.log(filters)
       return {
         page: this.pagination.page,
         pageSize: this.pagination.pageSize,
-        filters: this.pagination.filters,
-        sorts: this.pagination.sorts
+        filters: filters
       }
     },
     queryResultHandler(result) {
@@ -73,11 +77,13 @@ export default {
     sortChangeHandler({ column, prop, order }) {
       // ElementUI 目前并不支持远端多字段排序
       // sorts数组设计的目的是为了支持ElementUI后续拓展
+
       this.pagination.sorts = []
+      // sorts = [type: 'ORDER_BY_DESC', field: ['name']]
       if (column) {
         this.pagination.sorts.push({
-          field: prop,
-          value: order === 'descending' ? 'desc' : 'asc'
+          field: [prop],
+          type: order === 'descending' ? 'ORDER_BY_DESC' : 'ORDER_BY_ASC'
         })
       }
       this.pagination.page = 1

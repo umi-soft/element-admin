@@ -14,7 +14,7 @@
             </el-col>
             <el-col :span="12">
               <input-item-view :label-width="labelWidth" label="肖像">
-                <img :src="detail.avatar ? detail.avatar : 'http://element.eleme.io/static/hamburger.50e4091.png'" class="photo">
+                <img :src="detail.avatar ? previewAvatar + detail.avatar : 'http://element.eleme.io/static/hamburger.50e4091.png'" class="photo">
               </input-item-view>
             </el-col>
           </el-row>

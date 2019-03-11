@@ -76,7 +76,7 @@ export function queryAllRoleDepts(id) {
 
 export function queryAllRoleGroups(id) {
   return request({
-    url: base_url + 'all-groups',
+    url: base_url + 'all-role-groups',
     method: 'get',
     data: { id }
   })

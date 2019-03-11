@@ -39,7 +39,7 @@ export default {
     },
     queryMenuSecurities() {
       this.securities = []
-      MenuAPI.queryAllMenuSecurities({ id: this.detail.id }).then(securities => {
+      MenuAPI.queryAllMenuSecurities(this.detail.id).then(securities => {
         this.securities = securities
       })
     },

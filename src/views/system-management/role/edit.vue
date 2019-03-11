@@ -181,10 +181,10 @@ export default {
     this.queryAllUsers()
     this.queryAllGroups() // 该角色已有的角色组信息
     this.queryAllDepts()
-    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
+    GroupAPI.queryAllGroups([{ field: 'category', value: 2 }]).then(data => {
       this.allRoleGroups = data
     }) // 系统已有的所有角色组信息
-    DeptAPI.queryAllDepts({ filters: [], sorts: [] }).then(data => {
+    DeptAPI.queryAllDepts([]).then(data => {
       this.allDepts = data
     }) // 系统已有的所有部门信息
   },

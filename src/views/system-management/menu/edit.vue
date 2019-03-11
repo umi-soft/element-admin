@@ -101,7 +101,7 @@ export default {
     })
     this.queryMenuSecurities()
     this.queryMenuRoles()
-    SecurityAPI.queryAll({ filters: [], sorts: [] }).then(data => { this.allSecurities = data }) // 系统已有的所有资源权限信息
+    SecurityAPI.queryAll([]).then(data => { this.allSecurities = data }) // 系统已有的所有资源权限信息
   },
   methods: {
     customSubmitHandler() {

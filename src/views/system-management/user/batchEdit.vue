@@ -141,21 +141,20 @@ export default {
   },
   activated() {
     const params = {
-      filters: [],
-      sorts: []
+      filters: []
     }
     RoleAPI.queryAllRoles(params).then(data => {
       this.roles = data
     })
-    DeptAPI.queryAllTreeDepts({}).then(data => {
+    DeptAPI.queryAllTreeDepts().then(data => {
       this.depts = data
     })
     this.allUserGroups = []
-    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 1 }], sorts: [] }).then(data => {
+    GroupAPI.queryAllGroups([{ field: 'category', value: 1 }]).then(data => {
       this.allUserGroups = data
     }) // 系统已有的所有用户组
     this.allRoleGroups = []
-    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
+    GroupAPI.queryAllGroups([{ field: 'category', value: 2 }]).then(data => {
       this.allRoleGroups = data
     }) // 系统已有的所有角色组
   },

@@ -1,5 +1,4 @@
 import Mock from 'mockjs'
-import { param2Obj } from '@/utils'
 import * as MockDB from './MockDB'
 
 let captcha = null

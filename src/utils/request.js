@@ -36,8 +36,8 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if ('' + res.code !== '1') {
-      if ('' + res.code === '2' || '' + res.code === '3') {
-        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+      if (('' + res.code).indexOf('3') === 0) { // 规则码3开头的均为回话问题，token过期等
+        MessageBox.confirm('你已登出，可以取消继续留在该页面，或者重新登录', '提示', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'
@@ -78,7 +78,6 @@ export default function ({ url, method = 'get', data = null }) {
     // 对 data 进行任意转换处理
     const isDeep = Object.keys(data).findIndex(prop => {
       const type = Object.prototype.toString.call(data[prop])
-      console.log(data[prop])
       return type === '[object Object]' || type === '[object Array]' || type === '[object JSON]'
     }) !== -1
 
@@ -91,7 +90,6 @@ export default function ({ url, method = 'get', data = null }) {
       data = Qs.stringify(data)
     }
   }
-  console.log(data)
   if (method.toLowerCase() === 'post') {
     return service({
       url,

@@ -8,7 +8,8 @@ export default {
       uploadAvatarHeaders: {
         Authorization: store.getters.token
       },
-      uploadAvatar: UserAPI.uploadAvatar
+      uploadAvatar: UserAPI.uploadAvatar,
+      previewAvatar: UserAPI.previewAvatar + '?token=' + store.getters.token + '&avatar='
     }
   },
   computed: {
@@ -55,12 +56,12 @@ export default {
           required: true, message: '请输入用户编号', trigger: 'blur'
         }],
         loginName: [{
-          required: true, message: '请输入用户编号', trigger: 'blur'
+          required: true, message: '请输入用户名', trigger: 'blur'
         }, {
           validator: validateLoginName, trigger: 'change'
         }],
         password: [{
-          required: true, message: '请输入用户编号', trigger: 'blur'
+          required: true, message: '请输入密码', trigger: 'blur'
         }],
         name: [{
           required: true, message: '请输入用户姓名', trigger: 'blur'
@@ -68,13 +69,13 @@ export default {
           min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
         }],
         nickName: [{
-          required: true, message: '请输入用户编号', trigger: 'blur'
+          required: true, message: '请输入简称', trigger: 'blur'
         }],
         gender: [{
-          required: true, message: '请输入用户编号', trigger: 'blur'
+          required: true, message: '请输入性别', trigger: 'blur'
         }],
         email: [{
-          required: true, message: '请输入用户编号', trigger: 'blur'
+          required: true, message: '请输入邮箱', trigger: 'blur'
         }]
       }
     },
@@ -108,12 +109,11 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     uploadAvatarSuccess(response, file, fileList) {
-      // 上传成功后返回图片base64流值，后端直接存储
-      this.form.avatar = response.data
+      this.form.avatar = response.data.fileName
     },
     // eslint-disable-next-line no-unused-vars
     uploadAvatarError(response, file, fileList) {
-      this.form.avatar = ''
+      this.form.avatar = null
     }
   }
 }

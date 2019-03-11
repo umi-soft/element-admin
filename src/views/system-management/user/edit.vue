@@ -32,7 +32,7 @@
           <el-col :span="12">
             <el-form-item label="照片" prop="avatar">
               <el-upload :headers="uploadAvatarHeaders" :show-file-list="false" :on-success="uploadAvatarSuccess" :on-error="uploadAvatarError" :action="uploadAvatar" class="avatar-uploader">
-                <img v-if="form.avatar" :src="form.avatar" class="avatar">
+                <img v-if="form.avatar" :src="previewAvatar + form.avatar" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"/>
               </el-upload>
             </el-form-item>
@@ -291,12 +291,12 @@ export default {
     this.queryAllUserGroups() // 用户已有的所有用户组
     this.queryAllRoleGroups() // 用户已有的所有角色组
     this.queryAllUserRoles() // 用户已有的所有角色
-    DeptAPI.queryAllDepts({ filters: [], sorts: [] }).then(data => { this.addOption.allDepts = data }) // 系统已有的所有部门
-    RoleAPI.queryAllRoles({ filters: [], sorts: [] }).then(data => { this.addOption.allRoles = data }) // 系统已有的所有角色
-    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 1 }], sorts: [] }).then(data => {
+    DeptAPI.queryAllDepts([]).then(data => { this.addOption.allDepts = data }) // 系统已有的所有部门
+    RoleAPI.queryAllRoles([]).then(data => { this.addOption.allRoles = data }) // 系统已有的所有角色
+    GroupAPI.queryAllGroups([{ field: 'category', value: 1 }]).then(data => {
       this.addOption.allUserGroups = data
     }) // 系统已有的所有用户组
-    GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
+    GroupAPI.queryAllGroups([{ field: 'category', value: 2 }]).then(data => {
       this.addOption.allRoleGroups = data
     }) // 系统已有的所有角色组
   },

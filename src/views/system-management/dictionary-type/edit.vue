@@ -3,9 +3,6 @@
     <el-form-item label="ID" prop="id">
       <el-input v-model="form.id" disabled/>
     </el-form-item>
-    <el-form-item v-if="form.parentId !== null" label="上级ID" prop="parentId">
-      <el-input v-model="form.parentId" disabled/>
-    </el-form-item>
     <el-form-item label="字典分类名称" prop="name">
       <el-input v-model="form.name"/>
     </el-form-item>

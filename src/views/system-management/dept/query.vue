@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     queryAllHandler() {
-      DeptAPI.queryAllTreeDepts({}).then(data => {
+      DeptAPI.queryAllTreeDepts().then(data => {
         this.nodes = data
       })
     },

@@ -1,8 +1,5 @@
 <template>
   <el-form ref="form" :model="form" :rules="rules" label-width="200px">
-    <el-form-item v-if="form.parentId !== null" label="上级ID" prop="parentId">
-      <el-input v-model="form.parentId" disabled/>
-    </el-form-item>
     <el-form-item label="字典分类名称" prop="name">
       <el-input v-model="form.name"/>
     </el-form-item>
@@ -47,9 +44,6 @@ export default {
   },
   activated() {
     deepMergeLeft(this.form, this.initForm())
-    if (this.detail.id) {
-      this.form.parentId = this.detail.id
-    }
     this.$nextTick(() => {
       this.$refs['form'].clearValidate()
     })

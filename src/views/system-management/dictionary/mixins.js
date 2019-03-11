@@ -58,10 +58,7 @@ export default {
       }
     },
     queryAllDictionaryType() {
-      DictionaryAPI.queryAllDictionaries({
-        filters: [{ field: 'category', value: 1 }],
-        sorts: []
-      }).then((list) => {
+      DictionaryAPI.queryAllDictionaries([{ field: 'category', value: 1 }]).then((list) => {
         this.dictionaryTypeList = list
       }, () => {
         this.dictionaryTypeList = []

@@ -27,6 +27,7 @@ export function checkLoginName(data) {
 }
 
 export const uploadAvatar = base_url + 'upload-avatar'
+export const previewAvatar = base_url + 'avatar/'
 
 export function addUser(data) {
   return request({
@@ -78,7 +79,7 @@ export function queryAllUserDepts(params) {
 
 export function queryAllUserGroups(params) {
   return request({
-    url: base_url + 'all-groups',
+    url: base_url + 'all-user-groups',
     method: 'get',
     data: params
   })

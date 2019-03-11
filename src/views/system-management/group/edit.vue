@@ -125,12 +125,12 @@ export default {
       this.queryAllRoles()
     }
     if (this.isUserGroup) {
-      GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 1 }], sorts: [] }).then(data => {
+      GroupAPI.queryAllGroups([{ field: 'category', value: 1 }]).then(data => {
         this.allGroups = data
       }) // 系统已有的所有用户组
     }
     if (this.isRoleGroup) {
-      GroupAPI.queryAllGroups({ filters: [{ field: 'category', value: 2 }], sorts: [] }).then(data => {
+      GroupAPI.queryAllGroups([{ field: 'category', value: 2 }]).then(data => {
         this.allGroups = data
       }) // 系统已有的所有角色组
     }

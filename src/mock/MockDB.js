@@ -92,7 +92,6 @@ export const userMockConfig = {
   'name': '@cname', // 姓名
   'nickName': '@cname', // 昵称
   'avatar': '', // 肖像地址
-  'avatarContent': '', // 肖像二进制
   'idNumber': /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/, // 证件号码
   'gender|1': [0, 1], // 性别
   'birthday': '@date("yyyy-MM-dd")', // 出生日期
