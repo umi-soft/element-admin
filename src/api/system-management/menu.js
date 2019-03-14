@@ -1,6 +1,26 @@
 import request from '@/utils/request'
 
+import { asyncMenuMap } from '@/router'
+
 const base_url = '/admin/menu/'
+
+function createMenu(router, parentId, menus) {
+  const menu = {}
+  menu.id = router.name
+  menu.parentId = parentId
+  menu.deleted = 0
+  menu.sortNum = router.meta.sortNum
+  menu.name = router.meta.title
+  menu.icon = router.meta.icon
+  menu.remark = null
+
+  if (router.children && router.children.length > 0) {
+    router.children.forEach(children => {
+      createMenu(children, router.name, menus)
+    })
+  }
+  menus.push(menu)
+}
 
 // ####################################Menu工具方法####################################
 /**
@@ -92,11 +112,13 @@ export function editMenu(data) {
   })
 }
 
-export function syncMenus(data) {
+export function syncMenus() {
+  const menus = []
+  asyncMenuMap.forEach(router => createMenu(router, null, menus))
   return request({
     url: base_url + 'sync',
     method: 'post',
-    data
+    data: menus
   })
 }
 

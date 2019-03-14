@@ -93,7 +93,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        MenuAPI.syncMenus(this.menusTree).then(() => {
+        MenuAPI.syncMenus().then(() => {
           this.needSync = false
           this.initMenus()
           this.$message({

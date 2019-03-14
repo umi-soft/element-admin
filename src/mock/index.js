@@ -1,22 +1,22 @@
 import Mock from 'mockjs'
-import loginAPI from './login'
-
-import groupAPI from './system-management/group'
-import userAPI from './system-management/user'
-import roleAPI from './system-management/role'
-import deptAPI from './system-management/dept'
-import dictionaryAPI from './system-management/dictionary'
-import menuAPI from './system-management/menu'
-import userRoleGroupAPI from './system-management/userRoleGroup'
-import userGroupRoleGroupAPI from './system-management/userGroupRoleGroup'
-import userRoleAPI from './system-management/userRole'
-import securityAPI from './system-management/security'
-import menuRoleAPI from './system-management/menuRole'
-import roleGroupAPI from './system-management/roleGroup'
-import userGroupAPI from './system-management/userGroup'
-import userDeptAPI from './system-management/userDept'
-import menuSecurityAPI from './system-management/menuSecurity'
-import deptRoleAPI from './system-management/deptRole'
+// import loginAPI from './login'
+//
+// import groupAPI from './system-management/group'
+// import userAPI from './system-management/user'
+// import roleAPI from './system-management/role'
+// import deptAPI from './system-management/dept'
+// import dictionaryAPI from './system-management/dictionary'
+// import menuAPI from './system-management/menu'
+// import userRoleGroupAPI from './system-management/userRoleGroup'
+// import userGroupRoleGroupAPI from './system-management/userGroupRoleGroup'
+// import userRoleAPI from './system-management/userRole'
+// import securityAPI from './system-management/security'
+// import menuRoleAPI from './system-management/menuRole'
+// import roleGroupAPI from './system-management/roleGroup'
+// import userGroupAPI from './system-management/userGroup'
+// import userDeptAPI from './system-management/userDept'
+// import menuSecurityAPI from './system-management/menuSecurity'
+// import deptRoleAPI from './system-management/deptRole'
 
 // 修复在使用 MockJS 情况下，设置 withCredentials = true，且未被拦截的跨域请求丢失 Cookies 的问题
 // https://github.com/nuysoft/Mock/issues/300
@@ -35,8 +35,8 @@ Mock.setup({
 // 登录相关
 // Mock.mock(/\/admin\/auth\/captcha/, 'get', loginAPI.captcha)
 // Mock.mock(/\/admin\/auth\/login/, 'post', loginAPI.loginByLoginName)
-Mock.mock(/\/admin\/auth\/user-authorities/, 'get', loginAPI.getUserInfo)
-Mock.mock(/\/admin\/auth\/system-authorities/, 'get', loginAPI.getRouterRoles)
+// Mock.mock(/\/admin\/auth\/user-authorities/, 'get', loginAPI.getUserInfo)
+// Mock.mock(/\/admin\/auth\/system-authorities/, 'get', loginAPI.getRouterRoles)
 // Mock.mock(/\/admin\/auth\/logout/, 'get', loginAPI.logout)
 
 //  系统设置相关---用户分组
@@ -105,10 +105,10 @@ Mock.mock(/\/admin\/auth\/system-authorities/, 'get', loginAPI.getRouterRoles)
 // Mock.mock(/\/admin\/security\/del/, 'post', securityAPI.del)
 
 //  系统设置相关---菜单
-Mock.mock(/\/admin\/menu\/query-all/, 'post', menuAPI.queryAll)
-Mock.mock(/\/admin\/menu\/query-by-id/, 'get', menuAPI.queryById)
-Mock.mock(/\/admin\/menu\/edit/, 'post', menuAPI.edit)
-Mock.mock(/\/admin\/menu\/sync/, 'post', menuAPI.sync)
+// Mock.mock(/\/admin\/menu\/query-all/, 'post', menuAPI.queryAll)
+// Mock.mock(/\/admin\/menu\/query-by-id/, 'get', menuAPI.queryById)
+// Mock.mock(/\/admin\/menu\/edit/, 'post', menuAPI.edit)
+// Mock.mock(/\/admin\/menu\/sync/, 'post', menuAPI.sync)
 // Mock.mock(/\/admin\/menu\/all-securities/, 'get', menuAPI.queryAllMenuSecurities)
 // Mock.mock(/\/admin\/menu\/all-roles/, 'get', menuAPI.queryMenuRoles)
 
