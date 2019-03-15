@@ -161,7 +161,7 @@ export default {
     delGroupRoleHandler(id) {
       const params = {
         roleId: id,
-        roleGroupId: this.detail.id
+        groupId: this.detail.id
       }
       RoleGroupAPI.delByEntityMapping(params).then(() => {
         this.optionSuccessHandler()

@@ -77,7 +77,7 @@ export default {
         RoleAPI.queryAllRoleMenus(this.detail.id).then(roleMenus => {
           const checkedMenus = []
           roleMenus.forEach(item => {
-            checkedMenus.push(item.menuId)
+            checkedMenus.push(item.id)
           })
           this.$refs['menusTree'].setCheckedKeys(checkedMenus)
         })

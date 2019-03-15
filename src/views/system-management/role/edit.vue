@@ -196,11 +196,12 @@ export default {
       this.$refs['form'].clearValidate()
     },
     resetRoleMenus() {
-      const params = {
-        roleId: this.detail.id,
-        menuIds: this.$refs['menusTree'].getCheckedKeys()
-      }
-      MenuRoleAPI.reset(params).then(this.optionSuccessHandler)
+      const menuIds = this.$refs['menusTree'].getCheckedKeys()
+      const data = []
+      menuIds.forEach(menuId => {
+        data.push({ roleId: this.detail.id, menuId: menuId })
+      })
+      MenuRoleAPI.reset(data).then(this.optionSuccessHandler)
     },
     delUserRoleHandler(id) {
       const params = {
@@ -214,7 +215,7 @@ export default {
     },
     addGroupHandler() {
       if (!this.roleGroupId) return // 防止取消选择时触发
-      const params = { roleId: this.detail.id, roleGroupId: this.roleGroupId }
+      const params = { roleId: this.detail.id, groupId: this.roleGroupId }
 
       RoleGroupAPI.add(params).then(() => {
         this.queryAllGroups()

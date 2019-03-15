@@ -93,12 +93,13 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        MenuAPI.syncMenus().then(() => {
+        MenuAPI.syncMenus().then((data) => {
           this.needSync = false
           this.initMenus()
+          console.log(data)
           this.$message({
             type: 'success',
-            message: '保存成功'
+            message: '保存成功\n新增路由：' + data.insert.length + '个\n修改：'+ data.update.length + '个\n删除：'+ data.delete.length + '个'
           })
         })
       }, () => {
