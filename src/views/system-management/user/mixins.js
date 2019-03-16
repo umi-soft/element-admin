@@ -1,6 +1,7 @@
 import { mapGetters } from 'vuex'
 import store from '@/store'
 import * as UserAPI from '@/api/system-management/user'
+import defaultAvatar from '@/assets/images/avatar.jpeg'
 
 export default {
   data() {
@@ -9,7 +10,7 @@ export default {
         Authorization: store.getters.token
       },
       uploadAvatar: UserAPI.uploadAvatar,
-      previewAvatar: UserAPI.previewAvatar + '?token=' + store.getters.token + '&avatar='
+      previewAvatar: UserAPI.previewAvatar + '?token=' + this.$store.getters.token + '&avatar='
     }
   },
   computed: {
@@ -77,6 +78,15 @@ export default {
         email: [{
           required: true, message: '请输入邮箱', trigger: 'blur'
         }]
+      }
+    },
+    getAvatar(avatar) {
+      if (avatar) {
+        return this.previewAvatar + avatar
+      } else if (avatar.trim().startsWith("http")) {
+        return avatar
+      } else {
+        return defaultAvatar
       }
     },
     // 用户所属的部门信息

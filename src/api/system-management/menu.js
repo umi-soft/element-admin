@@ -122,18 +122,18 @@ export function syncMenus() {
   })
 }
 
-export function queryAllMenuSecurities(params) {
+export function queryAllMenuSecurities(id) {
   return request({
     url: base_url + 'all-securities',
     method: 'get',
-    params
+    data: { id }
   })
 }
 
-export function queryAllMenuRole(params) {
+export function queryAllMenuRole(id) {
   return request({
     url: base_url + 'all-roles',
     method: 'get',
-    params
+    data: { id }
   })
 }

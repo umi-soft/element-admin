@@ -12,7 +12,7 @@
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="user.avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="getAvatar(user.avatar)" class="user-avatar">
         </div>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
@@ -32,12 +32,19 @@ import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 import Breadcrumb from '@/components/Breadcrumb'
 import Screenfull from '@/components/Screenfull'
+import * as UserAPI from '@/api/system-management/user'
+import defaultAvatar from '@/assets/images/avatar.jpeg'
 
 export default {
   components: {
     Hamburger,
     Breadcrumb,
     Screenfull
+  },
+  data() {
+    return {
+      previewAvatar: UserAPI.previewAvatar + '?token=' + this.$store.getters.token + '&avatar='
+    }
   },
   computed: {
     ...mapGetters([
@@ -48,6 +55,15 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('toggleSideBar')
+    },
+    getAvatar(avatar) {
+      if (avatar) {
+        return this.previewAvatar + avatar
+      } else if (avatar.trim().startsWith("http")) {
+        return avatar
+      } else {
+        return defaultAvatar
+      }
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
@@ -106,7 +122,8 @@ export default {
         .user-avatar {
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 50%;
+          border: 2px solid ghostwhite;
         }
         .el-icon-caret-bottom {
           position: absolute;
