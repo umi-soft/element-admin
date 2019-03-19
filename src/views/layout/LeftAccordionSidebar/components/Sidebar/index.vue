@@ -3,6 +3,7 @@
     <el-menu
       :show-timeout="200"
       :default-active="$route.path"
+      :default-active="getDefaultActive()"
       :collapse="isCollapse"
       mode="vertical"
       background-color="#304156"
@@ -17,6 +18,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
+import { obj2Param } from '@/utils'
 
 export default {
   components: { SidebarItem },
@@ -27,6 +29,16 @@ export default {
     ]),
     isCollapse() {
       return !this.sidebar.opened
+    }
+  },
+  methods: {
+    getDefaultActive() {
+      const query = obj2Param(this.$route.query)
+      let routerPath = this.$route.path
+      if (query) {
+        routerPath = routerPath + '?' + query
+      }
+      return routerPath
     }
   }
 }
