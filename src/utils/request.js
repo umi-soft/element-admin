@@ -37,14 +37,12 @@ service.interceptors.response.use(
     const res = response.data
     if ('' + res.code !== '1') {
       if (('' + res.code).indexOf('3') === 0) { // 规则码3开头的均为回话问题，token过期等
-        MessageBox.confirm('你已登出，可以取消继续留在该页面，或者重新登录', '提示', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
+        this.$message({
+          message: '你已从其他终端登出，或回话已超时，请重新登录',
           type: 'warning'
-        }).then(() => {
-          store.dispatch('FedLogOut').then(() => {
-            location.reload() // 为了重新实例化vue-router对象 避免bug
-          })
+        })
+        store.dispatch('FedLogOut').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       }
       console.log('response interceptor: error') // for debug
