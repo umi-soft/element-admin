@@ -2,7 +2,6 @@
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
       :show-timeout="200"
-      :default-active="$route.path"
       :default-active="getDefaultActive()"
       :collapse="isCollapse"
       mode="vertical"
