@@ -15,8 +15,7 @@ const asyncRouter = {
     sortNum: 1,
     roles: [],
     title: '系统管理',
-    icon: 'setting',
-    cacheAble: false
+    icon: 'setting'
   },
   children: [
     {
@@ -29,8 +28,7 @@ const asyncRouter = {
         sortNum: 1,
         roles: [],
         title: '部门管理',
-        icon: 'dept',
-        cacheAble: false
+        icon: 'dept'
       }
     },
     {
@@ -43,8 +41,7 @@ const asyncRouter = {
         sortNum: 1,
         roles: [],
         title: '用户与分组',
-        icon: 'user-setting',
-        cacheAble: false
+        icon: 'user-setting'
       },
       children: [
         {
@@ -60,8 +57,7 @@ const asyncRouter = {
             sortNum: 1,
             roles: [],
             title: '用户分组',
-            icon: 'group',
-            cacheAble: false
+            icon: 'group'
           }
         },
         {
@@ -74,8 +70,7 @@ const asyncRouter = {
             sortNum: 1,
             roles: [],
             title: '用户管理',
-            icon: 'user',
-            cacheAble: false
+            icon: 'user'
           }
         }
       ]
@@ -90,8 +85,7 @@ const asyncRouter = {
         sortNum: 1,
         roles: [],
         title: '菜单与资源',
-        icon: 'menu-setting',
-        cacheAble: false
+        icon: 'menu-setting'
       },
       children: [
         {
@@ -104,8 +98,7 @@ const asyncRouter = {
             sortNum: 1,
             roles: [],
             title: '资源管理',
-            icon: 'security',
-            cacheAble: false
+            icon: 'security'
           }
         },
         {
@@ -118,8 +111,7 @@ const asyncRouter = {
             sortNum: 1,
             roles: [],
             title: '菜单管理',
-            icon: 'menu',
-            cacheAble: false
+            icon: 'menu'
           }
         }
       ]
@@ -134,8 +126,7 @@ const asyncRouter = {
         sortNum: 1,
         roles: [],
         title: '角色与分组',
-        icon: 'role-setting',
-        cacheAble: false
+        icon: 'role-setting'
       },
       children: [
         {
@@ -151,8 +142,7 @@ const asyncRouter = {
             sortNum: 1,
             roles: [],
             title: '角色分组',
-            icon: 'group',
-            cacheAble: false
+            icon: 'group'
           }
         },
         {
@@ -165,8 +155,7 @@ const asyncRouter = {
             sortNum: 1,
             roles: [],
             title: '角色管理',
-            icon: 'user-role',
-            cacheAble: false
+            icon: 'user-role'
           }
         }
       ]
@@ -181,8 +170,7 @@ const asyncRouter = {
         sortNum: 1,
         roles: [],
         title: '字典管理',
-        icon: 'dictionary-setting',
-        cacheAble: false
+        icon: 'dictionary-setting'
       },
       children: [
         {
@@ -195,8 +183,7 @@ const asyncRouter = {
             sortNum: 1,
             roles: [],
             title: '字典分类',
-            icon: 'dictionary-type',
-            cacheAble: false
+            icon: 'dictionary-type'
           }
         },
         {
@@ -209,8 +196,7 @@ const asyncRouter = {
             sortNum: 2,
             roles: [],
             title: '单级业务字典',
-            icon: 'dictionary-single',
-            cacheAble: false
+            icon: 'dictionary-single'
           }
         },
         {
@@ -223,8 +209,7 @@ const asyncRouter = {
             sortNum: 3,
             roles: [],
             title: '多级业务字典',
-            icon: 'dictionary-multi',
-            cacheAble: false
+            icon: 'dictionary-multi'
           }
         }
       ]

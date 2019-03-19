@@ -47,13 +47,13 @@ export const constantRouterMap = [
     path: '/myself',
     component: defaultLayout,
     hidden: true,
-    meta: { title: '个人设置', icon: 'user', cacheAble: true },
+    meta: { title: '个人设置', icon: 'user' },
     children: [
       {
         path: 'modify',
         component: () => import('@/views/system-management/user/myself/modify'),
         name: 'myself-modify',
-        meta: { title: '个人信息编辑', icon: 'user', cacheAble: true }
+        meta: { title: '个人信息编辑', icon: 'user' }
       }
     ]
   },
@@ -67,7 +67,7 @@ export const constantRouterMap = [
         path: '/index',
         component: () => import('@/views/dashboard/index'),
         name: 'index',
-        meta: { title: '首页', icon: 'index', cacheAble: true }
+        meta: { title: '首页', icon: 'index' }
       }
     ]
   }

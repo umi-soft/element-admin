@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Qs from 'Qs'
-import { Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 
 // 本工程中axios使用，均通过其API构建请求，可参考https://www.kancloud.cn/yunye/axios/234845
