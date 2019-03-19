@@ -1,22 +1,27 @@
 <template>
+
   <div v-if="!item.hidden && item.children" class="menu-wrapper">
-    <!-- item及其一级子路由中，至多包含一个非hidden路由，记录为onlyOneShowing && onlyOneShowing是item本身或没有子路由 && alwaysShow为false -->
+    <!-- 判断是否可直接渲染，判断依据为： -->
+    <!-- 1、item及其一级子路由中，至多包含一个非hidden路由，记为onlyOneShowing -->
+    <!-- 2、&& onlyOneShowing是item本身或没有子路由 -->
+    <!-- 3、&& alwaysShow为false -->
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneShowing.children || onlyOneShowing.noShowingChildren) && !item.alwaysShow">
       <app-link :to="resolvePath(onlyOneShowing)">
         <el-menu-item :index="resolvePath(onlyOneShowing)" :class="{'submenu-title-no-dropdown':!isNest}">
-          <item v-if="onlyOneShowing.meta" :icon="onlyOneShowing.meta.icon||item.meta.icon" :title="onlyOneShowing.meta.title" />
+          <item v-if="onlyOneShowing.meta" :icon="onlyOneShowing.meta.icon || item.meta.icon" :title="onlyOneShowing.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
 
     <el-submenu v-else :index="item.name||item.path">
+
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
       </template>
 
       <template v-for="child in item.children" v-if="!child.hidden">
         <sidebar-item
-          v-if="child.children&&child.children.length>0"
+          v-if="child.children && child.children.length > 0"
           :is-nest="true"
           :item="child"
           :key="child.path"
