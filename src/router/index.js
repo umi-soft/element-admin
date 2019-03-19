@@ -10,6 +10,7 @@ import defaultLayout from '@/views/layout/LeftAccordionSidebar/index'
 
 /* 模块化路由 */
 import systemManagementRouter from './modules/SystemManagement'
+import CodeGenerator from './modules/CodeGenerator'
 
 /**
  * 静态路由定义，无需权限的全局路由
@@ -82,7 +83,8 @@ export default new Router({
  * asyncRouterMap动态够钱过程中，请在最后末尾处加上路由 ： { path: '*', redirect: '/404', hidden: true }，将未知路由归置到404页面, 详见src/store/modules/permission.js
  */
 export const asyncRouterMap = [
-  systemManagementRouter
+  systemManagementRouter,
+  CodeGenerator
 ]
 
 export const asyncMenuMap = JSON.parse(JSON.stringify(asyncRouterMap))
