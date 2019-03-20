@@ -5,6 +5,7 @@ const asyncRouter = {
   component: defaultLayout,
   hidden: false,
   redirect: '/java-code-generator/execute',
+  name: '923c7i98uc6khj109b8930ba20d907j3',
   meta: {
     sortNum: 1,
     roles: [],
