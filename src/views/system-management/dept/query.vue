@@ -42,6 +42,13 @@
 import * as DeptAPI from '@/api/system-management/dept'
 
 export default {
+  props: {
+    detail: {
+      required: false,
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     return {
       filter: null,
@@ -60,12 +67,32 @@ export default {
   },
   activated() {
     this.selected = null
-    this.queryAllHandler()
+    if (this.detail != null && this.detail.id != null) {
+      let result = null
+      for(let i = 0; i < this.nodes.length; i++) {
+        result = this.findNodeById(this.detail.id, this.nodes[i])
+        if (result !== null) {
+          break
+        }
+      }
+      if (result !== null) { // 说明 detail 是从更新页面传递过来的
+        // 页面显示的三项字段将被更新，其中createdDate无需更新
+        result.name = this.detail.name
+        result.modifiedDate = this.detail.modifiedDate
+      } else { // 新增操作获取的
+        this.queryAllHandler()
+      }
+    } else {
+      this.queryAllHandler()
+    }
   },
   methods: {
     queryAllHandler() {
       DeptAPI.queryAllTreeDepts().then(data => {
         this.nodes = data
+        this.$nextTick(() => {
+          this.$refs.tree.filter(this.filter)
+        })
       })
     },
     delHandler() {
@@ -95,6 +122,20 @@ export default {
         this.selected = null
       }
       return show
+    },
+    findNodeById(id,node) {
+      if (node.id === id) {
+        return node
+      }
+      if (node.children) {
+        for(let i = 0; i < node.children.length; i++) {
+          const result = this.findNodeById(id, node.children[i])
+          if (result !== null) {
+            return node
+          }
+        }
+      }
+      return null
     }
   }
 }

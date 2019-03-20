@@ -104,6 +104,9 @@ export default {
     this.queryAllRoles()
   },
   methods: {
+    customBackHandler() {
+      this.$emit('option-changed', 'query', this.form)
+    },
     customSubmitHandler() {
       DeptAPI.editDept(this.form).then(this.submitSuccessHandler)
     },
