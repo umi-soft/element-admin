@@ -104,14 +104,6 @@ export function queryMenuById(id) {
   })
 }
 
-export function editMenu(data) {
-  return request({
-    url: base_url + 'edit',
-    method: 'post',
-    data
-  })
-}
-
 export function syncMenus() {
   const menus = []
   asyncMenuMap.forEach(router => createMenu(router, null, menus))

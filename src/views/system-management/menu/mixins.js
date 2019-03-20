@@ -9,30 +9,6 @@ export default {
     }
   },
   methods: {
-    initForm() {
-      return {
-        id: null,
-        token: null,
-        sortNum: '',
-        name: '',
-        remark: ''
-      }
-    },
-    initRules() {
-      return {
-        id: [{
-          required: true, message: '编辑信息时ID不能为空', trigger: 'change'
-        }],
-        sortNum: [{
-          required: true, message: '请输入菜单编号', trigger: 'blur'
-        }],
-        name: [{
-          required: true, message: '请输入菜单名称', trigger: 'blur'
-        }, {
-          min: 4, max: 20, message: '长度在 4 到 20 个字符', trigger: 'blur'
-        }]
-      }
-    },
     queryMenuRoles() {
       this.roles = []
       MenuAPI.queryAllMenuRole(this.detail.id).then(roles => { this.roles = roles })

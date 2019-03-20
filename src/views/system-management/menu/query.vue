@@ -61,9 +61,11 @@ export default {
       this.$refs.tree.filter(filter)
     }
   },
-  activated() {
-    this.selected = null
+  created() {
     this.initMenus()
+  },
+  activated() {
+    this.$refs.tree.filter(this.filter)
   },
   methods: {
     initMenus() {
