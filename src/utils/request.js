@@ -37,7 +37,7 @@ service.interceptors.response.use(
     const res = response.data
     if ('' + res.code !== '1') {
       if (('' + res.code).indexOf('3') === 0) { // 规则码3开头的均为回话问题，token过期等
-        this.$message({
+        Message({
           message: '你已从其他终端登出，或回话已超时，请重新登录',
           type: 'warning'
         })
