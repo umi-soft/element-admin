@@ -383,3 +383,31 @@ export function createUniqueString() {
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
+
+/**
+ * 给tree结构中增加一个新节点,注意，该方法不考虑插入节点顺序问题，只追加在末尾处
+ * @param node 需要新增进入的节点
+ * @param nodes tree数据
+ * @param id 表明tree的唯一标识的key值
+ * @param parentId 表明tree的上下级关系的key值
+ * @param children 表明tree节点子节点数组的key值
+ */
+export function addNode2Tree(node, nodes, isElementNode = true, id = 'id', parentId = 'parentId', children = 'children') {
+  for (let i = 0; i < nodes.length; i++) {
+    let nodeV = nodes[i];
+    if (isElementNode) {
+      nodeV = nodes[i].data
+    }
+    if (!nodeV[children]) {
+      nodeV[children] = []
+    }
+    if (nodeV[id] === node[parentId]) {
+      nodeV[children].push(node)
+      return
+    } else {
+      for (let j = 0; j < nodeV[children].length; j++) {
+        addNode2Tree(node, nodeV[children], id, parentId, children)
+      }
+    }
+  }
+}
