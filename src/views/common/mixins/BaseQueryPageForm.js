@@ -13,11 +13,14 @@ export default {
   data() {
     const pagination = this.initPagination()
     return {
+      autoRefresh: true,
       pagination: pagination
     }
   },
   activated() {
-    this.executeQueryPage()
+    if (this.autoRefresh) {
+      this.executeQueryPage()
+    }
   },
   methods: {
     initPagination(pagination = {}) {

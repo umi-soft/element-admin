@@ -47,7 +47,7 @@
         </div>
       </el-tree>
       <!-- eslint-disable-next-line vue/max-attributes-per-line -->
-      <el-tree ref="tree" :data="pagination.list" :load="loadChildren" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion lazy @current-change="(value, node) => selected = value">
+      <el-tree ref="tree" :data="pagination.list" :load="loadChildren" :props="defaultProps" node-key="id" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion lazy @current-change="(value, node) => selected = value">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">{{ data.name }}</div>
           <div class="type">{{ getDictionaryTypeName(data.type) }}</div>
@@ -66,6 +66,13 @@ import mixins from './mixins'
 
 export default {
   mixins: [BaseQueryPageForm, mixins],
+  props: {
+    detail: {
+      required: false,
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     const queryCriteria = this.initQueryCriteria()
     return {
@@ -83,9 +90,30 @@ export default {
       this.$refs.tree.filter(filter)
     }
   },
+  created() {
+    this.autoRefresh = false
+    this.executeQueryPage()
+  },
   activated() {
     this.selected = null
     this.queryAllDictionaryType()
+    // 目前的设计逻辑为，新增之后，立即跳转至编辑，可由编辑页面返回至查询页面
+    // 意味着页面跳转过程中，从查看页面返回的detail，为空对象{}
+    // detail为非空对象时，可能是从新增或修改页面返回回来的，id可从当前列表中找到则为编辑，反之则为新增
+    // 注意，从新增页面跳转至编辑，再返回，id也是在当前列表中找不到的
+    if (this.detail.id != null) {
+      let result = this.$refs.tree.getNode(this.detail.id)
+      if (result !== null) { // 说明 detail 是从更新页面传递过来的
+        // 页面显示的2项字段将被更新, type无需更新，修改时不允许修改
+        result.data.name = this.detail.name
+        this.$refs.tree.filter(this.filter)
+      } else if(this.detail.parentId && this.detail.parentId !== 'root') { // 新增操作获取的, 子节点
+        this.$refs.tree.append(this.detail, this.detail.parentId)
+        this.$refs.tree.filter(this.filter)
+      } else { // 新增操作获取的,根节点
+        this.executeQueryPage()
+      }
+    }
   },
   methods: {
     initQueryCriteria(form = {}) {
@@ -99,6 +127,7 @@ export default {
     executeQueryPage() {
       DictionaryAPI.queryPageDictionaries(this.createQueryParams()).then(data => {
         this.queryResultHandler(data)
+        this.$refs.tree.filter(this.filter)
       })
     },
     customDelHandler() {

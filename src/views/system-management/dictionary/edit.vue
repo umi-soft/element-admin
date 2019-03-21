@@ -61,6 +61,9 @@ export default {
     this.queryAllDictionaryType()
   },
   methods: {
+    customBackHandler() {
+      this.$emit('option-changed', 'query', this.form)
+    },
     customSubmitHandler() {
       DictionaryAPI.editDictionary(this.form).then(this.submitSuccessHandler)
     }

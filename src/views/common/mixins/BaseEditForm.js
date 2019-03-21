@@ -1,8 +1,8 @@
 export default {
   methods: {
-    backHandler() {
+    backHandler(data) {
       if (this.customBackHandler) {
-        this.customBackHandler()
+        this.customBackHandler(data)
       } else {
         this.$emit('option-changed')
       }
@@ -33,7 +33,7 @@ export default {
       if (this.customSubmitSuccessHandler) {
         this.customSubmitSuccessHandler(data)
       } else {
-        this.backHandler()
+        this.backHandler(data)
       }
     },
     optionSuccessHandler() {
