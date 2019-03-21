@@ -27,7 +27,7 @@
           <div class="time">创建时间</div>
         </div>
       </el-tree>
-      <el-tree ref="tree" :data="nodes" :props="defaultProps" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value">
+      <el-tree ref="tree" :data="nodes" :props="defaultProps" :filter-node-method="filterNodeHandler" node-key="id" class="filter-tree" highlight-current accordion @current-change="(value, node) => selected = value">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">{{ data.name }}</div>
           <div class="time">{{ data.modifiedDate | parseTime }}</div>
@@ -65,25 +65,27 @@ export default {
       this.$refs.tree.filter(filter)
     }
   },
+  created() {
+    this.queryAllHandler()
+  },
   activated() {
     this.selected = null
-    if (this.detail != null && this.detail.id != null) {
-      let result = null
-      for(let i = 0; i < this.nodes.length; i++) {
-        result = this.findNodeById(this.detail.id, this.nodes[i])
-        if (result !== null) {
-          break
-        }
-      }
-      if (result !== null) { // 说明 detail 是从更新页面传递过来的
+    if (this.detail && this.detail.id) {
+      let result = this.$refs.tree.getNode(this.detail.id)
+      if (result !== null) {
         // 页面显示的三项字段将被更新，其中createdDate无需更新
-        result.name = this.detail.name
-        result.modifiedDate = this.detail.modifiedDate
-      } else { // 新增操作获取的
-        this.queryAllHandler()
+        result.data.name = this.detail.name
+        result.data.modifiedDate = this.detail.modifiedDate
+      } else if(this.detail.parentId) { // 新增操作获取的, 子节点
+        this.$refs.tree.append(this.detail, this.detail.parentId)
+      } else { // 新增操作获取的,根节点
+        let beforeNodeKey = null
+        if (this.nodes && this.nodes.length > 0) {
+          beforeNodeKey = this.nodes[this.nodes.length - 1].id
+        }
+        this.$refs.tree.insertAfter(this.detail, beforeNodeKey)
       }
-    } else {
-      this.queryAllHandler()
+      this.$refs.tree.filter(this.filter)
     }
   },
   methods: {

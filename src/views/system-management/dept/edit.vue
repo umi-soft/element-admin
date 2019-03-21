@@ -87,12 +87,14 @@ export default {
       required: true, message: '编辑信息时ID不能为空', trigger: 'change'
     }]
     return {
+      newest: null, // 记录最新的值，后端返回时存储
       form: form,
       rules: rules,
       users: []
     }
   },
   activated() {
+    this.newest = this.detail
     DeptAPI.queryDeptById(this.detail.id).then((data) => {
       deepMergeLeft(this.form, data)
       this.getParentDeptName(this.form.parentId)
@@ -105,10 +107,12 @@ export default {
   },
   methods: {
     customBackHandler() {
-      this.$emit('option-changed', 'query', this.form)
+      this.$emit('option-changed', 'query', this.newest)
     },
     customSubmitHandler() {
-      DeptAPI.editDept(this.form).then(this.submitSuccessHandler)
+      DeptAPI.editDept(this.form).then(data => {
+        this.submitSuccessHandler(data)
+      })
     },
     customSubmitSuccessHandler() {
       this.$refs['form'].clearValidate()
