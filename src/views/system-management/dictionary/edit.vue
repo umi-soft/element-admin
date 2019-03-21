@@ -46,11 +46,13 @@ export default {
       required: true, message: '编辑信息时ID不能为空', trigger: 'change'
     }]
     return {
+      newest: null, // 记录最新的值，后端返回时存储
       form: form,
       rules: rules
     }
   },
   activated() {
+    this.newest = this.detail
     DictionaryAPI.queryDictionaryById(this.detail.id).then((data) => {
       deepMergeLeft(this.form, data)
       this.getParentDictionaryName(this.form.parentId)
@@ -62,10 +64,12 @@ export default {
   },
   methods: {
     customBackHandler() {
-      this.$emit('option-changed', 'query', this.form)
+      this.$emit('option-changed', 'query', this.newest)
     },
     customSubmitHandler() {
-      DictionaryAPI.editDictionary(this.form).then(this.submitSuccessHandler)
+      DictionaryAPI.editDictionary(this.form).then(data => {
+        this.submitSuccessHandler(data)
+      })
     }
   }
 }

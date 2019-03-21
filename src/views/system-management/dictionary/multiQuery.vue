@@ -47,7 +47,7 @@
         </div>
       </el-tree>
       <!-- eslint-disable-next-line vue/max-attributes-per-line -->
-      <el-tree ref="tree" :data="pagination.list" :load="loadChildren" :props="defaultProps" node-key="id" :filter-node-method="filterNodeHandler" class="filter-tree" highlight-current accordion lazy @current-change="(value, node) => selected = value">
+      <el-tree ref="tree" :data="pagination.list" :load="loadChildren" :props="defaultProps" :filter-node-method="filterNodeHandler" node-key="id" class="filter-tree" highlight-current accordion lazy @current-change="(value, node) => selected = value">
         <div slot-scope="{ data }" class="custom-tree-node">
           <div class="name">{{ data.name }}</div>
           <div class="type">{{ getDictionaryTypeName(data.type) }}</div>
@@ -101,7 +101,7 @@ export default {
     // 意味着页面跳转过程中，从查看页面返回的detail，为空对象{}
     // detail为非空对象时，可能是从新增或修改页面返回回来的，id可从当前列表中找到则为编辑，反之则为新增
     // 注意，从新增页面跳转至编辑，再返回，id也是在当前列表中找不到的
-    if (this.detail.id != null) {
+    if (this.detail && this.detail.id) {
       let result = this.$refs.tree.getNode(this.detail.id)
       if (result !== null) { // 说明 detail 是从更新页面传递过来的
         // 页面显示的2项字段将被更新, type无需更新，修改时不允许修改

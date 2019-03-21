@@ -40,6 +40,7 @@ export default {
     const form = this.initForm()
     const rules = this.initRules()
     return {
+      newest: null, // 记录最新的值，后端返回时存储
       form: form,
       rules: rules
     }
@@ -50,6 +51,7 @@ export default {
     }
   },
   activated() {
+    this.newest = null
     deepMergeLeft(this.form, this.initForm())
     this.form.category = this.category
     if (this.category === '3') {
@@ -63,8 +65,8 @@ export default {
     this.queryAllDictionaryType()
   },
   methods: {
-    customBackHandler(data) {
-      this.$emit('option-changed', 'query', data)
+    customBackHandler() {
+      this.$emit('option-changed', 'query', this.newest)
     },
     customSubmitHandler() {
       DictionaryAPI.addDictionary(this.form).then(this.submitSuccessHandler)
