@@ -33,6 +33,9 @@
     </el-col>
     <el-col :span="24">
       <el-table :data="pagination.list" highlight-current-row stripe border @current-change="(row) => { selected = row }" @row-dblclick="$emit('option-changed','check', selected)" @sort-change="sortChangeHandler">
+        <el-table-column prop="serviceId" label="服务名称" width="180" align="center">
+          <template slot-scope="scope">{{ scope.row.serviceId | translateDictionary(dictionaries.allMicroService) }}</template>
+        </el-table-column>
         <el-table-column :show-overflow-tooltip="true" prop="securityDef" label="定义" sortable="custom"/>
         <el-table-column :show-overflow-tooltip="true" prop="name" label="名称" sortable="custom"/>
         <el-table-column prop="createdDate" label="创建时间" width="180" sortable="custom" align="center">
@@ -48,24 +51,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { deepMerge } from '@/utils'
 import BaseQueryPageForm from '@/views/common/mixins/BaseQueryPageForm'
 import * as SecurityAPI from '@/api/system-management/security'
+import mixins from './mixins'
 
 export default {
-  mixins: [BaseQueryPageForm],
+  mixins: [BaseQueryPageForm, mixins],
   data() {
     const queryCriteria = this.initQueryCriteria()
     return {
       queryCriteria: queryCriteria,
       selected: null
     }
-  },
-  computed: {
-    ...mapGetters([
-      'dictionaries'
-    ])
   },
   activated() {
     this.selected = null

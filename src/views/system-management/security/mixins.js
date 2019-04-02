@@ -1,8 +1,25 @@
+import { mapGetters } from 'vuex'
+import * as SecurityAPI from '@/api/system-management/security'
+
 export default {
+  created() {
+    this.queryAllMicroService()
+  },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
+  },
   methods: {
+    queryAllMicroService () {
+      SecurityAPI.queryAllMicroService().then(data => {
+        this.$store.dispatch('loadAllMicroService', data)
+      })
+    },
     initForm() {
       return {
         id: null,
+        serviceId: null,
         securityDef: null,
         name: '',
         remark: ''
@@ -10,6 +27,9 @@ export default {
     },
     initRules() {
       return {
+        serviceId: [{
+          required: true, message: '请选择所属微服务', trigger: 'change'
+        }],
         securityDef: [{
           required: true, message: '请输入资源定义', trigger: 'blur'
         }, {

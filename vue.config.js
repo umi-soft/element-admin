@@ -32,10 +32,10 @@ module.exports = {
     proxy: {
       '/admin': {
         // target: `http://localhost:${port}/mock`,
-        target: 'http://localhost:8080',
+        target: 'http://localhost:25000',
         changeOrigin: true,
         pathRewrite: {
-          '^/' : '/'
+          '^/' : '/umi-system-admin-server/'
         }
       }
     }

@@ -25,7 +25,22 @@ const dictionaries = {
     }, {
       key: '3',
       value: '多级字典'
+    }],
+
+    allMicroService: [{
+      key: '',
+      value: ''
     }]
+  },
+  mutations: {
+    REFRESH_MICRO_SERVICE: ( state, data ) => {
+      state.allMicroService = data
+    }
+  },
+  actions: {
+    loadAllMicroService({ commit }, data) {
+      commit('REFRESH_MICRO_SERVICE', data)
+    }
   }
 }
 export default dictionaries

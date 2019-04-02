@@ -1,5 +1,10 @@
 <template>
   <el-form ref="form" :model="form" :rules="rules" label-width="200px">
+    <el-form-item label="所属微服务" prop="serviceId">
+      <el-select v-model="form.serviceId" filterable clearable placeholder="请输入关键词进行搜索">
+        <el-option v-for="(item, index) in dictionaries.allMicroService" :key="index" :label="item.value" :value="item.key"/>
+      </el-select>
+    </el-form-item>
     <el-form-item label="定义" prop="securityDef">
       <el-input v-model="form.securityDef"/>
     </el-form-item>
