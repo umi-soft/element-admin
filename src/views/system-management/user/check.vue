@@ -7,7 +7,7 @@
           <el-row>
             <el-col :span="12">
               <input-item-view :label-width="labelWidth" label="ID">{{ detail.id }}</input-item-view>
-              <input-item-view :label-width="labelWidth" label="启用状态">{{ detail.disabled | translateTrueOrFalse }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="启用状态">{{ detail.disabled | translateDictionary( dictionaries.trueOrFalse ) }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="用户编号">{{ detail.sortNum }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="登录ID">{{ detail.loginName }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="用户姓名">{{ detail.name }}</input-item-view>
@@ -22,7 +22,7 @@
             <el-col :span="12">
               <input-item-view :label-width="labelWidth" label="昵称">{{ detail.nickName }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="证件号码">{{ detail.idNumber }}</input-item-view>
-              <input-item-view :label-width="labelWidth" label="性别">{{ detail.gender | translateGender }}</input-item-view>
+              <input-item-view :label-width="labelWidth" label="性别">{{ detail.gender | translateDictionary( dictionaries.gender ) }}</input-item-view>
               <input-item-view :label-width="labelWidth" label="生日">{{ detail.birthday }}</input-item-view>
             </el-col>
             <el-col :span="12">

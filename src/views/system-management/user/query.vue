@@ -66,7 +66,7 @@
         <el-table-column :show-overflow-tooltip="true" prop="loginName" label="登录ID" sortable="custom" align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="name" label="姓名" sortable="custom" align="center"/>
         <el-table-column prop="gender" label="性别" width="100" sortable="custom" align="center">
-          <template slot-scope="scope">{{ scope.row.gender | translateGender }}</template>
+          <template slot-scope="scope">{{ scope.row.gender | translateDictionary( dictionaries.gender ) }}</template>
         </el-table-column>
         <el-table-column :show-overflow-tooltip="true" prop="email" label="邮箱" sortable="custom" align="center"/>
         <el-table-column :show-overflow-tooltip="true" prop="phone" label="电话" width="160" sortable="custom" align="center"/>

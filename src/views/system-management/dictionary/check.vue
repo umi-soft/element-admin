@@ -6,7 +6,7 @@
         <el-form :model="detail" :label-width="labelWidth">
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
           <input-item-view v-if="parentDictionaryName" label="上级字典">{{ parentDictionaryName }}</input-item-view>
-          <input-item-view label="字典类型">{{ detail.category | translateDicCategory }}</input-item-view>
+          <input-item-view label="字典类型">{{ detail.category | translateDictionary( dictionaries.dictionaryCategory ) }}</input-item-view>
           <input-item-view label="字典分类">{{ getDictionaryTypeName(detail.type) }}</input-item-view>
           <input-item-view label="字典名称">{{ detail.name }}</input-item-view>
           <input-item-view label="字典规则码">{{ detail.code }}</input-item-view>

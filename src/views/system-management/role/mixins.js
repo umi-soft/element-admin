@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 import * as RoleAPI from '@/api/system-management/role'
 import * as MenuAPI from '@/api/system-management/menu'
 import { asyncMenuMap } from '@/router'
@@ -10,6 +11,11 @@ export default {
       groups: [],
       depts: []
     }
+  },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
   },
   methods: {
     initForm() {

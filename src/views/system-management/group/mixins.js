@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 import * as GroupAPI from '@/api/system-management/group'
 
 export default {
@@ -13,6 +14,11 @@ export default {
       isUserGroup: this.$route.query.category === '' + 1,
       isRoleGroup: this.$route.query.category === '' + 2
     }
+  },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
   },
   methods: {
     initForm() {

@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex'
 import * as DeptAPI from '@/api/system-management/dept'
 
 export default {
@@ -7,6 +8,11 @@ export default {
       users: [],
       roles: []
     }
+  },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
   },
   methods: {
     initForm() {

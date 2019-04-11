@@ -1,8 +1,10 @@
 <template>
-  <el-tag :type="state === 1 ? 'success' : 'info'" plain>{{ state | translateTrueOrFalse }}</el-tag>
+  <el-tag :type="state === 1 ? 'success' : 'info'" plain>{{ state | translateDictionary( dictionaries.trueOrFalse ) }}</el-tag>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     state: {
@@ -10,6 +12,11 @@ export default {
       type: [String, Number],
       default: () => {}
     }
+  },
+  computed: {
+    ...mapGetters([
+      'dictionaries'
+    ])
   }
 }
 </script>
