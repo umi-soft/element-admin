@@ -1,21 +1,40 @@
 <template>
   <el-row>
     <el-card>
-      <el-col :span="18">
+      <el-col :span="24">
         <el-form
-          :model="queryCriteria"
-          :inline="true">
-          <el-form-item label="资源定义:" prop="securityDef">
-            <el-input v-model="queryCriteria.securityDef" placeholder="请输入资源定义"/>
-          </el-form-item>
-          <el-form-item label="资源名称:" prop="name">
-            <el-input v-model="queryCriteria.name" placeholder="请输入分组名称"/>
-          </el-form-item>
+          :model="queryCriteria" label-width="130px">
+          <el-col :span="6">
+            <el-form-item label="是否为内置资源:" prop="fromSystem">
+              <el-select v-model="queryCriteria.fromSystem" clearable placeholder="全部">
+                <el-option v-for="item in dictionaries.trueOrFalse" :key="item.key" :value="item.key" :label="item.value"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="所属服务:" prop="serviceId">
+              <el-select v-model="queryCriteria.serviceId" clearable placeholder="全部">
+                <el-option v-for="item in dictionaries.allMicroService" :key="item.key" :value="item.key" :label="item.value"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="资源定义:" prop="securityDef">
+              <el-input v-model="queryCriteria.securityDef" placeholder="请输入资源定义"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="资源名称:" prop="name">
+              <el-input v-model="queryCriteria.name" placeholder="请输入资源名称"/>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-col>
-      <el-col :span="6" class="query-btn">
-        <el-button round type="info" @click="resetHandler">重置</el-button>
-        <el-button round type="primary" @click="queryHandler">查询</el-button>
+      <el-col :span="24" class="query-btn">
+        <flex-center>
+          <el-button round type="info" @click="resetHandler">重置</el-button>
+          <el-button round type="primary" @click="queryHandler">查询</el-button>
+        </flex-center>
       </el-col>
     </el-card>
     <el-col :span="24" style="margin: 10px 0px;">
@@ -25,8 +44,8 @@
           <el-button-group>
             <el-button v-if="selected" type="primary" @click="$emit('option-changed','check', selected)">查看</el-button>
             <el-button type="primary" @click="$emit('option-changed','add')">新增</el-button>
-            <el-button v-if="selected" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
-            <el-button v-if="selected" type="primary" @click="delHandler">删除</el-button>
+            <el-button v-if="selected && selected.fromSystem == 0" type="primary" @click="$emit('option-changed','edit', selected)">编辑</el-button>
+            <el-button v-if="selected && selected.fromSystem == 0" type="primary" @click="delHandler">删除</el-button>
           </el-button-group>
         </template>
       </button-right>
@@ -57,6 +76,7 @@ import * as SecurityAPI from '@/api/system-management/security'
 import mixins from './mixins'
 
 export default {
+  // TODO 新增、修改、查看操作，字段补全
   mixins: [BaseQueryPageForm, mixins],
   data() {
     const queryCriteria = this.initQueryCriteria()
@@ -71,6 +91,8 @@ export default {
   methods: {
     initQueryCriteria(form = {}) {
       return deepMerge(form, {
+        fromSystem: '',
+        serviceId: '',
         securityDef: '',
         name: ''
       })
