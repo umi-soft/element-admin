@@ -19,6 +19,7 @@ export default {
     initForm() {
       return {
         id: null,
+        fromSystem: 0,
         serviceId: null,
         securityDef: null,
         name: '',

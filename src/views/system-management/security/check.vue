@@ -5,6 +5,7 @@
       <el-collapse-item title="基本信息" name="base-info">
         <el-form :model="detail" :label-width="labelWidth">
           <input-item-view label="ID">{{ detail.id }}</input-item-view>
+          <input-item-view label="是否为系统内置资源">{{ detail.fromSystem | translateDictionary(dictionaries.trueOrFalse) }}</input-item-view>
           <input-item-view label="所属服务">{{ detail.serviceId | translateDictionary(dictionaries.allMicroService) }}</input-item-view>
           <input-item-view label="定义">{{ detail.securityDef }}</input-item-view>
           <input-item-view label="名称">{{ detail.name }}</input-item-view>

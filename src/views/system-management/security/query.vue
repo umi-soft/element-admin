@@ -76,7 +76,7 @@ import * as SecurityAPI from '@/api/system-management/security'
 import mixins from './mixins'
 
 export default {
-  // TODO 新增、修改、查看操作，字段补全
+  // TODO 完善dev分支功能，增加fromSystem字段即可
   mixins: [BaseQueryPageForm, mixins],
   data() {
     const queryCriteria = this.initQueryCriteria()
