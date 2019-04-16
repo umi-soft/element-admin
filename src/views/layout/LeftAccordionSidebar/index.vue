@@ -20,6 +20,9 @@ export default {
     AppMain,
     TagsView
   },
+  created() {
+    this.$store.dispatch('loadBaseSystemDictionary')
+  },
   computed: {
     sidebar() {
       return this.$store.state.app.sidebar
@@ -31,8 +34,6 @@ export default {
         'without-animation': this.sidebar.withoutAnimation
       }
     }
-  },
-  methods: {
   }
 }
 </script>

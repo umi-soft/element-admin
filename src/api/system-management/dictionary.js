@@ -26,6 +26,14 @@ export function queryDictionaryById(id) {
   })
 }
 
+export function queryBaseSystemDictionary() {
+  return request({
+    url: base_url + 'query-base-system-dictionaries',
+    method: 'get',
+    data: { }
+  })
+}
+
 export function addDictionary(data) {
   return request({
     url: base_url + 'add',

@@ -49,11 +49,3 @@ export function del(id) {
     data: { id }
   })
 }
-
-export function queryAllMicroService() {
-  return request({
-    url: base_url + 'query-all-micro-service',
-    method: 'get'
-  })
-}
-

@@ -1,21 +1,12 @@
 import { mapGetters } from 'vuex'
-import * as SecurityAPI from '@/api/system-management/security'
 
 export default {
-  created() {
-    this.queryAllMicroService()
-  },
   computed: {
     ...mapGetters([
       'dictionaries'
     ])
   },
   methods: {
-    queryAllMicroService () {
-      SecurityAPI.queryAllMicroService().then(data => {
-        this.$store.dispatch('loadAllMicroService', data)
-      })
-    },
     initForm() {
       return {
         id: null,

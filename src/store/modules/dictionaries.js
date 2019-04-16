@@ -1,33 +1,23 @@
+import * as DictionaryAPI from '@/api/system-management/dictionary'
+
 const dictionaries = {
   state: {
     // 字典是否自动初始化完成
     initCompleted: false,
 
     trueOrFalse: [{
-      key: '0',
-      value: '否'
-    }, {
-      key: '1',
-      value: '是'
+      key: '',
+      value: ''
     }],
 
     gender: [{
-      key: '0',
-      value: '女'
-    }, {
-      key: '1',
-      value: '男'
+      key: '',
+      value: ''
     }],
 
     dictionaryCategory: [{
-      key: '1',
-      value: '字典分类'
-    }, {
-      key: '2',
-      value: '单级字典'
-    }, {
-      key: '3',
-      value: '多级字典'
+      key: '',
+      value: ''
     }],
 
     allMicroService: [{
@@ -36,7 +26,6 @@ const dictionaries = {
     }]
   },
   mutations: {
-    // initComplete
     REFRESH_INIT_COMPLETED: ( state, data ) => {
       state.initCompleted = data
     },
@@ -54,22 +43,18 @@ const dictionaries = {
     }
   },
   actions: {
-    // TODO 一次加载所有的字典项
-    loadInitComplete({ commit }) {
-      commit('REFRESH_INIT_COMPLETED', true)
-    },
-    loadAllTrueOrFalse({ commit }, data) {
-      commit('REFRESH_TRUE_OR_FALSE', data)
-    },
-    loadAllGender({ commit }, data) {
-      commit('REFRESH_GENDER', data)
-    },
-    loadAllDictionaryCategory({ commit }, data) {
-      commit('REFRESH_DICTIONARY_CATEGORY', data)
-    },
-    // TODO 将API掉你用转移到本文件内
-    loadAllMicroService({ commit }, data) {
-      commit('REFRESH_MICRO_SERVICE', data)
+    loadBaseSystemDictionary({ commit, state }) {
+      if(!state.initCompleted) {
+        DictionaryAPI.queryBaseSystemDictionary().then(data => {
+          for (let key in data) {
+            // REFRESH_TRUE_OR_FALSE, REFRESH_GENDER, REFRESH_DICTIONARY_CATEGORY, REFRESH_MICRO_SERVICE 与后端枚举值是一样的
+            commit(key, data[key])
+          }
+          commit('REFRESH_INIT_COMPLETED', true)
+        }).catch(() => {
+          commit('REFRESH_INIT_COMPLETED', false)
+        })
+      }
     }
   }
 }
